@@ -127,7 +127,14 @@ def _adapt_sql(sql: str) -> str:
     sql = re.sub(r'TIMESTAMP\s+DEFAULT\s+CURRENT_TIMESTAMP', 'TIMESTAMPTZ DEFAULT NOW()', sql, flags=re.IGNORECASE)
     # CURRENT_TIMESTAMP 단독
     sql = sql.replace("CURRENT_TIMESTAMP", "NOW()")
-    # printf → format (PostgreSQL)
+    # printf('%06d', expr) → lpad((expr)::text, 6, '0')  (PostgreSQL)
+    sql = re.sub(
+        r"printf\s*\(\s*'%06d'\s*,\s*([^)]+)\)",
+        lambda m: f"lpad(({m.group(1)})::text, 6, '0')",
+        sql,
+        flags=re.IGNORECASE,
+    )
+    # 나머지 printf → format (fallback)
     sql = re.sub(r'printf\(', 'format(', sql, flags=re.IGNORECASE)
     # PRAGMA → 무시 (빈 SELECT로 대체)
     if re.match(r'\s*PRAGMA', sql, re.IGNORECASE):

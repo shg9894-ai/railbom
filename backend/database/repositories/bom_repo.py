@@ -11,14 +11,13 @@ def _attach_compat_codes(conn, rows: list[dict]) -> list[dict]:
             r['compat_codes'] = []
         return rows
 
-    placeholders = ','.join('?' * len(corp_nos))
-    # bom_nodes.corp_material_no 기준으로 동일 공사자재번호를 가진 모든 노드 조회
+    placeholders = ','.join(['?'] * len(corp_nos))
     shared = conn.execute(f"""
         SELECT corp_material_no, id, material_no
         FROM bom_nodes
         WHERE corp_material_no IN ({placeholders})
           AND material_no IS NOT NULL
-    """, corp_nos).fetchall()
+    """, tuple(corp_nos)).fetchall()
 
     # corp_material_no → [(node_id, material_no), ...] 맵
     corp_map: dict[str, list[tuple]] = {}
@@ -44,7 +43,7 @@ def get_tree(vehicle_type_id: int, category_code: str = None):
             # 해당 category_code 루트 노드부터 시작
             sql = """
             WITH RECURSIVE bom_tree AS (
-                SELECT *, 0 AS depth, CAST(sort_order AS TEXT) AS path
+                SELECT *, 0 AS depth, printf('%06d', sort_order) AS path
                 FROM bom_nodes
                 WHERE vehicle_type_id = ? AND parent_id IS NULL AND category_code = ?
                 UNION ALL
