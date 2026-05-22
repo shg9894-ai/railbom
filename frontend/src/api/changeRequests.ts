@@ -26,6 +26,7 @@ export interface ChangeRequestCreate {
   requested_value?: string | null
   requester_name?: string | null
   requester_note?: string | null
+  node_data?: string | null
 }
 
 export const changeRequestsApi = {

@@ -29,7 +29,7 @@ export interface Formation {
   updated_at: string
 }
 
-export type NodeType = 'category' | 'assembly' | 'part' | 'kit'
+export type NodeType = 'category' | 'assembly' | 'part' | 'kit' | 'repair_kit'
 
 export interface BomNode {
   id: number
