@@ -4,6 +4,8 @@ import { LockOutlined, UserOutlined } from '@ant-design/icons'
 
 const { Title, Text } = Typography
 
+const API_BASE = import.meta.env.VITE_API_URL ? `${import.meta.env.VITE_API_URL}/api` : '/api'
+
 interface Props {
   onLogin: (token: string, role: string, userId: string) => void
 }
@@ -16,7 +18,7 @@ export default function LoginPage({ onLogin }: Props) {
     setLoading(true)
     setError(null)
     try {
-      const res = await fetch('/api/auth/login', {
+      const res = await fetch(`${API_BASE}/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(values),
