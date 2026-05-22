@@ -98,8 +98,20 @@ def approve_request(rid: int, body: ReviewBody = ReviewBody()):
         req = conn.execute("SELECT * FROM diagram_page_requests WHERE id = ?", (rid,)).fetchone()
         if not req:
             raise HTTPException(404, "Request not found")
-        if dict(req)["status"] != "pending":
-            raise HTTPException(400, f"Already {dict(req)['status']}")
+        req = dict(req)
+        if req["status"] != "pending":
+            raise HTTPException(400, f"Already {req['status']}")
+
+        rtype = req["request_type"]
+        new_val = req["requested_value"]
+
+        # 부품명 추가/수정: diagram_pages.assembly 실제 반영
+        if rtype in ("assembly_add", "assembly_edit") and new_val:
+            conn.execute(
+                "UPDATE diagram_pages SET assembly = ? WHERE id = ?",
+                (new_val, req["page_id"]),
+            )
+
         conn.execute(
             "UPDATE diagram_page_requests SET status='approved', reviewed_at=CURRENT_TIMESTAMP, reviewer_note=? WHERE id=?",
             (body.reviewer_note, rid),

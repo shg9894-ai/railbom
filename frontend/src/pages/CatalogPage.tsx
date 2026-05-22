@@ -9,6 +9,7 @@ import type { DiagramPage } from '../api/diagramPages'
 
 const { Text } = Typography
 const { TextArea } = Input
+const userId = localStorage.getItem('user_id') ?? ''
 
 const VEHICLE_CODE_MAP: Record<string, string> = {
   'EMU-320':    'emu320',
@@ -42,7 +43,6 @@ function RequestModal({
     mutationFn: (values: {
       request_type: string
       requested_value?: string
-      requester_name?: string
       requester_note?: string
     }) =>
       diagramPageRequestsApi.create({
@@ -53,7 +53,7 @@ function RequestModal({
         request_type: values.request_type,
         current_value: page!.assembly ?? null,
         requested_value: values.requested_value ?? null,
-        requester_name: values.requester_name ?? null,
+        requester_name: userId || null,
         requester_note: values.requester_note ?? null,
       }),
     onSuccess: () => {
@@ -80,7 +80,7 @@ function RequestModal({
       width={480}
     >
       {page && (
-        <div style={{ marginBottom: 12, padding: '8px 12px', background: '#f5f5f5', borderRadius: 6 }}>
+        <div style={{ marginBottom: 12, padding: '8px 12px', borderRadius: 6, border: '1px solid rgba(128,128,128,0.2)', background: 'rgba(128,128,128,0.08)' }}>
           <Text type="secondary" style={{ fontSize: 12 }}>현재 부품명: </Text>
           <Text strong>{page.assembly || '(없음)'}</Text>
           <Text type="secondary" style={{ fontSize: 12, marginLeft: 12 }}>페이지: </Text>
@@ -91,11 +91,8 @@ function RequestModal({
         <Form.Item name="request_type" label="요청 유형" rules={[{ required: true, message: '요청 유형을 선택해주세요' }]}>
           <AntSelect options={REQUEST_TYPE_LABELS} placeholder="유형 선택" />
         </Form.Item>
-        <Form.Item name="requested_value" label="수정 요청값 (부품명 추가/수정 시)">
+        <Form.Item name="requested_value" label="추가/수정할 부품명">
           <Input placeholder="올바른 부품명을 입력하세요" />
-        </Form.Item>
-        <Form.Item name="requester_name" label="요청자명">
-          <Input placeholder="이름 (선택)" />
         </Form.Item>
         <Form.Item name="requester_note" label="요청 내용">
           <TextArea rows={3} placeholder="수정이 필요한 이유나 추가 설명을 입력하세요" />

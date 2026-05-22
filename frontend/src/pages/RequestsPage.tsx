@@ -273,7 +273,9 @@ function DiagramRequestTable({ statusFilter }: { statusFilter?: string }) {
     { title: '요청자', dataIndex: 'requester_name', width: 90, render: (v: string | null) => v ?? '—' },
     { title: '요청 내용', dataIndex: 'requester_note', ellipsis: true, render: (v: string | null) => v ?? '—' },
     { title: '상태', dataIndex: 'status', width: 80, render: (v: string) => { const s = STATUS_TAG[v] ?? { color: 'default', text: v }; return <Tag color={s.color}>{s.text}</Tag> } },
-    { title: '요청일시', dataIndex: 'created_at', width: 140, render: (v: string) => v?.replace('T', ' ').slice(0, 16) },
+    { title: '요청일시', dataIndex: 'created_at', width: 130, render: (v: string) => v?.replace('T', ' ').slice(0, 16) },
+    { title: '처리일시', dataIndex: 'reviewed_at', width: 130, render: (v: string | null) => v ? v.replace('T', ' ').slice(0, 16) : <Text type="secondary">—</Text> },
+    { title: '검토의견', dataIndex: 'reviewer_note', width: 140, ellipsis: true, render: (v: string | null) => v ?? <Text type="secondary">—</Text> },
     {
       title: '처리', width: 120,
       render: (_: unknown, record: DiagramPageRequest) =>
@@ -282,7 +284,7 @@ function DiagramRequestTable({ statusFilter }: { statusFilter?: string }) {
             <Button size="small" type="primary" icon={<CheckOutlined />} onClick={() => setModal({ action: 'approve', request: record })}>승인</Button>
             <Button size="small" danger icon={<CloseOutlined />} onClick={() => setModal({ action: 'reject', request: record })}>반려</Button>
           </Space>
-        ) : <Text type="secondary" style={{ fontSize: 12 }}>{record.reviewer_note ?? '—'}</Text>,
+        ) : null,
     },
   ]
 
