@@ -10,4 +10,7 @@ export default defineConfig({
       '/api': 'http://localhost:8001',
     },
   },
+  preview: {
+    host: true,
+  },
 })
