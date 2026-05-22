@@ -1,39 +1,59 @@
 from fastapi import APIRouter, HTTPException, Query, Body
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, RedirectResponse
 from typing import Optional, List
 from pathlib import Path
 from pydantic import BaseModel
 from database.connection import get_connection
+from config.settings import DATABASE_URL, SUPABASE_URL, SUPABASE_BUCKET
 
 router = APIRouter(prefix="/api/diagram-pages", tags=["diagram-pages"])
 
+# 클라우드 모드: Supabase Storage의 파일명 규칙
+SUPABASE_DIAGRAM_BUCKET = "diagrams"
+CLOUD_FILENAMES = {
+    "emu260":    lambda n: f"이음_명칭도감_{n:03d}p.jpg",
+    "emu320":    lambda n: f"청룡_명칭도감_{n:03d}p.jpg",
+    "KTX-산천2": lambda n: f"호남_명칭도감_{n:03d}p.jpg",
+    "KTX-산천4": lambda n: f"원강_명칭도감_{n:03d}p.jpg",
+    "KTX-산천1": lambda n: f"산천_명칭도감_{n:03d}p.jpg",
+}
+
+# 로컬 모드: 원본 파일 경로
+_LOCAL_BASE = Path(r"C:\Users\shg98\Desktop\철도공사\2차 추가 백데이터")
 IMAGE_DIRS = {
-    "emu260": Path(r"C:\Users\shg98\Desktop\철도공사\2차 추가 백데이터\ktx 이음 명칭도감_1"),
-    "emu320": Path(r"C:\Users\shg98\Desktop\철도공사\2차 추가 백데이터\KTX-청룡_명칭도감"),
-    "KTX-산천2": Path(r"C:\Users\shg98\Desktop\철도공사\2차 추가 백데이터\별첨1_호남) 명칭도감(안)"),
-    "KTX-산천4": Path(r"C:\Users\shg98\Desktop\철도공사\2차 추가 백데이터\KTX-산천(원강선) 명칭도감"),
-    "KTX-산천1": Path(r"C:\Users\shg98\Desktop\철도공사\2차 추가 백데이터\KTX-Sancheon_IllustratedPartsCatalog(100량 명칭도감) 산천"),
+    "emu260":    _LOCAL_BASE / "ktx 이음 명칭도감_1",
+    "emu320":    _LOCAL_BASE / "KTX-청룡_명칭도감",
+    "KTX-산천2": _LOCAL_BASE / "별첨1_호남) 명칭도감(안)",
+    "KTX-산천4": _LOCAL_BASE / "KTX-산천(원강선) 명칭도감",
+    "KTX-산천1": _LOCAL_BASE / "KTX-Sancheon_IllustratedPartsCatalog(100량 명칭도감) 산천",
 }
 IMAGE_FILENAMES = {
-    "emu260": lambda n: f"ktx 이음 명칭도감_{n}.jpeg",
-    "emu320": lambda n: f"KTX-청룡_명칭도감_{n}.jpg",
+    "emu260":    lambda n: f"ktx 이음 명칭도감_{n}.jpeg",
+    "emu320":    lambda n: f"KTX-청룡_명칭도감_{n}.jpg",
     "KTX-산천2": lambda n: f"별첨1_호남) 명칭도감(안)_{n}.jpg",
     "KTX-산천4": lambda n: f"KTX-산천(원강선) 명칭도감_{n}.jpg",
     "KTX-산천1": lambda n: f"KTX-Sancheon_IllustratedPartsCatalog(100량 명칭도감) 산천_{n}.jpg",
 }
 
-# Legacy alias
 IMAGE_DIR = IMAGE_DIRS["emu260"]
 
 
 @router.get("/image/{file_no}")
 def get_image(file_no: int, vehicle: Optional[str] = Query("emu260")):
-    img_dir = IMAGE_DIRS.get(vehicle, IMAGE_DIRS["emu260"])
-    filename = IMAGE_FILENAMES.get(vehicle, IMAGE_FILENAMES["emu260"])(file_no)
-    path = img_dir / filename
-    if not path.exists():
-        raise HTTPException(404, f"이미지 없음: {vehicle}/{file_no}")
-    return FileResponse(str(path), media_type="image/jpeg")
+    if DATABASE_URL and SUPABASE_URL:
+        name_fn = CLOUD_FILENAMES.get(vehicle, CLOUD_FILENAMES.get("emu260"))
+        if name_fn is None:
+            raise HTTPException(404, f"지원하지 않는 차종: {vehicle}")
+        filename = name_fn(file_no)
+        url = f"{SUPABASE_URL}/storage/v1/object/public/{SUPABASE_DIAGRAM_BUCKET}/{filename}"
+        return RedirectResponse(url, status_code=302)
+    else:
+        img_dir = IMAGE_DIRS.get(vehicle, IMAGE_DIRS["emu260"])
+        filename = IMAGE_FILENAMES.get(vehicle, IMAGE_FILENAMES["emu260"])(file_no)
+        path = img_dir / filename
+        if not path.exists():
+            raise HTTPException(404, f"이미지 없음: {vehicle}/{file_no}")
+        return FileResponse(str(path), media_type="image/jpeg")
 
 
 def _fetch_pages_with_parts(conn, rows):
