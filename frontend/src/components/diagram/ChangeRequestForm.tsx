@@ -2,7 +2,7 @@ import { useState } from 'react'
 import {
   Modal, Form, Input, Button, Divider,
   Upload, message, InputNumber, Typography, Tag, Checkbox,
-  Select,
+  Select, theme,
 } from 'antd'
 import { PlusOutlined, MinusCircleOutlined, UploadOutlined } from '@ant-design/icons'
 import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query'
@@ -19,8 +19,9 @@ const API_BASE = '/api'
 function NewNodeRow({ name, index, removable, remove }: {
   name: number; index: number; removable: boolean; remove: (n: number) => void
 }) {
+  const { token: tk } = theme.useToken()
   return (
-    <div style={{ border: '1px solid #e8e8e8', borderRadius: 6, padding: '10px 12px', marginBottom: 8, background: '#fafafa' }}>
+    <div style={{ border: `1px solid ${tk.colorBorder}`, borderRadius: 6, padding: '10px 12px', marginBottom: 8, background: tk.colorFillAlter }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
         <Text style={{ fontSize: 12, fontWeight: 600, color: '#1677ff' }}>신규 부품 {index + 1}</Text>
         {removable && (
@@ -83,6 +84,7 @@ const BOM_TYPES = [
 ]
 
 export function BomRequestButton({ node, vehicleTypeId }: { node: BomNode; vehicleTypeId: number }) {
+  const { token: tk } = theme.useToken()
   const [open, setOpen] = useState(false)
   const [form] = Form.useForm()
   const requestType: string | undefined = Form.useWatch('request_type', form)
@@ -172,7 +174,7 @@ export function BomRequestButton({ node, vehicleTypeId }: { node: BomNode; vehic
         destroyOnHidden
       >
         <Form form={form} layout="vertical" onFinish={handleSubmit} style={{ marginTop: 12 }}>
-          <div style={{ background: '#f5f5f5', borderRadius: 6, padding: '6px 10px', marginBottom: 12, fontSize: 12 }}>
+          <div style={{ background: tk.colorFillAlter, borderRadius: 6, padding: '6px 10px', marginBottom: 12, fontSize: 12 }}>
             <Text type="secondary">대상: </Text>
             <Text strong>{node.name}</Text>
             {node.material_no && <Text code style={{ marginLeft: 8 }}>{node.material_no}</Text>}
@@ -214,6 +216,7 @@ export function BomRequestButton({ node, vehicleTypeId }: { node: BomNode; vehic
 
 // ── BOM 하위 부품 추가 ───────────────────────────────────────────
 function BomNodeAddSection({ node }: { node: BomNode }) {
+  const { token: tk } = theme.useToken()
   const { data: siblings = [] } = useQuery({
     queryKey: ['children', node.id],
     queryFn: () => bomApi.getChildrenLazy(node.id),
@@ -224,7 +227,7 @@ function BomNodeAddSection({ node }: { node: BomNode }) {
 
   return (
     <>
-      <div style={{ background: '#e6f4ff', border: '1px solid #91caff', borderRadius: 6, padding: '8px 12px', marginBottom: 10, fontSize: 12 }}>
+      <div style={{ background: tk.colorInfoBg, border: `1px solid ${tk.colorInfoBorder}`, borderRadius: 6, padding: '8px 12px', marginBottom: 10, fontSize: 12 }}>
         <Text>
           <Text strong code>{node.material_no ?? node.name}</Text> 아래에 추가됩니다.
           현재 하위 {siblings.length}개 → 다음 연번:{' '}
@@ -249,6 +252,7 @@ function BomNodeAddSection({ node }: { node: BomNode }) {
 
 // ── 수리키트 구성 추가 ───────────────────────────────────────────
 function BomKitAddSection({ node }: { node: BomNode }) {
+  const { token: tk } = theme.useToken()
   const { data: siblings = [], isLoading } = useQuery({
     queryKey: ['children', node.id],
     queryFn: () => bomApi.getChildrenLazy(node.id),
@@ -257,7 +261,7 @@ function BomKitAddSection({ node }: { node: BomNode }) {
 
   return (
     <>
-      <div style={{ background: '#e6f4ff', border: '1px solid #91caff', borderRadius: 6, padding: '8px 12px', marginBottom: 10, fontSize: 12 }}>
+      <div style={{ background: tk.colorInfoBg, border: `1px solid ${tk.colorInfoBorder}`, borderRadius: 6, padding: '8px 12px', marginBottom: 10, fontSize: 12 }}>
         <Text>
           <Text strong code>{node.material_no ?? node.name}</Text>의 하위 부품 중 수리키트를 구성할 항목을 선택하세요.
         </Text>
@@ -290,6 +294,7 @@ function BomKitAddSection({ node }: { node: BomNode }) {
 
 // ── BOM 개량 추가 ────────────────────────────────────────────────
 function BomNodeRevisionSection({ node }: { node: BomNode }) {
+  const { token: tk } = theme.useToken()
   const { data: parentChildren = [] } = useQuery({
     queryKey: ['children-of-parent', node.id],
     queryFn: async () => {
@@ -312,7 +317,7 @@ function BomNodeRevisionSection({ node }: { node: BomNode }) {
 
   return (
     <>
-      <div style={{ background: '#fff7e6', border: '1px solid #ffd591', borderRadius: 6, padding: '8px 12px', marginBottom: 10, fontSize: 12 }}>
+      <div style={{ background: tk.colorWarningBg, border: `1px solid ${tk.colorWarningBorder}`, borderRadius: 6, padding: '8px 12px', marginBottom: 10, fontSize: 12 }}>
         <Text>
           현재 노드 <Text strong code>{baseCode}</Text>는 그대로 유지되고,
           개량 버전 <Text strong code style={{ color: '#d46b08' }}>{nextRevCode}</Text>이 신규 생성됩니다.
@@ -356,6 +361,7 @@ function BomNodeEditSection({ node }: { node: BomNode }) {
 
 // ── BOM 노드 삭제 ────────────────────────────────────────────────
 function BomNodeDeleteSection({ node, vehicleTypeId }: { node: BomNode; vehicleTypeId: number }) {
+  const { token: tk } = theme.useToken()
   const [searchQ, setSearchQ] = useState('')
 
   const { data: children = [] } = useQuery({
@@ -373,7 +379,7 @@ function BomNodeDeleteSection({ node, vehicleTypeId }: { node: BomNode; vehicleT
 
   return (
     <>
-      <div style={{ background: '#fff2f0', border: '1px solid #ffccc7', borderRadius: 6, padding: '8px 12px', marginBottom: 10 }}>
+      <div style={{ background: tk.colorErrorBg, border: `1px solid ${tk.colorErrorBorder}`, borderRadius: 6, padding: '8px 12px', marginBottom: 10 }}>
         <Text type="danger" style={{ fontSize: 12 }}>
           이 노드의 삭제를 요청합니다. 관리자가 검토 후 승인 시 처리됩니다.
         </Text>
@@ -431,6 +437,7 @@ const CORP_MAT_TYPES = [
 ]
 
 export function CorpMatRequestButton({ node }: { node: BomNode }) {
+  const { token: tk } = theme.useToken()
   const [open, setOpen] = useState(false)
   const [form] = Form.useForm()
   const requestType: string | undefined = Form.useWatch('request_type', form)
@@ -475,7 +482,7 @@ export function CorpMatRequestButton({ node }: { node: BomNode }) {
         destroyOnHidden
       >
         <Form form={form} layout="vertical" onFinish={handleSubmit} style={{ marginTop: 12 }}>
-          <div style={{ background: '#f5f5f5', borderRadius: 6, padding: '6px 10px', marginBottom: 12, fontSize: 12 }}>
+          <div style={{ background: tk.colorFillAlter, borderRadius: 6, padding: '6px 10px', marginBottom: 12, fontSize: 12 }}>
             <Text type="secondary">현재: </Text>
             <Text strong code>{node.corp_material_no ?? '(미등록)'}</Text>
           </div>
