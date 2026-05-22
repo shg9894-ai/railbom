@@ -16,21 +16,22 @@ import { CATEGORY_COLORS, CATEGORIES, formatBomCode } from '../types'
 const { Text } = Typography
 
 // ── 호환 코드 클릭 팝업 ──────────────────────────────────────────────────────
-function CompatNodeModal({ materialNo, onClose }: { materialNo: string | null; onClose: () => void }) {
+// materialNos: 클릭한 코드 + 해당 노드 자신의 material_no (모두 같은 corp_material_no 공유)
+function CompatNodeModal({ materialNos, onClose }: { materialNos: string[] | null; onClose: () => void }) {
   const { data: nodes = [], isLoading } = useQuery({
-    queryKey: ['compat-modal', materialNo],
-    queryFn: () => bomApi.searchGlobal(materialNo!),
-    enabled: !!materialNo,
+    queryKey: ['compat-modal', materialNos?.join(',')],
+    queryFn: () => bomApi.getNodesByMaterialNos(materialNos!),
+    enabled: !!materialNos && materialNos.length > 0,
     staleTime: 60_000,
   })
 
   return (
     <Modal
-      open={!!materialNo}
+      open={!!materialNos}
       onCancel={onClose}
       footer={null}
-      title={<span style={{ fontFamily: 'monospace' }}>{formatBomCode(materialNo)}</span>}
-      width={560}
+      title={<span>호환 부품 ({materialNos?.length ?? 0}개 차종)</span>}
+      width={580}
     >
       {isLoading ? (
         <div style={{ textAlign: 'center', padding: 40 }}><Spin /></div>
@@ -110,17 +111,19 @@ const COLUMNS = [
 type ColKey = (typeof COLUMNS)[number]['key']
 
 // ── 셀 렌더 ──────────────────────────────────────────────────────────────────
-function CellValue({ colKey, node, onCompatClick }: { colKey: ColKey; node: BomNode; onCompatClick?: (code: string) => void }) {
+function CellValue({ colKey, node, onCompatClick }: { colKey: ColKey; node: BomNode; onCompatClick?: (codes: string[]) => void }) {
   const { token: tk } = theme.useToken()
   if (colKey === 'compat_codes') {
     const codes = node.compat_codes ?? []
     if (codes.length === 0) return <span style={{ opacity: 0.2 }}>—</span>
+    // 자기 자신 + 호환 노드들의 material_no 전체를 넘긴다
+    const allCodes = node.material_no ? [node.material_no, ...codes] : codes
     return (
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: 2 }}>
         {codes.map(c => (
           <span
             key={c}
-            onClick={() => onCompatClick?.(c)}
+            onClick={() => onCompatClick?.(allCodes)}
             style={{
               fontFamily: 'monospace', fontSize: 10, color: tk.colorSuccess,
               background: tk.colorSuccessBg, border: `1px solid ${tk.colorSuccessBorder}`,
@@ -201,7 +204,7 @@ export default function BomPage() {
   const [expandedIds,  setExpandedIds] = useState<Set<number>>(new Set())
   const [loadingIds,   setLoadingIds]  = useState<Set<number>>(new Set())
   const [isExpandingAll, setIsExpandingAll] = useState(false)
-  const [compatModal,  setCompatModal] = useState<string | null>(null)
+  const [compatModal,  setCompatModal] = useState<string[] | null>(null)
 
   // 자식 캐시: nodeId → BomNode[]
   // useRef로 관리해서 setState 루프 없이 트리 수정 가능
@@ -353,7 +356,7 @@ export default function BomPage() {
 
   return (
     <>
-    <CompatNodeModal materialNo={compatModal} onClose={() => setCompatModal(null)} />
+    <CompatNodeModal materialNos={compatModal} onClose={() => setCompatModal(null)} />
     <div style={{ height: 'calc(100vh - 112px)', display: 'flex', flexDirection: 'column', gap: 8 }}>
 
       {/* 툴바 */}

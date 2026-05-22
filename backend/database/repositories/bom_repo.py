@@ -362,6 +362,26 @@ def search_nodes(vehicle_type_id: int, query: str):
         conn.close()
 
 
+def get_nodes_by_material_nos(material_nos: list[str]):
+    """material_no 목록으로 노드 정확 조회 (호환코드 팝업용)"""
+    if not material_nos:
+        return []
+    conn = get_connection()
+    try:
+        placeholders = ','.join(['?'] * len(material_nos))
+        rows = conn.execute(
+            f"""SELECT n.*, vt.name AS vehicle_name, vt.code AS vehicle_code
+                FROM bom_nodes n
+                LEFT JOIN vehicle_types vt ON vt.id = n.vehicle_type_id
+                WHERE n.material_no IN ({placeholders})
+                ORDER BY n.vehicle_type_id, n.sort_order""",
+            tuple(material_nos),
+        ).fetchall()
+        return [dict(r) for r in rows]
+    finally:
+        conn.close()
+
+
 def search_by_corp_material_no(corp_material_no: str):
     """공사 자재번호로 전체 차종에서 해당 자재번호가 등록된 BOM 노드 목록 반환"""
     conn = get_connection()

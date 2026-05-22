@@ -13,6 +13,7 @@ import RequestsPage from './pages/RequestsPage'
 import LoginLogsPage from './pages/LoginLogsPage'
 import LoginPage from './pages/LoginPage'
 import BomPage from './pages/BomPage'
+import CatalogPage from './pages/CatalogPage'
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { retry: 1, staleTime: 30_000 } },
@@ -69,6 +70,7 @@ export default function App() {
               <Route path="/compatibility" element={<CompatibilityPage />} />
               <Route path="/search" element={<SearchPage />} />
               <Route path="/bom" element={<BomPage />} />
+              <Route path="/catalog" element={<CatalogPage />} />
               {role === 'admin' && <Route path="/requests" element={<RequestsPage />} />}
               {role === 'admin' && <Route path="/login-logs" element={<LoginLogsPage />} />}
               <Route path="*" element={<Navigate to="/diagram" replace />} />

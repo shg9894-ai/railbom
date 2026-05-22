@@ -38,6 +38,15 @@ def search_nodes_global(q: str, vehicle_id: Optional[int] = Query(None)):
     return bom_repo.search_nodes_global(q, vehicle_id)
 
 
+@router.get("/nodes-by-material-nos")
+def get_nodes_by_material_nos(material_nos: str = Query(...)):
+    """쉼표로 구분된 material_no 목록으로 노드 정확 조회 (호환코드 팝업용)"""
+    codes = [c.strip() for c in material_nos.split(',') if c.strip()]
+    if not codes:
+        return []
+    return bom_repo.get_nodes_by_material_nos(codes)
+
+
 @router.get("/search-by-corp-material-no")
 def search_by_corp_material_no(q: str):
     """공사 자재번호로 전체 차종에서 사용 위치 조회"""

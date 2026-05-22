@@ -31,6 +31,11 @@ export const bomApi = {
     client.put('/bom/nodes/reorder', { ordered_ids: orderedIds }).then((r) => r.data),
   delete: (nodeId: number) => client.delete(`/bom/nodes/${nodeId}`),
 
+  getNodesByMaterialNos: (materialNos: string[]) =>
+    client.get<(BomNode & { vehicle_name: string; vehicle_code: string })[]>(
+      '/bom/nodes-by-material-nos', { params: { material_nos: materialNos.join(',') } }
+    ).then((r) => r.data),
+
   searchByCorpMaterialNo: (q: string) =>
     client.get<(BomNode & { vehicle_name: string; vehicle_code: string; corp_material_no: string; is_primary: number; mat_notes: string | null })[]>(
       '/bom/search-by-corp-material-no', { params: { q } }

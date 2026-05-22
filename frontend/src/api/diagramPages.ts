@@ -49,4 +49,9 @@ export const diagramPagesApi = {
     client
       .get('/diagram-pages/by-assembly', { params: { assembly, vehicle } })
       .then((r) => r.data),
+
+  allPages: (vehicle: string): Promise<DiagramPage[]> =>
+    client
+      .get(`/diagram-pages/${vehicle}`)
+      .then((r) => r.data),
 }
