@@ -1,0 +1,5 @@
+﻿utf-8 decoded: 전력추진장치
+utf-8 decoded: 집전 장치 (싱글암)
+utf-8 decoded: 싱글암 팬터그래프
+utf-8 decoded: 절연 애자
+utf-8 decoded: 애자

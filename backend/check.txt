@@ -1,0 +1,50 @@
+﻿=== 업데이트된 공사 자재번호 샘플 5개 ===
+BOM코드  : HR-750-8-21-5
+명칭     : 주간제어기
+CPN      : None
+도면번호 : RVS60001EE0
+공사번호 : 1113070
+
+BOM코드  : HR-750-8-21-2
+명칭     : 제동레버
+CPN      : None
+도면번호 : RMB50001EE0
+공사번호 : 1114001
+
+BOM코드  : HR-750-2-11-8-7
+명칭     : 핸드셋
+CPN      : None
+도면번호 : RES10001EE0
+공사번호 : 1120095
+
+BOM코드  : HR-750-2-11-7-7
+명칭     : 핸드셋
+CPN      : None
+도면번호 : RES10001EE0
+공사번호 : 1120095
+
+BOM코드  : HR-750-2-11-6-7
+명칭     : 핸드셋
+CPN      : None
+도면번호 : RES10001EE0
+공사번호 : 1120095
+
+=== DB 테이블 목록 ===
+vehicle_types
+sqlite_sequence
+formations
+bom_nodes
+compatibility
+bom_node_materials
+diagram_pages
+diagram_page_parts
+bom_node_diagrams
+change_requests
+login_logs
+failure_cases
+repair_kit_items
+
+=== 로그인 관련 테이블 ===
+login_logs: 8건
+{'id': 1, 'user_id': '0417', 'role': 'admin', 'ip': '127.0.0.1', 'logged_in_at': '2026-05-20 12:39:19'}
+{'id': 2, 'user_id': '5100', 'role': 'staff', 'ip': '127.0.0.1', 'logged_in_at': '2026-05-20 12:39:21'}

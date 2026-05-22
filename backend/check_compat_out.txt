@@ -1,0 +1,18 @@
+﻿python.exe : Traceback (most recent call last):
+At line:1 char:1
++ & "C:\Dev\railway-bom\backend\.venv\Scripts\python.exe" "C:\Dev\railw ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Traceback (most recent call last)::String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  File "C:\Dev\railway-bom\backend\check_compat.py", line 7, in <module>
+    rows = con.execute("""
+           ~~~~~~~~~~~^^^^
+        SELECT id, material_no, name, corp_material_no, compat_codes
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        ORDER BY material_no
+        ^^^^^^^^^^^^^^^^^^^^
+    """).fetchall()
+    ^^^^
+sqlite3.OperationalError: no such column: compat_codes
