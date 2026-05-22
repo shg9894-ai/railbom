@@ -1,7 +1,7 @@
 import { useState, useMemo, useCallback, useRef } from 'react'
 import {
   Select, Card, Spin, Empty, Input, Button, Space, Tooltip,
-  Typography, theme,
+  Typography, theme, Modal, Descriptions, Tag,
 } from 'antd'
 import {
   SearchOutlined, DownloadOutlined, RightOutlined, DownOutlined,
@@ -11,9 +11,75 @@ import { vehicleApi } from '../api/vehicles'
 import { bomApi } from '../api/bom'
 import { excelApi } from '../api/excel'
 import type { BomNode } from '../types'
-import { CATEGORY_COLORS, formatBomCode } from '../types'
+import { CATEGORY_COLORS, CATEGORIES, formatBomCode } from '../types'
 
 const { Text } = Typography
+
+// ── 호환 코드 클릭 팝업 ──────────────────────────────────────────────────────
+function CompatNodeModal({ materialNo, onClose }: { materialNo: string | null; onClose: () => void }) {
+  const { data: nodes = [], isLoading } = useQuery({
+    queryKey: ['compat-modal', materialNo],
+    queryFn: () => bomApi.searchGlobal(materialNo!),
+    enabled: !!materialNo,
+    staleTime: 60_000,
+  })
+
+  return (
+    <Modal
+      open={!!materialNo}
+      onCancel={onClose}
+      footer={null}
+      title={<span style={{ fontFamily: 'monospace' }}>{formatBomCode(materialNo)}</span>}
+      width={560}
+    >
+      {isLoading ? (
+        <div style={{ textAlign: 'center', padding: 40 }}><Spin /></div>
+      ) : nodes.length === 0 ? (
+        <Empty description="노드를 찾을 수 없습니다" />
+      ) : (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+          {nodes.map(n => {
+            const catName = CATEGORIES.find(c => c.code === n.category_code)?.name
+            return (
+              <Card key={n.id} size="small" style={{ borderRadius: 8 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 8, flexWrap: 'wrap' }}>
+                  {n.category_code && (
+                    <Tag color={CATEGORY_COLORS[n.category_code]} style={{ margin: 0 }}>{catName}</Tag>
+                  )}
+                  <span style={{ fontWeight: 600, fontSize: 14 }}>{n.name}</span>
+                  {(n as any).vehicle_name && (
+                    <Tag color="blue" style={{ margin: 0, marginLeft: 'auto' }}>{(n as any).vehicle_name}</Tag>
+                  )}
+                </div>
+                <Descriptions size="small" column={2} bordered>
+                  <Descriptions.Item label="BOM 코드">
+                    <span style={{ fontFamily: 'monospace', color: '#1677ff' }}>{formatBomCode(n.material_no)}</span>
+                  </Descriptions.Item>
+                  <Descriptions.Item label="공사 자재번호">
+                    <span style={{ fontFamily: 'monospace' }}>{n.corp_material_no ?? '—'}</span>
+                  </Descriptions.Item>
+                  <Descriptions.Item label="CPN">
+                    <span style={{ fontFamily: 'monospace' }}>{n.manufacturer_pn ?? '—'}</span>
+                  </Descriptions.Item>
+                  <Descriptions.Item label="도면번호">
+                    <span style={{ fontFamily: 'monospace' }}>{n.drawing_no ?? '—'}</span>
+                  </Descriptions.Item>
+                  <Descriptions.Item label="제작사">{n.manufacturer ?? '—'}</Descriptions.Item>
+                  <Descriptions.Item label="규격/사양">{n.specification ?? '—'}</Descriptions.Item>
+                  <Descriptions.Item label="수량">{n.quantity} {n.unit}</Descriptions.Item>
+                  <Descriptions.Item label="재질">{n.material ?? '—'}</Descriptions.Item>
+                  {n.notes && (
+                    <Descriptions.Item label="비고" span={2}>{n.notes}</Descriptions.Item>
+                  )}
+                </Descriptions>
+              </Card>
+            )
+          })}
+        </div>
+      )}
+    </Modal>
+  )
+}
 
 const DEPTH_COLORS = [
   { bg: '#1677ff', fg: '#fff' },  // 0 - 파랑
@@ -44,7 +110,7 @@ const COLUMNS = [
 type ColKey = (typeof COLUMNS)[number]['key']
 
 // ── 셀 렌더 ──────────────────────────────────────────────────────────────────
-function CellValue({ colKey, node }: { colKey: ColKey; node: BomNode }) {
+function CellValue({ colKey, node, onCompatClick }: { colKey: ColKey; node: BomNode; onCompatClick?: (code: string) => void }) {
   const { token: tk } = theme.useToken()
   if (colKey === 'compat_codes') {
     const codes = node.compat_codes ?? []
@@ -52,11 +118,16 @@ function CellValue({ colKey, node }: { colKey: ColKey; node: BomNode }) {
     return (
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: 2 }}>
         {codes.map(c => (
-          <span key={c} style={{
-            fontFamily: 'monospace', fontSize: 10, color: tk.colorSuccess,
-            background: tk.colorSuccessBg, border: `1px solid ${tk.colorSuccessBorder}`,
-            borderRadius: 3, padding: '0 4px', whiteSpace: 'nowrap',
-          }}>{formatBomCode(c)}</span>
+          <span
+            key={c}
+            onClick={() => onCompatClick?.(c)}
+            style={{
+              fontFamily: 'monospace', fontSize: 10, color: tk.colorSuccess,
+              background: tk.colorSuccessBg, border: `1px solid ${tk.colorSuccessBorder}`,
+              borderRadius: 3, padding: '0 4px', whiteSpace: 'nowrap',
+              cursor: 'pointer',
+            }}
+          >{formatBomCode(c)}</span>
         ))}
       </div>
     )
@@ -130,6 +201,7 @@ export default function BomPage() {
   const [expandedIds,  setExpandedIds] = useState<Set<number>>(new Set())
   const [loadingIds,   setLoadingIds]  = useState<Set<number>>(new Set())
   const [isExpandingAll, setIsExpandingAll] = useState(false)
+  const [compatModal,  setCompatModal] = useState<string | null>(null)
 
   // 자식 캐시: nodeId → BomNode[]
   // useRef로 관리해서 setState 루프 없이 트리 수정 가능
@@ -280,6 +352,8 @@ export default function BomPage() {
   const totalWidth = NAME_COL_WIDTH + COLUMNS.reduce((s, c) => s + c.width, 0)
 
   return (
+    <>
+    <CompatNodeModal materialNo={compatModal} onClose={() => setCompatModal(null)} />
     <div style={{ height: 'calc(100vh - 112px)', display: 'flex', flexDirection: 'column', gap: 8 }}>
 
       {/* 툴바 */}
@@ -458,7 +532,7 @@ export default function BomPage() {
                           overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
                           maxWidth: c.width, color: tk.colorText,
                         }}>
-                          <CellValue colKey={c.key} node={node} />
+                          <CellValue colKey={c.key} node={node} onCompatClick={setCompatModal} />
                         </td>
                       ))}
                     </tr>
@@ -471,5 +545,6 @@ export default function BomPage() {
       </div>
 
     </div>
+    </>
   )
 }
