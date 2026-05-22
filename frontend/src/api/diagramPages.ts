@@ -1,5 +1,7 @@
 import client from './client'
 
+const API_BASE = import.meta.env.VITE_API_URL ? `${import.meta.env.VITE_API_URL}/api` : '/api'
+
 export interface DiagramPage {
   id: number
   vehicle: string
@@ -25,7 +27,7 @@ export const diagramPagesApi = {
       .then((r) => r.data),
 
   imageUrl: (file_no: number, vehicle?: string) =>
-    `/api/diagram-pages/image/${file_no}${vehicle ? `?vehicle=${vehicle}` : ''}`,
+    `${API_BASE}/diagram-pages/image/${file_no}${vehicle ? `?vehicle=${vehicle}` : ''}`,
 
   hasPages: (
     drawing_nos: string[],
