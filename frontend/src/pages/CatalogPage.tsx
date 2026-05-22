@@ -92,7 +92,7 @@ function RequestModal({
           <AntSelect options={REQUEST_TYPE_LABELS} placeholder="유형 선택" />
         </Form.Item>
         <Form.Item name="requested_value" label="추가/수정할 부품명">
-          <Input placeholder="올바른 부품명을 입력하세요" />
+          <Input placeholder="올바른 부품명을 입력하세요 (예: 하부 암 조립체 / 상부 암 조립체)" />
         </Form.Item>
         <Form.Item name="requester_note" label="요청 내용">
           <TextArea rows={3} placeholder="수정이 필요한 이유나 추가 설명을 입력하세요" />
