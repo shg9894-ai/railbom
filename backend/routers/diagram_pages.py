@@ -11,11 +11,11 @@ router = APIRouter(prefix="/api/diagram-pages", tags=["diagram-pages"])
 # 클라우드 모드: Supabase Storage의 파일명 규칙
 SUPABASE_DIAGRAM_BUCKET = "diagrams"
 CLOUD_FILENAMES = {
-    "emu260":    lambda n: f"이음_명칭도감_{n:03d}p.jpg",
-    "emu320":    lambda n: f"청룡_명칭도감_{n:03d}p.jpg",
-    "KTX-산천2": lambda n: f"호남_명칭도감_{n:03d}p.jpg",
-    "KTX-산천4": lambda n: f"원강_명칭도감_{n:03d}p.jpg",
-    "KTX-산천1": lambda n: f"산천_명칭도감_{n:03d}p.jpg",
+    "emu260":    lambda n: f"emu260_p{n:03d}.jpg",
+    "emu320":    lambda n: f"emu320_p{n:03d}.jpg",
+    "KTX-산천2": lambda n: f"ktx720_p{n:03d}.jpg",
+    "KTX-산천4": lambda n: f"ktx730_p{n:03d}.jpg",
+    "KTX-산천1": lambda n: f"ktx750_p{n:03d}.jpg",
 }
 
 # 로컬 모드: 원본 파일 경로
