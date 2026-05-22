@@ -216,18 +216,42 @@ def list_pages(
         # file_no 기준으로 중복 제거 — 같은 페이지의 여러 assembly를 합침
         seen: dict = {}
         result = []
+        page_ids = []
         for r in rows:
             d = dict(r)
             fno = d["file_no"]
             if fno not in seen:
+                d["linked_bom"] = []
                 seen[fno] = d
                 result.append(d)
+                page_ids.append(d["id"])
             else:
-                # 기존 레코드에 assembly 이름 추가
                 existing = seen[fno]
                 asm = d.get("assembly")
                 if asm and asm not in (existing.get("assembly") or ""):
                     existing["assembly"] = f"{existing['assembly'] or ''} / {asm}".strip(" /")
+
+        # 연결된 BOM 노드 조회
+        if page_ids:
+            placeholders = ",".join("?" * len(page_ids))
+            bom_rows = conn.execute(
+                f"""SELECT bnd.diagram_page_id, bn.material_no, bn.name
+                    FROM bom_node_diagrams bnd
+                    JOIN bom_nodes bn ON bn.id = bnd.bom_node_id
+                    WHERE bnd.diagram_page_id IN ({placeholders})
+                    ORDER BY bnd.diagram_page_id, bn.name""",
+                page_ids,
+            ).fetchall()
+            # page_id → 대표 id 매핑
+            pid_map = {d["id"]: d for d in result}
+            for br in bom_rows:
+                page = pid_map.get(br["diagram_page_id"])
+                if page is not None:
+                    page["linked_bom"].append({
+                        "material_no": br["material_no"],
+                        "name": br["name"],
+                    })
+
         return result
     finally:
         conn.close()

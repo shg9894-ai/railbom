@@ -26,6 +26,7 @@ export const diagramPageRequestsApi = {
     request_type: string
     current_value?: string | null
     requested_value?: string | null
+    requested_drawing_no?: string | null
     requester_name?: string | null
     requester_note?: string | null
   }) => client.post('/diagram-page-requests', body).then((r) => r.data),

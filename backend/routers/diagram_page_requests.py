@@ -14,6 +14,7 @@ class DiagramPageRequestCreate(BaseModel):
     request_type: str   # 'assembly_add' | 'assembly_edit' | 'page_delete' | 'other'
     current_value: Optional[str] = None
     requested_value: Optional[str] = None
+    requested_drawing_no: Optional[str] = None
     requester_name: Optional[str] = None
     requester_note: Optional[str] = None
 
@@ -25,22 +26,29 @@ class ReviewBody(BaseModel):
 def _ensure_table(conn):
     conn.execute("""
         CREATE TABLE IF NOT EXISTS diagram_page_requests (
-            id              SERIAL PRIMARY KEY,
-            page_id         INTEGER,
-            vehicle         TEXT,
-            file_no         INTEGER,
-            assembly        TEXT,
-            request_type    TEXT,
-            current_value   TEXT,
-            requested_value TEXT,
-            requester_name  TEXT,
-            requester_note  TEXT,
-            status          TEXT DEFAULT 'pending',
-            created_at      TIMESTAMPTZ DEFAULT NOW(),
-            reviewed_at     TIMESTAMPTZ,
-            reviewer_note   TEXT
+            id                   SERIAL PRIMARY KEY,
+            page_id              INTEGER,
+            vehicle              TEXT,
+            file_no              INTEGER,
+            assembly             TEXT,
+            request_type         TEXT,
+            current_value        TEXT,
+            requested_value      TEXT,
+            requested_drawing_no TEXT,
+            requester_name       TEXT,
+            requester_note       TEXT,
+            status               TEXT DEFAULT 'pending',
+            created_at           TIMESTAMPTZ DEFAULT NOW(),
+            reviewed_at          TIMESTAMPTZ,
+            reviewer_note        TEXT
         )
     """)
+    # 기존 테이블에 컬럼이 없으면 추가
+    try:
+        conn.execute("ALTER TABLE diagram_page_requests ADD COLUMN IF NOT EXISTS requested_drawing_no TEXT")
+        conn.commit()
+    except Exception:
+        pass
     try:
         conn.commit()
     except Exception:
@@ -59,11 +67,11 @@ def create_request(body: DiagramPageRequestCreate):
         cur = conn.execute(
             """INSERT INTO diagram_page_requests
                (page_id, vehicle, file_no, assembly, request_type,
-                current_value, requested_value, requester_name, requester_note)
-               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+                current_value, requested_value, requested_drawing_no, requester_name, requester_note)
+               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
             (body.page_id, body.vehicle, body.file_no, body.assembly,
              body.request_type, body.current_value, body.requested_value,
-             body.requester_name, body.requester_note),
+             body.requested_drawing_no, body.requester_name, body.requester_note),
         )
         conn.commit()
         return {"id": cur.lastrowid, "status": "pending"}
@@ -110,6 +118,13 @@ def approve_request(rid: int, body: ReviewBody = ReviewBody()):
             conn.execute(
                 "UPDATE diagram_pages SET assembly = ? WHERE id = ?",
                 (new_val, req["page_id"]),
+            )
+        # 도면번호 수정
+        new_drawing = req.get("requested_drawing_no")
+        if new_drawing:
+            conn.execute(
+                "UPDATE diagram_pages SET drawing_no = ? WHERE id = ?",
+                (new_drawing, req["page_id"]),
             )
 
         conn.execute(

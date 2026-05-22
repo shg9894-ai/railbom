@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { Select, Card, Spin, Empty, Image, theme, Typography, Button, Modal, Form, Input, Select as AntSelect, message } from 'antd'
-import { EditOutlined } from '@ant-design/icons'
+import { Select, Card, Spin, Empty, Image, theme, Typography, Button, Modal, Form, Input, Select as AntSelect, message, Tooltip, Tag } from 'antd'
+import { EditOutlined, LinkOutlined, DisconnectOutlined } from '@ant-design/icons'
 import { useQuery, useMutation } from '@tanstack/react-query'
 import { vehicleApi } from '../api/vehicles'
 import { diagramPagesApi } from '../api/diagramPages'
@@ -43,6 +43,7 @@ function RequestModal({
     mutationFn: (values: {
       request_type: string
       requested_value?: string
+      requested_drawing_no?: string
       requester_note?: string
     }) =>
       diagramPageRequestsApi.create({
@@ -53,6 +54,7 @@ function RequestModal({
         request_type: values.request_type,
         current_value: page!.assembly ?? null,
         requested_value: values.requested_value ?? null,
+        requested_drawing_no: values.requested_drawing_no ?? null,
         requester_name: userId || null,
         requester_note: values.requester_note ?? null,
       }),
@@ -80,11 +82,10 @@ function RequestModal({
       width={480}
     >
       {page && (
-        <div style={{ marginBottom: 12, padding: '8px 12px', borderRadius: 6, border: '1px solid rgba(128,128,128,0.2)', background: 'rgba(128,128,128,0.08)' }}>
-          <Text type="secondary" style={{ fontSize: 12 }}>현재 부품명: </Text>
-          <Text strong>{page.assembly || '(없음)'}</Text>
-          <Text type="secondary" style={{ fontSize: 12, marginLeft: 12 }}>페이지: </Text>
-          <Text>{page.file_no}p</Text>
+        <div style={{ marginBottom: 12, padding: '8px 12px', borderRadius: 6, border: '1px solid rgba(128,128,128,0.2)', background: 'rgba(128,128,128,0.08)', fontSize: 12, lineHeight: 1.8 }}>
+          <div><Text type="secondary">현재 부품명: </Text><Text strong>{page.assembly || '(없음)'}</Text></div>
+          <div><Text type="secondary">현재 도면번호: </Text><Text strong>{page.drawing_no || '(없음)'}</Text></div>
+          <div><Text type="secondary">페이지: </Text><Text>{page.file_no}p</Text></div>
         </div>
       )}
       <Form form={form} layout="vertical">
@@ -93,6 +94,9 @@ function RequestModal({
         </Form.Item>
         <Form.Item name="requested_value" label="추가/수정할 부품명">
           <Input placeholder="올바른 부품명을 입력하세요 (예: 하부 암 조립체 / 상부 암 조립체)" />
+        </Form.Item>
+        <Form.Item name="requested_drawing_no" label="추가/수정할 도면번호">
+          <Input placeholder="올바른 도면번호를 입력하세요 (예: RET10001FK0)" />
         </Form.Item>
         <Form.Item name="requester_note" label="요청 내용">
           <TextArea rows={3} placeholder="수정이 필요한 이유나 추가 설명을 입력하세요" />
@@ -186,6 +190,23 @@ export default function CatalogPage() {
                     <div style={{ fontSize: 11, fontWeight: 600, color: tk.colorText, lineHeight: 1.3 }}>
                       {p.assembly || p.chapter || `페이지 ${p.file_no}`}
                     </div>
+                    {p.drawing_no && (
+                      <div style={{ fontSize: 10, color: tk.colorTextSecondary, marginTop: 1, fontFamily: 'monospace' }}>
+                        {p.drawing_no}
+                      </div>
+                    )}
+                    {/* BOM 연결 표시 */}
+                    {p.linked_bom?.length > 0 ? (
+                      <Tooltip title={p.linked_bom.map(b => `${b.material_no ?? ''} ${b.name}`).join('\n')} overlayStyle={{ whiteSpace: 'pre-line' }}>
+                        <Tag icon={<LinkOutlined />} color="success" style={{ fontSize: 9, marginTop: 3, cursor: 'default', padding: '0 4px', lineHeight: '16px', height: 16 }}>
+                          BOM 연결 {p.linked_bom.length}건
+                        </Tag>
+                      </Tooltip>
+                    ) : (
+                      <Tag icon={<DisconnectOutlined />} color="default" style={{ fontSize: 9, marginTop: 3, cursor: 'default', padding: '0 4px', lineHeight: '16px', height: 16 }}>
+                        BOM 미연결
+                      </Tag>
+                    )}
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 4 }}>
                       <span style={{ fontSize: 10, color: tk.colorTextSecondary }}>
                         {p.chapter && p.assembly ? p.chapter : ''} · {p.file_no}p

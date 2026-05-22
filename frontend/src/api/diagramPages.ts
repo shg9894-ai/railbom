@@ -16,6 +16,7 @@ export interface DiagramPage {
   parent_part_no: number | null
   drawing_no: string | null
   parts: { part_no: string; part_name: string }[]
+  linked_bom: { material_no: string | null; name: string }[]
 }
 
 export const diagramPagesApi = {
