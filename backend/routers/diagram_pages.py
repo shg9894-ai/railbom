@@ -210,9 +210,24 @@ def list_pages(
             params.append(page_type)
         where = " AND ".join(conditions)
         rows = conn.execute(
-            f"SELECT * FROM diagram_pages WHERE {where} ORDER BY file_no",
+            f"SELECT * FROM diagram_pages WHERE {where} ORDER BY file_no, id",
             params
         ).fetchall()
-        return [dict(r) for r in rows]
+        # file_no 기준으로 중복 제거 — 같은 페이지의 여러 assembly를 합침
+        seen: dict = {}
+        result = []
+        for r in rows:
+            d = dict(r)
+            fno = d["file_no"]
+            if fno not in seen:
+                seen[fno] = d
+                result.append(d)
+            else:
+                # 기존 레코드에 assembly 이름 추가
+                existing = seen[fno]
+                asm = d.get("assembly")
+                if asm and asm not in (existing.get("assembly") or ""):
+                    existing["assembly"] = f"{existing['assembly'] or ''} / {asm}".strip(" /")
+        return result
     finally:
         conn.close()
