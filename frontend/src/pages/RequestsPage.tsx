@@ -227,8 +227,7 @@ function RequestTable({ statusFilter }: { statusFilter?: string }) {
 }
 
 const DIAGRAM_REQ_TYPE_LABELS: Record<string, string> = {
-  assembly_add:  '부품명 추가',
-  assembly_edit: '부품명 수정',
+  assembly_edit: '데이터 수정',
   page_delete:   '페이지 삭제 요청',
   other:         '기타',
 }

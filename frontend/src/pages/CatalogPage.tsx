@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Select, Card, Spin, Empty, Image, theme, Typography, Button, Modal, Form, Input, Select as AntSelect, message, Tooltip, Tag } from 'antd'
 import { EditOutlined, LinkOutlined, DisconnectOutlined } from '@ant-design/icons'
 import { useQuery, useMutation } from '@tanstack/react-query'
@@ -20,7 +20,7 @@ const VEHICLE_CODE_MAP: Record<string, string> = {
 }
 
 const REQUEST_TYPE_LABELS = [
-  { value: 'assembly_edit', label: '부품명 수정' },
+  { value: 'assembly_edit', label: '데이터 수정' },
   { value: 'page_delete',   label: '페이지 삭제 요청' },
   { value: 'other',         label: '기타' },
 ]
@@ -37,6 +37,15 @@ function RequestModal({
   onClose: () => void
 }) {
   const [form] = Form.useForm()
+
+  useEffect(() => {
+    if (page) {
+      form.setFieldsValue({
+        requested_value: page.assembly ?? '',
+        requested_drawing_no: page.drawing_no ?? '',
+      })
+    }
+  }, [page, form])
 
   const mutation = useMutation({
     mutationFn: (values: {
@@ -87,15 +96,18 @@ function RequestModal({
           <div><Text type="secondary">페이지: </Text><Text>{page.file_no}p</Text></div>
         </div>
       )}
-      <Form form={form} layout="vertical">
+      <Form form={form} layout="vertical" initialValues={{
+        requested_value: page?.assembly ?? '',
+        requested_drawing_no: page?.drawing_no ?? '',
+      }}>
         <Form.Item name="request_type" label="요청 유형" rules={[{ required: true, message: '요청 유형을 선택해주세요' }]}>
           <AntSelect options={REQUEST_TYPE_LABELS} placeholder="유형 선택" />
         </Form.Item>
-        <Form.Item name="requested_value" label="추가/수정할 부품명">
-          <Input placeholder="올바른 부품명을 입력하세요 (예: 하부 암 조립체 / 상부 암 조립체)" />
+        <Form.Item name="requested_value" label="부품명 (2개일 경우: 하부 암 조립체 / 상부 암 조립체)">
+          <Input />
         </Form.Item>
-        <Form.Item name="requested_drawing_no" label="추가/수정할 도면번호">
-          <Input placeholder="올바른 도면번호를 입력하세요 (예: RET10001FK0)" />
+        <Form.Item name="requested_drawing_no" label="도면번호">
+          <Input />
         </Form.Item>
         <Form.Item name="requester_note" label="요청 내용">
           <TextArea rows={3} placeholder="수정이 필요한 이유나 추가 설명을 입력하세요" />
