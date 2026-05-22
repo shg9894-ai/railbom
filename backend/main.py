@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from loguru import logger
 import sys
 
-from config.settings import CORS_ORIGINS, LOG_LEVEL
+from config.settings import CORS_ORIGINS, LOG_LEVEL, DATABASE_URL
 from database.connection import initialize_db
 from routers import vehicles, formations, bom, compatibility, excel, photos, diagram_pages, change_requests, auth, failure_cases, repair_kits
 
@@ -11,8 +11,10 @@ from routers import vehicles, formations, bom, compatibility, excel, photos, dia
 logger.remove()
 logger.add(sys.stderr, level=LOG_LEVEL, colorize=True,
            format="<green>{time:HH:mm:ss}</green> | <level>{level}</level> | {message}")
-logger.add("data/logs/bom.log", rotation="10 MB", retention="30 days",
-           level=LOG_LEVEL, encoding="utf-8")
+import os as _os
+if not DATABASE_URL:
+    logger.add("data/logs/bom.log", rotation="10 MB", retention="30 days",
+               level=LOG_LEVEL, encoding="utf-8")
 
 # ── DB 초기화 ──────────────────────────────────────────────────────────────────
 logger.info("DB 초기화 시작")
@@ -26,10 +28,11 @@ app = FastAPI(
     version="1.0.0",
 )
 
+_allow_credentials = "*" not in CORS_ORIGINS
 app.add_middleware(
     CORSMiddleware,
     allow_origins=CORS_ORIGINS,
-    allow_credentials=True,
+    allow_credentials=_allow_credentials,
     allow_methods=["*"],
     allow_headers=["*"],
 )
