@@ -355,19 +355,24 @@ export default function RequestsPage() {
             children: <DiagramRequestTable statusFilter="pending" />,
           },
           {
+            key: 'diagram-approved',
+            label: '명칭도감 승인됨',
+            children: <DiagramRequestTable statusFilter="approved" />,
+          },
+          {
+            key: 'diagram-rejected',
+            label: '명칭도감 반려됨',
+            children: <DiagramRequestTable statusFilter="rejected" />,
+          },
+          {
             key: 'approved',
-            label: '승인됨',
+            label: 'BOM 승인됨',
             children: <RequestTable statusFilter="approved" />,
           },
           {
             key: 'rejected',
-            label: '반려됨',
+            label: 'BOM 반려됨',
             children: <RequestTable statusFilter="rejected" />,
-          },
-          {
-            key: 'all',
-            label: '전체',
-            children: <RequestTable />,
           },
         ]}
       />

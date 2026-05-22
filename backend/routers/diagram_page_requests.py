@@ -57,7 +57,7 @@ def _ensure_table(conn):
 
 @router.post("", status_code=201)
 def create_request(body: DiagramPageRequestCreate):
-    VALID_TYPES = {'assembly_add', 'assembly_edit', 'page_delete', 'other'}
+    VALID_TYPES = {'assembly_edit', 'page_delete', 'other'}
     if body.request_type not in VALID_TYPES:
         raise HTTPException(400, f"Invalid request_type: {body.request_type}")
 
@@ -113,8 +113,8 @@ def approve_request(rid: int, body: ReviewBody = ReviewBody()):
         rtype = req["request_type"]
         new_val = req["requested_value"]
 
-        # 부품명 추가/수정: diagram_pages.assembly 실제 반영
-        if rtype in ("assembly_add", "assembly_edit") and new_val:
+        # 부품명 수정: diagram_pages.assembly 실제 반영
+        if rtype == "assembly_edit" and new_val:
             conn.execute(
                 "UPDATE diagram_pages SET assembly = ? WHERE id = ?",
                 (new_val, req["page_id"]),

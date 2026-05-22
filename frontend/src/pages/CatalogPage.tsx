@@ -20,7 +20,6 @@ const VEHICLE_CODE_MAP: Record<string, string> = {
 }
 
 const REQUEST_TYPE_LABELS = [
-  { value: 'assembly_add',  label: '부품명 추가' },
   { value: 'assembly_edit', label: '부품명 수정' },
   { value: 'page_delete',   label: '페이지 삭제 요청' },
   { value: 'other',         label: '기타' },
@@ -120,7 +119,7 @@ export default function CatalogPage() {
     queryKey: ['catalog-pages', vehicleCode],
     queryFn: () => diagramPagesApi.allPages(vehicleCode!),
     enabled: !!vehicleCode,
-    staleTime: 300_000,
+    staleTime: 0,
   })
 
   const vehicleOptions = vehicles
