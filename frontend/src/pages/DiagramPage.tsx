@@ -116,7 +116,7 @@ export default function DiagramPage() {
             style={{ height: '100%' }}
             styles={{ body: { padding: '24px 16px' } }}
           >
-            {selectedVehicle && ['EMU-320', 'EMU-260', 'KTX-산천1', 'KTX-산천2', 'KTX-산천3', 'KTX-산천4'].includes(selectedVehicle.code) ? (
+            {selectedVehicle && ['EMU-320', 'EMU-260', 'KTX-산천1', 'KTX-산천2', 'KTX-산천3', 'KTX-산천4', 'ITX-마음'].includes(selectedVehicle.code) ? (
               <TrainPhotoView
                 onSelectCategory={handleSelectCategory}
                 selectedCategory={selectedCategory}
@@ -126,6 +126,7 @@ export default function DiagramPage() {
                   selectedVehicle.code === 'KTX-산천2' ? '/train_srt_nobg.png'     :
                   selectedVehicle.code === 'KTX-산천4' ? '/train_wongang_nobg.png' :
                   selectedVehicle.code === 'KTX-산천1' ? '/train_wongang_nobg.png' :
+                  selectedVehicle.code === 'ITX-마음'  ? '/train_maum_nobg.png'    :
                   '/train_blue_nobg.png'
                 }
                 flipImage={selectedVehicle.code === 'EMU-320'}
