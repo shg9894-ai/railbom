@@ -16,16 +16,19 @@ CLOUD_FILENAMES = {
     "KTX-산천2": lambda n: f"ktx720_p{n:03d}.jpg",
     "KTX-산천4": lambda n: f"ktx730_p{n:03d}.jpg",
     "KTX-산천1": lambda n: f"ktx750_p{n:03d}.jpg",
+    "ITX-마음":  lambda n: f"itxmaum_p{n:03d}.jpg",
 }
 
 # 로컬 모드: 원본 파일 경로
 _LOCAL_BASE = Path(r"C:\Users\shg98\Desktop\철도공사\2차 추가 백데이터")
+_MAUM_BASE = Path(r"C:\Users\shg98\Desktop\철도공사\3차 추가 백데이터(마음, KTX 부품도해집)")
 IMAGE_DIRS = {
     "emu260":    _LOCAL_BASE / "ktx 이음 명칭도감_1",
     "emu320":    _LOCAL_BASE / "KTX-청룡_명칭도감",
     "KTX-산천2": _LOCAL_BASE / "별첨1_호남) 명칭도감(안)",
     "KTX-산천4": _LOCAL_BASE / "KTX-산천(원강선) 명칭도감",
     "KTX-산천1": _LOCAL_BASE / "KTX-Sancheon_IllustratedPartsCatalog(100량 명칭도감) 산천",
+    "ITX-마음":  _MAUM_BASE / "ITX-마음_부품명칭도감",
 }
 IMAGE_FILENAMES = {
     "emu260":    lambda n: f"ktx 이음 명칭도감_{n}.jpeg",
@@ -33,6 +36,7 @@ IMAGE_FILENAMES = {
     "KTX-산천2": lambda n: f"별첨1_호남) 명칭도감(안)_{n}.jpg",
     "KTX-산천4": lambda n: f"KTX-산천(원강선) 명칭도감_{n}.jpg",
     "KTX-산천1": lambda n: f"KTX-Sancheon_IllustratedPartsCatalog(100량 명칭도감) 산천_{n}.jpg",
+    "ITX-마음":  lambda n: f"(2023.10.13 승인) ITX-마음_부품명칭도감_{n}.jpg",
 }
 
 IMAGE_DIR = IMAGE_DIRS["emu260"]

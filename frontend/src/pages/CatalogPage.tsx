@@ -17,6 +17,7 @@ const VEHICLE_CODE_MAP: Record<string, string> = {
   'KTX-산천1':  'KTX-산천1',
   'KTX-산천2':  'KTX-산천2',
   'KTX-산천4':  'KTX-산천4',
+  'ITX-마음':   'ITX-마음',
 }
 
 const REQUEST_TYPE_LABELS = [
