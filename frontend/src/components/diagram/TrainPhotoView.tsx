@@ -37,14 +37,36 @@ const DEFAULT_HOTSPOTS: HotspotDef[] = [
   { code: '2', name: '연결',        bx: 858, by: 203, bw: 108 },
 ]
 
+const MAUM_ANCHORS: AnchorMap = {
+  '1': { x: 618, y: 79  }, '2': { x: 161, y: 359 },
+  '3': { x: 723, y: 312 }, '4': { x: 268, y: 145 },
+  '5': { x: 616, y: 334 }, '6': { x: 530, y: 353 },
+  '7': { x: 828, y: 291 }, '8': { x: 728, y: 193 },
+}
+const MAUM_HOTSPOTS: HotspotDef[] = [
+  { code: '4', name: '운전실·제어', bx: 176, by: 51,  bw: 108 },
+  { code: '1', name: '전력추진',    bx: 632, by: 28,  bw: 108 },
+  { code: '8', name: '차체·설비',   bx: 760, by: 51,  bw: 108 },
+  { code: '2', name: '연결',        bx: 73,  by: 124, bw: 108 },
+  { code: '6', name: '주행',        bx: 486, by: 455, bw: 108 },
+  { code: '5', name: '제동',        bx: 638, by: 447, bw: 108 },
+  { code: '3', name: '보조전원',    bx: 788, by: 415, bw: 108 },
+  { code: '7', name: '차상신호',    bx: 857, by: 346, bw: 108 },
+]
+
 function lsKey(src: string) { return `trainphoto_cfg_${src}` }
+
+function defaultConfig(src: string) {
+  if (src.includes('maum')) return { hotspots: MAUM_HOTSPOTS, anchors: MAUM_ANCHORS }
+  return { hotspots: DEFAULT_HOTSPOTS, anchors: DEFAULT_ANCHORS }
+}
 
 function loadConfig(src: string): { hotspots: HotspotDef[]; anchors: AnchorMap } {
   try {
     const raw = localStorage.getItem(lsKey(src))
     if (raw) return JSON.parse(raw)
   } catch {}
-  return { hotspots: DEFAULT_HOTSPOTS, anchors: DEFAULT_ANCHORS }
+  return defaultConfig(src)
 }
 
 function saveConfig(src: string, hotspots: HotspotDef[], anchors: AnchorMap) {
