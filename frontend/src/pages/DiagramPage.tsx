@@ -127,6 +127,7 @@ export default function DiagramPage() {
                   selectedVehicle.code === 'KTX-산천4' ? '/train_wongang_nobg.png' :
                   selectedVehicle.code === 'KTX-산천1' ? '/train_wongang_nobg.png' :
                   selectedVehicle.code === 'ITX-마음'  ? '/train_maum_nobg.png'    :
+                  selectedVehicle.code === 'KTX-1'    ? '/train_ktx1_nobg.png'   :
                   '/train_blue_nobg.png'
                 }
                 flipImage={selectedVehicle.code === 'EMU-320'}
