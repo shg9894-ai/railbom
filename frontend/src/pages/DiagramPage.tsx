@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Select, Card, Empty, Typography, Image, Tabs } from 'antd'
+import { Select, Card, Empty, Typography, Image } from 'antd'
 import { useQuery } from '@tanstack/react-query'
 import { vehicleApi } from '../api/vehicles'
 import { diagramPagesApi } from '../api/diagramPages'
@@ -32,7 +32,6 @@ export default function DiagramPage() {
   const [selectedVehicleId, setSelectedVehicleId] = useState<number | null>(null)
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
   const [jumpSearch, setJumpSearch] = useState<string | undefined>()
-  const [layoutTab, setLayoutTab] = useState<'layout' | 'overview'>('layout')
 
   const { data: vehicles = [] } = useQuery({
     queryKey: ['vehicles'],
@@ -144,60 +143,28 @@ export default function DiagramPage() {
               {selectedVehicle?.name} ({selectedVehicle?.code}) · {carCount}량 편성
             </div>
 
-            {/* layout / overview 이미지 */}
+            {/* 차량 일반 (layout + overview 통합) */}
             {(layoutPages.length > 0 || overviewPages.length > 0) && (
               <div style={{ marginTop: 20 }}>
-                <Tabs
-                  size="small"
-                  activeKey={layoutTab}
-                  onChange={(k) => setLayoutTab(k as 'layout' | 'overview')}
-                  items={[
-                    layoutPages.length > 0 ? {
-                      key: 'layout',
-                      label: `기기 배치도 (${layoutPages.length})`,
-                      children: (
-                        <Image.PreviewGroup>
-                          <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-                            {layoutPages.map(p => (
-                              <div key={p.id} style={{ textAlign: 'center' }}>
-                                <Image
-                                  src={diagramPagesApi.imageUrl(p.file_no, vehicleCode ?? undefined)}
-                                  style={{ height: 180, borderRadius: 6, border: '1px solid #e0e0e0', cursor: 'pointer' }}
-                                  preview={{ mask: '확대' }}
-                                />
-                                <div style={{ fontSize: 11, marginTop: 4, maxWidth: 160 }}>
-                                  {p.assembly}
-                                </div>
-                              </div>
-                            ))}
-                          </div>
-                        </Image.PreviewGroup>
-                      ),
-                    } : null,
-                    overviewPages.length > 0 ? {
-                      key: 'overview',
-                      label: `계통 개요도 (${overviewPages.length})`,
-                      children: (
-                        <Image.PreviewGroup>
-                          <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-                            {overviewPages.map(p => (
-                              <div key={p.id} style={{ textAlign: 'center' }}>
-                                <Image
-                                  src={diagramPagesApi.imageUrl(p.file_no, vehicleCode ?? undefined)}
-                                  style={{ height: 180, borderRadius: 6, border: '1px solid #e0e0e0', cursor: 'pointer' }}
-                                  preview={{ mask: '확대' }}
-                                />
-                                <div style={{ fontSize: 11, marginTop: 4, maxWidth: 160 }}>
-                                  {p.assembly}
-                                </div>
-                              </div>
-                            ))}
-                          </div>
-                        </Image.PreviewGroup>
-                      ),
-                    } : null,
-                  ].filter(Boolean) as any}
-                />
+                <div style={{ fontSize: 13, fontWeight: 600, marginBottom: 10, color: '#666' }}>
+                  차량 일반 ({layoutPages.length + overviewPages.length})
+                </div>
+                <Image.PreviewGroup>
+                  <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+                    {[...layoutPages, ...overviewPages].map(p => (
+                      <div key={p.id} style={{ textAlign: 'center' }}>
+                        <Image
+                          src={diagramPagesApi.imageUrl(p.file_no, vehicleCode ?? undefined)}
+                          style={{ height: 180, borderRadius: 6, border: '1px solid #e0e0e0', cursor: 'pointer' }}
+                          preview={{ mask: '확대' }}
+                        />
+                        <div style={{ fontSize: 11, marginTop: 4, maxWidth: 160 }}>
+                          {p.assembly}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </Image.PreviewGroup>
               </div>
             )}
           </Card>
