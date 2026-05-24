@@ -131,7 +131,7 @@ def has_pages(body: HasPagesRequest, vehicle: Optional[str] = Query(None)):
                     f"SELECT DISTINCT drawing_no FROM diagram_pages WHERE drawing_no IN ({placeholders})",
                     all_candidates
                 ).fetchall()
-            found = {r[0] for r in rows}
+            found = {r["drawing_no"] for r in rows}
             result_dnos = [dno for dno, base in bases.items() if base in found]
 
             # 1b) drawing_no가 corp_material_no로 연결된 경우 (bom_node_diagrams 경유)
@@ -153,7 +153,7 @@ def has_pages(body: HasPagesRequest, vehicle: Optional[str] = Query(None)):
                         [vehicle] + not_found + not_found + not_found
                     ).fetchall()
                     for r in rows_bnd:
-                        for val in [r[0], r[1], r[2]]:
+                        for val in [r["corp_material_no"], r["drawing_no"], r["manufacturer_pn"]]:
                             if val and val in not_found and val not in result_dnos:
                                 result_dnos.append(val)
 
@@ -164,7 +164,7 @@ def has_pages(body: HasPagesRequest, vehicle: Optional[str] = Query(None)):
                 f"SELECT DISTINCT assembly FROM diagram_pages WHERE assembly IN ({placeholders2}) AND vehicle = ?",
                 body.node_names + [vehicle]
             ).fetchall()
-            result_names = [r[0] for r in rows2]
+            result_names = [r["assembly"] for r in rows2]
 
             # 2b) bom_node_diagrams 통해 name 매칭
             if not result_names:
@@ -177,7 +177,7 @@ def has_pages(body: HasPagesRequest, vehicle: Optional[str] = Query(None)):
                         AND bn.name IN ({placeholders2})""",
                     [vehicle] + body.node_names
                 ).fetchall()
-                result_names = [r[0] for r in rows3]
+                result_names = [r["name"] for r in rows3]
 
         return {"matched_drawing_nos": result_dnos, "matched_node_names": result_names}
     finally:
