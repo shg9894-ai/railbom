@@ -37,6 +37,23 @@ const DEFAULT_HOTSPOTS: HotspotDef[] = [
   { code: '2', name: '연결',        bx: 858, by: 203, bw: 108 },
 ]
 
+const KTX1_ANCHORS: AnchorMap = {
+  '1': { x: 718, y: 65  }, '2': { x: 391, y: 331 },
+  '3': { x: 867, y: 239 }, '4': { x: 515, y: 180 },
+  '5': { x: 750, y: 316 }, '6': { x: 697, y: 339 },
+  '7': { x: 787, y: 203 }, '8': { x: 908, y: 202 },
+}
+const KTX1_HOTSPOTS: HotspotDef[] = [
+  { code: '4', name: '운전실·제어', bx: 380, by: 109, bw: 108 },
+  { code: '1', name: '전력추진',    bx: 635, by: 24,  bw: 108 },
+  { code: '7', name: '차상신호',    bx: 800, by: 33,  bw: 108 },
+  { code: '8', name: '차체·설비',   bx: 950, by: 70,  bw: 108 },
+  { code: '2', name: '연결',        bx: 276, by: 231, bw: 108 },
+  { code: '3', name: '보조전원',    bx: 887, by: 353, bw: 108 },
+  { code: '5', name: '제동',        bx: 783, by: 400, bw: 108 },
+  { code: '6', name: '주행',        bx: 661, by: 426, bw: 108 },
+]
+
 const MAUM_ANCHORS: AnchorMap = {
   '1': { x: 618, y: 79  }, '2': { x: 161, y: 359 },
   '3': { x: 723, y: 312 }, '4': { x: 268, y: 145 },
@@ -58,6 +75,7 @@ function lsKey(src: string) { return `trainphoto_cfg_${src}` }
 
 function defaultConfig(src: string) {
   if (src.includes('maum')) return { hotspots: MAUM_HOTSPOTS, anchors: MAUM_ANCHORS }
+  if (src.includes('ktx1')) return { hotspots: KTX1_HOTSPOTS, anchors: KTX1_ANCHORS }
   return { hotspots: DEFAULT_HOTSPOTS, anchors: DEFAULT_ANCHORS }
 }
 
