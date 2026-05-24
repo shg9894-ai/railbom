@@ -16,7 +16,9 @@ CLOUD_FILENAMES = {
     "KTX-산천2": lambda n: f"ktx720_p{n:03d}.jpg",
     "KTX-산천4": lambda n: f"ktx730_p{n:03d}.jpg",
     "KTX-산천1": lambda n: f"ktx750_p{n:03d}.jpg",
+    "KTX-산천3": lambda n: f"ktx760_p{n:03d}.jpg",
     "ITX-마음":  lambda n: f"itxmaum_p{n:03d}.jpg",
+    "KTX-1":     lambda n: f"ktx1_p{n:03d}.jpg",
 }
 
 # 로컬 모드: 원본 파일 경로
@@ -114,7 +116,7 @@ def has_pages(body: HasPagesRequest, vehicle: Optional[str] = Query(None)):
         result_dnos: List[str] = []
         result_names: List[str] = []
 
-        # 1) drawing_no 매칭
+        # 1) drawing_no → diagram_pages.drawing_no 직접 매칭
         if body.drawing_nos:
             bases = {dno: dno.split("-")[0] if "-" in dno else dno for dno in body.drawing_nos}
             all_candidates = list(set(bases.values()))
@@ -132,6 +134,29 @@ def has_pages(body: HasPagesRequest, vehicle: Optional[str] = Query(None)):
             found = {r[0] for r in rows}
             result_dnos = [dno for dno, base in bases.items() if base in found]
 
+            # 1b) drawing_no가 corp_material_no로 연결된 경우 (bom_node_diagrams 경유)
+            # drawing_no 컬럼이 없는 차종(산천류 등)을 위해 bom_nodes.corp_material_no 기준 추가 체크
+            if vehicle:
+                not_found = [dno for dno in body.drawing_nos if dno not in result_dnos]
+                if not_found:
+                    # drawing_no 값을 corp_material_no로 간주해 bom_node_diagrams 조회
+                    phs = ",".join("?" * len(not_found))
+                    rows_bnd = conn.execute(
+                        f"""SELECT DISTINCT bn.corp_material_no, bn.drawing_no, bn.manufacturer_pn
+                            FROM bom_node_diagrams bnd
+                            JOIN diagram_pages dp ON dp.id = bnd.diagram_page_id
+                            JOIN bom_nodes bn ON bn.id = bnd.bom_node_id
+                            WHERE dp.vehicle = ?
+                            AND (bn.corp_material_no IN ({phs})
+                              OR bn.drawing_no IN ({phs})
+                              OR bn.manufacturer_pn IN ({phs}))""",
+                        [vehicle] + not_found + not_found + not_found
+                    ).fetchall()
+                    for r in rows_bnd:
+                        for val in [r[0], r[1], r[2]]:
+                            if val and val in not_found and val not in result_dnos:
+                                result_dnos.append(val)
+
         # 2) node_name → assembly 매칭 (drawing_no가 없는 차종용)
         if body.node_names and vehicle:
             placeholders2 = ",".join("?" * len(body.node_names))
@@ -140,6 +165,19 @@ def has_pages(body: HasPagesRequest, vehicle: Optional[str] = Query(None)):
                 body.node_names + [vehicle]
             ).fetchall()
             result_names = [r[0] for r in rows2]
+
+            # 2b) bom_node_diagrams 통해 name 매칭
+            if not result_names:
+                rows3 = conn.execute(
+                    f"""SELECT DISTINCT bn.name
+                        FROM bom_node_diagrams bnd
+                        JOIN diagram_pages dp ON dp.id = bnd.diagram_page_id
+                        JOIN bom_nodes bn ON bn.id = bnd.bom_node_id
+                        WHERE dp.vehicle = ?
+                        AND bn.name IN ({placeholders2})""",
+                    [vehicle] + body.node_names
+                ).fetchall()
+                result_names = [r[0] for r in rows3]
 
         return {"matched_drawing_nos": result_dnos, "matched_node_names": result_names}
     finally:

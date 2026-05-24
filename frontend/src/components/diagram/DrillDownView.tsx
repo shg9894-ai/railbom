@@ -52,7 +52,10 @@ const VEHICLE_DIAG_FOLDER: Record<number, string> = {
   2: 'emu260',   // KTX-이음
   3: 'ktx750',   // KTX-원강
   4: 'ktx730',   // KTX-호남
+  5: 'KTX-1',   // KTX-1세대
   6: 'ktx720',   // KTX-산천1
+  7: 'KTX-산천3', // KTX-SRT
+  8: 'ITX-마음',  // ITX-마음
 }
 
 

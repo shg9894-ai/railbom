@@ -120,5 +120,8 @@ export const VEHICLE_DB_CODE: Record<number, string> = {
   2: 'emu260',
   3: 'KTX-산천4',
   4: 'KTX-산천2',
+  5: 'KTX-1',
   6: 'KTX-산천1',
+  7: 'KTX-산천3',
+  8: 'ITX-마음',
 }
