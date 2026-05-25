@@ -7,6 +7,19 @@ from database.repositories import bom_repo, node_materials_repo
 router = APIRouter(prefix="/api/bom", tags=["bom"])
 
 
+@router.get("/counts")
+def get_bom_counts():
+    from database.connection import get_connection
+    conn = get_connection()
+    try:
+        rows = conn.execute(
+            "SELECT vehicle_type_id, COUNT(*) as cnt FROM bom_nodes GROUP BY vehicle_type_id"
+        ).fetchall()
+        return {r["vehicle_type_id"]: r["cnt"] for r in rows}
+    finally:
+        conn.close()
+
+
 @router.get("/tree/{vehicle_type_id}")
 def get_tree(vehicle_type_id: int, category: Optional[str] = Query(None)):
     return bom_repo.get_tree(vehicle_type_id, category)
