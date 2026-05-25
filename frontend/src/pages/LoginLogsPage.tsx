@@ -10,7 +10,7 @@ interface LoginLog {
   user_id: string
   role: string
   ip: string
-  created_at: string
+  logged_in_at: string
 }
 
 export default function LoginLogsPage() {
@@ -23,8 +23,8 @@ export default function LoginLogsPage() {
   const columns = [
     {
       title: '시간',
-      dataIndex: 'created_at',
-      key: 'created_at',
+      dataIndex: 'logged_in_at',
+      key: 'logged_in_at',
       render: (v: string) => new Date(v).toLocaleString('ko-KR'),
       width: 180,
     },
