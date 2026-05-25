@@ -10,4 +10,5 @@ export const vehicleApi = {
     client.put<Vehicle>(`/vehicles/${id}`, data).then((r) => r.data),
   delete: (id: number) => client.delete(`/vehicles/${id}`),
   counts: () => client.get<Record<number, number>>('/bom/counts').then((r) => r.data),
+  diagramPageCount: () => client.get<{ count: number }>('/bom/diagram-page-count').then((r) => r.data.count),
 }

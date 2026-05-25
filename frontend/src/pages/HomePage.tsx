@@ -10,21 +10,36 @@ const QUICK_LINKS = [
 ]
 
 const VEHICLES = [
-  { id: 1, name: 'KTX-청룡',   code: 'EMU-320'   },
-  { id: 2, name: 'KTX-이음',   code: 'EMU-260'   },
-  { id: 8, name: 'ITX-마음',   code: 'ITX-마음'  },
-  { id: 7, name: 'KTX-SRT',    code: 'KTX-산천3' },
-  { id: 6, name: 'KTX-산천1',  code: 'KTX-산천1' },
-  { id: 3, name: 'KTX-원강',   code: 'KTX-산천4' },
-  { id: 4, name: 'KTX-호남',   code: 'KTX-산천2' },
-  { id: 5, name: 'KTX(1세대)', code: 'KTX-1'     },
+  { id: 1, name: 'KTX-청룡',   code: 'EMU-320',   source: '제작사 BOM' },
+  { id: 2, name: 'KTX-이음',   code: 'EMU-260',   source: '제작사 BOM' },
+  { id: 8, name: 'ITX-마음',   code: 'ITX-마음',  source: '제작사 BOM' },
+  { id: 7, name: 'KTX-SRT',    code: 'KTX-산천3', source: '차량포탈 BOM' },
+  { id: 6, name: 'KTX-산천1',  code: 'KTX-산천1', source: '명칭도감' },
+  { id: 3, name: 'KTX-원강',   code: 'KTX-산천4', source: '명칭도감' },
+  { id: 4, name: 'KTX-호남',   code: 'KTX-산천2', source: '명칭도감' },
+  { id: 5, name: 'KTX(1세대)', code: 'KTX-1',     source: '명칭도감' },
 ]
+
+const SOURCE_COLOR: Record<string, string> = {
+  '제작사 BOM':  'rgba(82,196,26,0.15)',
+  '차량포탈 BOM': 'rgba(250,173,20,0.15)',
+  '명칭도감':    'rgba(22,119,255,0.12)',
+}
+const SOURCE_TEXT_COLOR: Record<string, string> = {
+  '제작사 BOM':  '#52c41a',
+  '차량포탈 BOM': '#faad14',
+  '명칭도감':    '#1677ff',
+}
 
 export default function HomePage() {
   const navigate = useNavigate()
   const { data: counts = {} } = useQuery({
     queryKey: ['vehicle-counts'],
     queryFn: vehicleApi.counts,
+  })
+  const { data: diagramPageCount = 0 } = useQuery({
+    queryKey: ['diagram-page-count'],
+    queryFn: vehicleApi.diagramPageCount,
   })
   const totalNodes = Object.values(counts).reduce((a, b) => a + b, 0)
 
@@ -56,7 +71,7 @@ export default function HomePage() {
             {[
               { label: '등록 차종', value: '8종' },
               { label: 'BOM 노드', value: totalNodes.toLocaleString() + '개' },
-              { label: '명칭도감', value: '2,000+ 페이지' },
+              { label: '명칭도감', value: diagramPageCount ? diagramPageCount.toLocaleString() + ' 페이지' : '...' },
             ].map(s => (
               <div key={s.label} style={{
                 background: 'rgba(22,119,255,0.08)', border: '1px solid rgba(22,119,255,0.2)',
@@ -113,6 +128,11 @@ export default function HomePage() {
                   <div>
                     <div style={{ color: '#fff', fontWeight: 600, fontSize: 15 }}>{v.name}</div>
                     <div style={{ color: 'rgba(255,255,255,0.35)', fontSize: 11, fontFamily: 'monospace', marginTop: 2 }}>{v.code}</div>
+                    <div style={{
+                      display: 'inline-block', marginTop: 5,
+                      background: SOURCE_COLOR[v.source], color: SOURCE_TEXT_COLOR[v.source],
+                      fontSize: 10, padding: '1px 7px', borderRadius: 4, fontWeight: 500,
+                    }}>{v.source}</div>
                   </div>
                   <div style={{ color: '#1677ff', fontSize: 18, fontWeight: 700, fontFamily: 'monospace' }}>
                     {count.toLocaleString()}

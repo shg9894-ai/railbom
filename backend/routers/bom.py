@@ -20,6 +20,17 @@ def get_bom_counts():
         conn.close()
 
 
+@router.get("/diagram-page-count")
+def get_diagram_page_count():
+    from database.connection import get_connection
+    conn = get_connection()
+    try:
+        row = conn.execute("SELECT COUNT(*) as cnt FROM diagram_pages").fetchone()
+        return {"count": row["cnt"]}
+    finally:
+        conn.close()
+
+
 @router.get("/tree/{vehicle_type_id}")
 def get_tree(vehicle_type_id: int, category: Optional[str] = Query(None)):
     return bom_repo.get_tree(vehicle_type_id, category)
