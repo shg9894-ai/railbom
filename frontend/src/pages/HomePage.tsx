@@ -6,7 +6,6 @@ const QUICK_LINKS = [
   { label: '부품 탐색',    path: '/diagram',       desc: '차종별 부품 드릴다운' },
   { label: 'BOM 원데이터', path: '/bom',           desc: '전체 BOM 트리 조회' },
   { label: '명칭도감',     path: '/catalog',       desc: '차종별 부품 도면집' },
-  { label: '호환성 관리',  path: '/compatibility', desc: '차종 간 호환 부품' },
 ]
 
 const VEHICLES = [

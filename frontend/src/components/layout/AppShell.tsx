@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Layout, Menu, Button, Space } from 'antd'
 import {
-  NodeIndexOutlined, OrderedListOutlined, LinkOutlined, PictureOutlined,
+  NodeIndexOutlined, OrderedListOutlined, PictureOutlined,
   SearchOutlined, CheckSquareOutlined, LogoutOutlined, HistoryOutlined,
   BulbOutlined, BulbFilled, DatabaseOutlined, MenuFoldOutlined, MenuUnfoldOutlined,
 } from '@ant-design/icons'
@@ -49,7 +49,6 @@ export default function AppShell({ children, role, onLogout, darkMode, onToggleD
     { key: '/catalog',     icon: <SearchOutlined />,       label: '차종별 명칭도감' },
     { key: '/vehicles',    icon: <NodeIndexOutlined />,    label: '차종 관리' },
     { key: '/formations',  icon: <OrderedListOutlined />,  label: '편성 관리' },
-    { key: '/compatibility', icon: <LinkOutlined />,       label: '호환성 관리' },
     ...(role === 'admin' ? [
       { key: '/requests',   icon: <CheckSquareOutlined />, label: '데이터 수정 승인' },
       { key: '/login-logs', icon: <HistoryOutlined />,     label: '로그인 기록' },
