@@ -119,6 +119,7 @@ export default function DiagramPage() {
               <TrainPhotoView
                 onSelectCategory={handleSelectCategory}
                 selectedCategory={selectedCategory}
+                vehicleCode={selectedVehicle.code}
                 imageSrc={
                   selectedVehicle.code === 'EMU-260'   ? '/train_eum_nobg.png'     :
                   selectedVehicle.code === 'KTX-산천3' ? '/train_srt_nobg.png'     :

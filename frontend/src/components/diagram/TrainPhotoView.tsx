@@ -71,30 +71,90 @@ const MAUM_HOTSPOTS: HotspotDef[] = [
   { code: '7', name: '차상신호',    bx: 857, by: 346, bw: 108 },
 ]
 
-function lsKey(src: string) { return `trainphoto_cfg_${src}` }
+// 원강·산천1 (train_wongang_nobg.png)
+const WONGANG_ANCHORS: AnchorMap = {
+  '1': { x: 679.7, y: 109.9 }, '2': { x: 837.9, y: 242.1 },
+  '3': { x: 776.3, y: 280.8 }, '4': { x: 528.0, y: 186.1 },
+  '5': { x: 724.6, y: 334.4 }, '6': { x: 682.0, y: 349.9 },
+  '7': { x: 543.7, y: 118.6 }, '8': { x: 875.6, y: 231.4 },
+}
+const WONGANG_HOTSPOTS: HotspotDef[] = [
+  { code: '4', name: '운전실·제어', bx: 411.2, by: 130.4, bw: 108 },
+  { code: '7', name: '차상신호',    bx: 489.0, by:  54.5, bw: 108 },
+  { code: '1', name: '전력추진',    bx: 685.5, by:  47.3, bw: 108 },
+  { code: '8', name: '차체·설비',   bx: 845.4, by: 104.6, bw: 108 },
+  { code: '6', name: '주행',        bx: 649.2, by: 429.0, bw: 108 },
+  { code: '5', name: '제동',        bx: 778.4, by: 437.1, bw: 108 },
+  { code: '3', name: '보조전원',    bx: 872.5, by: 385.3, bw: 108 },
+  { code: '2', name: '연결',        bx: 963.3, by: 331.7, bw: 108 },
+]
 
-function defaultConfig(src: string) {
-  if (src.includes('maum')) return { hotspots: MAUM_HOTSPOTS, anchors: MAUM_ANCHORS }
-  if (src.includes('ktx1')) return { hotspots: KTX1_HOTSPOTS, anchors: KTX1_ANCHORS }
+// SRT·호남 (train_srt_nobg.png)
+const SRT_ANCHORS: AnchorMap = {
+  '1': { x: 623.5, y:  95.9 }, '2': { x: 868.3, y: 266.3 },
+  '3': { x: 731.1, y: 358.8 }, '4': { x: 338.5, y: 152.6 },
+  '5': { x: 611.6, y: 383.5 }, '6': { x: 525.2, y: 397.4 },
+  '7': { x: 496.1, y:  80.4 }, '8': { x: 938.8, y: 273.5 },
+}
+const SRT_HOTSPOTS: HotspotDef[] = [
+  { code: '4', name: '운전실·제어', bx: 105.6, by:  64.1, bw: 108 },
+  { code: '7', name: '차상신호',    bx: 355.6, by:  30.4, bw: 108 },
+  { code: '1', name: '전력추진',    bx: 685.5, by:  29.4, bw: 108 },
+  { code: '8', name: '차체·설비',   bx: 922.6, by: 136.6, bw: 108 },
+  { code: '6', name: '주행',        bx: 533.8, by: 470.3, bw: 108 },
+  { code: '5', name: '제동',        bx: 674.7, by: 455.9, bw: 108 },
+  { code: '3', name: '보조전원',    bx: 822.6, by: 424.3, bw: 108 },
+  { code: '2', name: '연결',        bx: 801.1, by:  91.5, bw: 108 },
+]
+
+// 이음 (train_eum_nobg.png) — 기존 DEFAULT 대체
+const EUM_ANCHORS: AnchorMap = {
+  '1': { x: 601.7, y: 183.2 }, '2': { x: 774.0, y: 239.8 },
+  '3': { x: 689.0, y: 287.0 }, '4': { x: 457.0, y: 236.0 },
+  '5': { x: 596.0, y: 312.5 }, '6': { x: 556.4, y: 322.6 },
+  '7': { x: 539.0, y: 211.4 }, '8': { x: 695.5, y: 242.3 },
+}
+const EUM_HOTSPOTS: HotspotDef[] = [
+  { code: '4', name: '운전실·제어', bx: 333.3, by: 185.7, bw: 108 },
+  { code: '7', name: '차상신호',    bx: 464.0, by: 106.0, bw: 108 },
+  { code: '1', name: '전력추진',    bx: 620.0, by:  98.0, bw: 108 },
+  { code: '8', name: '차체·설비',   bx: 765.1, by: 124.9, bw: 108 },
+  { code: '6', name: '주행',        bx: 455.0, by: 411.8, bw: 108 },
+  { code: '5', name: '제동',        bx: 610.0, by: 427.0, bw: 108 },
+  { code: '3', name: '보조전원',    bx: 768.0, by: 397.0, bw: 108 },
+  { code: '2', name: '연결',        bx: 869.7, by: 171.8, bw: 108 },
+]
+
+function lsKey(vehicleCode: string) { return `trainphoto_cfg_v2_${vehicleCode}` }
+
+function defaultConfig(vehicleCode: string, src: string) {
+  if (vehicleCode === 'KTX-산천4' || vehicleCode === 'KTX-산천1')
+    return { hotspots: WONGANG_HOTSPOTS, anchors: WONGANG_ANCHORS }
+  if (vehicleCode === 'KTX-산천3' || vehicleCode === 'KTX-산천2')
+    return { hotspots: SRT_HOTSPOTS,     anchors: SRT_ANCHORS     }
+  if (src.includes('eum'))     return { hotspots: EUM_HOTSPOTS,     anchors: EUM_ANCHORS     }
+  if (src.includes('maum'))    return { hotspots: MAUM_HOTSPOTS,    anchors: MAUM_ANCHORS    }
+  if (src.includes('ktx1'))   return { hotspots: KTX1_HOTSPOTS,   anchors: KTX1_ANCHORS    }
   return { hotspots: DEFAULT_HOTSPOTS, anchors: DEFAULT_ANCHORS }
 }
 
-function loadConfig(src: string): { hotspots: HotspotDef[]; anchors: AnchorMap } {
+function loadConfig(vehicleCode: string, src: string): { hotspots: HotspotDef[]; anchors: AnchorMap } {
   try {
-    const raw = localStorage.getItem(lsKey(src))
+    const raw = localStorage.getItem(lsKey(vehicleCode))
     if (raw) return JSON.parse(raw)
   } catch {}
-  return defaultConfig(src)
+  return defaultConfig(vehicleCode, src)
 }
 
-function saveConfig(src: string, hotspots: HotspotDef[], anchors: AnchorMap) {
-  localStorage.setItem(lsKey(src), JSON.stringify({ hotspots, anchors }))
+function saveConfig(vehicleCode: string, hotspots: HotspotDef[], anchors: AnchorMap) {
+  localStorage.setItem(lsKey(vehicleCode), JSON.stringify({ hotspots, anchors }))
 }
 
 interface Props {
   onSelectCategory: (code: string) => void
   selectedCategory?: string | null
   imageSrc?: string
+  vehicleCode?: string
   flipImage?: boolean
   editable?: boolean
 }
@@ -108,24 +168,25 @@ export default function TrainPhotoView({
   onSelectCategory,
   selectedCategory,
   imageSrc = '/train_blue_nobg.png',
+  vehicleCode = '',
   flipImage = true,
   editable = false,
 }: Props) {
   const isMobile = useIsMobile()
   const { token: tk } = theme.useToken()
-  const cfg = loadConfig(imageSrc)
+  const cfg = loadConfig(vehicleCode, imageSrc)
   const [hotspots, setHotspots] = useState<HotspotDef[]>(cfg.hotspots)
   const [anchors,  setAnchors]  = useState<AnchorMap>(cfg.anchors)
   const [hovered,  setHovered]  = useState<string | null>(null)
   const [editMode, setEditMode] = useState(false)
   const [copied,   setCopied]   = useState(false)
 
-  // reload config when imageSrc changes
+  // reload config when vehicleCode/imageSrc changes
   useEffect(() => {
-    const c = loadConfig(imageSrc)
+    const c = loadConfig(vehicleCode, imageSrc)
     setHotspots(c.hotspots)
     setAnchors(c.anchors)
-  }, [imageSrc])
+  }, [vehicleCode, imageSrc])
 
   const svgRef   = useRef<SVGSVGElement>(null)
   const dragRef  = useRef<DragTarget>(null)
@@ -174,8 +235,8 @@ export default function TrainPhotoView({
     if (!dragRef.current) return
     dragRef.current = null
     prevRef.current = null
-    saveConfig(imageSrc, hotspots, anchors)
-  }, [imageSrc, hotspots, anchors])
+    saveConfig(vehicleCode, hotspots, anchors)
+  }, [vehicleCode, hotspots, anchors])
 
   const copyConfig = () => {
     const json = JSON.stringify({ hotspots, anchors }, null, 2)
