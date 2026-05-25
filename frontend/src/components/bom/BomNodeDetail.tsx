@@ -13,7 +13,7 @@ import { vehicleApi } from '../../api/vehicles'
 import { diagramPagesApi } from '../../api/diagramPages'
 import { bomApi } from '../../api/bom'
 import type { BomNode, NodeMaterial } from '../../types'
-import { CATEGORIES, CATEGORY_COLORS, formatBomCode } from '../../types'
+import { CATEGORIES, CATEGORY_COLORS, formatBomCode, getCategoryCode } from '../../types'
 
 interface Props {
   node: BomNode | null
@@ -234,15 +234,15 @@ export default function BomNodeDetail({ node, onEdit, onDelete, onAddChild }: Pr
 
   if (!node) return <Empty description="노드를 선택하세요" style={{ marginTop: 60 }} />
 
-  const categoryName = CATEGORIES.find((c) => c.code === node.category_code)?.name
+  const categoryName = CATEGORIES.find((c) => c.code === getCategoryCode(node))?.name
 
   return (
     <Card
       size="small"
       title={
         <Space>
-          {node.category_code && (
-            <Tag color={CATEGORY_COLORS[node.category_code]}>{categoryName}</Tag>
+          {getCategoryCode(node) && (
+            <Tag color={CATEGORY_COLORS[getCategoryCode(node)!]}>{categoryName}</Tag>
           )}
           <span>{node.name}</span>
           {formatBomCode(node.material_no) && (

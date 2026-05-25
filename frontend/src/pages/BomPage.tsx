@@ -11,7 +11,7 @@ import { vehicleApi } from '../api/vehicles'
 import { bomApi } from '../api/bom'
 import { excelApi } from '../api/excel'
 import type { BomNode } from '../types'
-import { CATEGORY_COLORS, CATEGORIES, formatBomCode } from '../types'
+import { CATEGORY_COLORS, CATEGORIES, formatBomCode, getCategoryCode } from '../types'
 
 const { Text } = Typography
 
@@ -40,12 +40,12 @@ function CompatNodeModal({ materialNos, onClose }: { materialNos: string[] | nul
       ) : (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
           {nodes.map(n => {
-            const catName = CATEGORIES.find(c => c.code === n.category_code)?.name
+            const catName = CATEGORIES.find(c => c.code === getCategoryCode(n))?.name
             return (
               <Card key={n.id} size="small" style={{ borderRadius: 8 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 8, flexWrap: 'wrap' }}>
-                  {n.category_code && (
-                    <Tag color={CATEGORY_COLORS[n.category_code]} style={{ margin: 0 }}>{catName}</Tag>
+                  {getCategoryCode(n) && (
+                    <Tag color={CATEGORY_COLORS[getCategoryCode(n)!]} style={{ margin: 0 }}>{catName}</Tag>
                   )}
                   <span style={{ fontWeight: 600, fontSize: 14 }}>{n.name}</span>
                   {(n as any).vehicle_name && (
@@ -459,7 +459,7 @@ export default function BomPage() {
                     </td>
                   </tr>
                 ) : flatRows.map(({ node, depth, hasChildren, isExpanded }) => {
-                  const catColor  = node.category_code ? CATEGORY_COLORS[node.category_code] : undefined
+                  const catColor  = CATEGORY_COLORS[getCategoryCode(node) ?? '']
                   const isMatch   = matchIds ? matchIds.has(node.id) : false
                   const isLoading_ = loadingIds.has(node.id)
 

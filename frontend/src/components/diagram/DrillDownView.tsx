@@ -16,7 +16,7 @@ import { BomRequestButton, CorpMatRequestButton, PhotoRequestButton } from './Ch
 import FailureCaseSection, { FailureCaseSectionButton } from './FailureCaseSection'
 import { repairKitApi } from '../../api/repairKits'
 import type { BomNode } from '../../types'
-import { CATEGORY_COLORS, CATEGORIES, VEHICLE_DB_CODE, formatBomCode } from '../../types'
+import { CATEGORY_COLORS, CATEGORIES, VEHICLE_DB_CODE, formatBomCode, getCategoryCode } from '../../types'
 
 const { Text, Title } = Typography
 const API_BASE = '/api'
@@ -363,7 +363,7 @@ function NodeCard({
   hasPage: boolean
 }) {
   const { token: t } = theme.useToken()
-  const color       = node.category_code ? CATEGORY_COLORS[node.category_code] : '#999'
+  const color       = CATEGORY_COLORS[getCategoryCode(node) ?? ''] ?? '#999'
   const hasChildren = !!node.has_children
 
   const copyMatNo = (e: React.MouseEvent) => {
@@ -512,9 +512,9 @@ function PartBomLink({
             >
               <div style={{ width: '100%' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                  {n.category_code && (
-                    <Tag color={CATEGORY_COLORS[n.category_code]} style={{ fontSize: 10, margin: 0, padding: '0 4px' }}>
-                      {CATEGORIES.find(c => c.code === n.category_code)?.name ?? n.category_code}
+                  {getCategoryCode(n) && (
+                    <Tag color={CATEGORY_COLORS[getCategoryCode(n)!]} style={{ fontSize: 10, margin: 0, padding: '0 4px' }}>
+                      {CATEGORIES.find(c => c.code === getCategoryCode(n))?.name ?? getCategoryCode(n)}
                     </Tag>
                   )}
                   <span style={{ fontSize: 12, fontWeight: 500 }}>{n.name}</span>

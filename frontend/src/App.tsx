@@ -14,6 +14,7 @@ import LoginLogsPage from './pages/LoginLogsPage'
 import LoginPage from './pages/LoginPage'
 import BomPage from './pages/BomPage'
 import CatalogPage from './pages/CatalogPage'
+import HomePage from './pages/HomePage'
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { retry: 1, staleTime: 30_000 } },
@@ -63,7 +64,7 @@ export default function App() {
         <BrowserRouter>
           <AppShell role={role} onLogout={handleLogout} darkMode={darkMode} onToggleDark={toggleDark}>
             <Routes>
-              <Route path="/" element={<Navigate to="/diagram" replace />} />
+              <Route path="/" element={<HomePage />} />
               <Route path="/diagram" element={<DiagramPage />} />
               <Route path="/vehicles" element={<VehiclesPage />} />
               <Route path="/formations" element={<FormationsPage />} />

@@ -22,14 +22,22 @@ interface Props {
 export default function AppShell({ children, role, onLogout, darkMode, onToggleDark }: Props) {
   const navigate = useNavigate()
   const location = useLocation()
-  const [open, setOpen] = useState(() => window.innerWidth >= 768)
   const [isMobile, setIsMobile] = useState(() => window.innerWidth < 768)
+  const [open, setOpen] = useState(() => {
+    if (window.innerWidth < 768) return false
+    const saved = localStorage.getItem('sidebar_open')
+    return saved === null ? true : saved === 'true'
+  })
+
+  const toggleOpen = (v: boolean) => {
+    setOpen(v)
+    if (!isMobile) localStorage.setItem('sidebar_open', String(v))
+  }
 
   useEffect(() => {
     const fn = () => {
       const mobile = window.innerWidth < 768
       setIsMobile(mobile)
-      if (!mobile) setOpen(true)
     }
     window.addEventListener('resize', fn)
     return () => window.removeEventListener('resize', fn)
@@ -52,7 +60,7 @@ export default function AppShell({ children, role, onLogout, darkMode, onToggleD
 
   const handleMenuClick = ({ key }: { key: string }) => {
     navigate(key)
-    if (isMobile) setOpen(false)
+    if (isMobile) toggleOpen(false)
   }
 
   return (
@@ -70,10 +78,13 @@ export default function AppShell({ children, role, onLogout, darkMode, onToggleD
           <Button
             type="text"
             icon={open ? <MenuFoldOutlined /> : <MenuUnfoldOutlined />}
-            onClick={() => setOpen(v => !v)}
+            onClick={() => toggleOpen(!open)}
             style={{ fontSize: 16 }}
           />
-          <span style={{ fontSize: 16, fontWeight: 600, whiteSpace: 'nowrap', color: darkMode ? '#fff' : '#000' }}>철도차량 BOM</span>
+          <span
+            style={{ fontSize: 16, fontWeight: 600, whiteSpace: 'nowrap', color: darkMode ? '#fff' : '#000', cursor: 'pointer' }}
+            onClick={() => navigate('/')}
+          >철도차량 BOM</span>
         </Space>
         <Space>
           <span style={{ fontSize: 12, color: '#888', whiteSpace: 'nowrap' }}>

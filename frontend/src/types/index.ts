@@ -104,6 +104,16 @@ export function formatBomCode(code: string | null | undefined): string | null {
   return code.replace(/(-0)+$/, '') || code
 }
 
+/** HR-760-1-2-3 → '1', HR-770-2-1 → '2', null → null */
+export function getCategoryCode(node: { category_code?: string | null; material_no?: string | null }): string | null {
+  if (node.category_code) return node.category_code
+  if (node.material_no) {
+    const seg = node.material_no.split('-')[2]
+    if (seg && /^[0-9]+$/.test(seg)) return seg
+  }
+  return null
+}
+
 export const CATEGORY_COLORS: Record<string, string> = {
   '1': '#1677ff',
   '2': '#52c41a',

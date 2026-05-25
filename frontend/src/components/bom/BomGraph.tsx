@@ -16,7 +16,7 @@ import {
 } from '@xyflow/react'
 import '@xyflow/react/dist/style.css'
 import type { BomNode } from '../../types'
-import { CATEGORY_COLORS } from '../../types'
+import { CATEGORY_COLORS, getCategoryCode } from '../../types'
 
 // ─── 깊이별 별 크기 ───────────────────────────────────────────────────────────
 function starRadius(depth: number): number {
@@ -215,7 +215,7 @@ function BomGraphInner({ roots, loadChildren, selectedNodeId, onSelectNode }: Bo
   const rebuildIdRef = useRef(0)
 
   function getCategoryColor(bom: BomNode): string {
-    return bom.category_code ? (CATEGORY_COLORS[bom.category_code] ?? '#88aaff') : '#88aaff'
+    return CATEGORY_COLORS[getCategoryCode(bom) ?? ''] ?? '#88aaff'
   }
 
   const rebuildRef = useRef<() => void>(() => {})
