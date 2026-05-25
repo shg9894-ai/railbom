@@ -27,6 +27,9 @@ const CAR_COUNT: Record<string, number> = {
   'KTX-산천1': 10,  // 산천1
   'KTX-1':    20,   // KTX 1세대
 }
+const CAR_COUNT_LABEL: Record<string, string> = {
+  'ITX-마음': '4량/6량',
+}
 
 export default function DiagramPage() {
   const [selectedVehicleId, setSelectedVehicleId] = useState<number | null>(null)
@@ -88,7 +91,7 @@ export default function DiagramPage() {
           />
           {selectedVehicle && (
             <Text type="secondary" style={{ fontSize: 11, whiteSpace: 'nowrap', flexShrink: 0 }}>
-              {carCount}량
+              {CAR_COUNT_LABEL[selectedVehicle.code] ?? `${carCount}량`}
             </Text>
           )}
         </div>
@@ -141,7 +144,7 @@ export default function DiagramPage() {
               />
             )}
             <div style={{ marginTop: 12, textAlign: 'center', fontSize: 11 }}>
-              {selectedVehicle?.name} ({selectedVehicle?.code}) · {carCount}량 편성
+              {selectedVehicle?.name} ({selectedVehicle?.code}) · {CAR_COUNT_LABEL[selectedVehicle?.code ?? ''] ?? `${carCount}량`} 편성
             </div>
 
             {/* 차량 일반 (layout + overview 통합) */}
