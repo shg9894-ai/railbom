@@ -31,6 +31,19 @@ def update_vehicle(vehicle_id: int, body: VehicleUpdate):
     return vehicle_repo.update_vehicle(vehicle_id, body.code, body.name, body.description)
 
 
+@router.get("/counts")
+def get_bom_counts():
+    from database.connection import get_connection
+    conn = get_connection()
+    try:
+        rows = conn.execute(
+            "SELECT vehicle_type_id, COUNT(*) as cnt FROM bom_nodes GROUP BY vehicle_type_id"
+        ).fetchall()
+        return {r["vehicle_type_id"]: r["cnt"] for r in rows}
+    finally:
+        conn.close()
+
+
 @router.delete("/{vehicle_id}", status_code=204)
 def delete_vehicle(vehicle_id: int):
     vehicle = vehicle_repo.get_vehicle_by_id(vehicle_id)

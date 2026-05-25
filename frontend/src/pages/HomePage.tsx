@@ -1,4 +1,6 @@
 import { useNavigate } from 'react-router-dom'
+import { useQuery } from '@tanstack/react-query'
+import { vehicleApi } from '../api/vehicles'
 
 const QUICK_LINKS = [
   { label: '부품 탐색',    path: '/diagram',       desc: '차종별 부품 드릴다운' },
@@ -6,10 +8,6 @@ const QUICK_LINKS = [
   { label: '명칭도감',     path: '/catalog',       desc: '차종별 부품 도면집' },
   { label: '호환성 관리',  path: '/compatibility', desc: '차종 간 호환 부품' },
 ]
-
-const COUNTS: Record<number, number> = {
-  1: 8689, 2: 8759, 3: 734, 4: 882, 5: 727, 6: 1921, 7: 5595, 8: 8252,
-}
 
 const VEHICLES = [
   { id: 1, name: 'KTX-청룡',   code: 'EMU-320'   },
@@ -22,10 +20,13 @@ const VEHICLES = [
   { id: 5, name: 'KTX(1세대)', code: 'KTX-1'     },
 ]
 
-const totalNodes = Object.values(COUNTS).reduce((a, b) => a + b, 0)
-
 export default function HomePage() {
   const navigate = useNavigate()
+  const { data: counts = {} } = useQuery({
+    queryKey: ['vehicle-counts'],
+    queryFn: vehicleApi.counts,
+  })
+  const totalNodes = Object.values(counts).reduce((a, b) => a + b, 0)
 
   return (
     <div style={{ minHeight: '100%', background: 'linear-gradient(135deg, #0a0e1a 0%, #0d1b2e 50%, #0a1628 100%)', padding: 0, margin: -16 }}>
@@ -95,7 +96,7 @@ export default function HomePage() {
         <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.3)', letterSpacing: 2, marginBottom: 16 }}>VEHICLE STATUS</div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: 16, paddingBottom: 40 }}>
           {VEHICLES.map(v => {
-            const count = COUNTS[v.id] ?? 0
+            const count = counts[v.id] ?? 0
             const pct = Math.round(count / 9000 * 100)
             return (
               <div

@@ -9,4 +9,5 @@ export const vehicleApi = {
   update: (id: number, data: { code: string; name: string; description?: string }) =>
     client.put<Vehicle>(`/vehicles/${id}`, data).then((r) => r.data),
   delete: (id: number) => client.delete(`/vehicles/${id}`),
+  counts: () => client.get<Record<number, number>>('/vehicles/counts').then((r) => r.data),
 }
