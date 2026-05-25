@@ -1,7 +1,8 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
 from pydantic import BaseModel
 from typing import Optional
 from database.connection import get_connection
+from routers.deps import require_user
 
 router = APIRouter(prefix="/api/failure-cases", tags=["failure-cases"])
 
@@ -36,7 +37,7 @@ def list_by_node(node_id: int):
 
 
 @router.post("", status_code=201)
-def create(body: FailureCaseCreate):
+def create(body: FailureCaseCreate, _=Depends(require_user)):
     conn = get_connection()
     try:
         node = conn.execute("SELECT id FROM bom_nodes WHERE id=?", (body.node_id,)).fetchone()
@@ -54,7 +55,7 @@ def create(body: FailureCaseCreate):
 
 
 @router.patch("/{fid}")
-def update(fid: int, body: FailureCaseUpdate):
+def update(fid: int, body: FailureCaseUpdate, _=Depends(require_user)):
     conn = get_connection()
     try:
         row = conn.execute("SELECT id FROM failure_cases WHERE id=?", (fid,)).fetchone()
@@ -74,7 +75,7 @@ def update(fid: int, body: FailureCaseUpdate):
 
 
 @router.delete("/{fid}")
-def delete(fid: int):
+def delete(fid: int, _=Depends(require_user)):
     conn = get_connection()
     try:
         conn.execute("DELETE FROM failure_cases WHERE id=?", (fid,))

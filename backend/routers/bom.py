@@ -1,8 +1,9 @@
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter, HTTPException, Query, Depends
 from typing import Optional
 from pydantic import BaseModel
 from schemas.bom import BomNodeCreate, BomNodeUpdate, BomNodeMove, BomReorder
 from database.repositories import bom_repo, node_materials_repo
+from routers.deps import require_user, require_admin
 
 router = APIRouter(prefix="/api/bom", tags=["bom"])
 
@@ -98,32 +99,32 @@ def get_ancestors(node_id: int):
 
 
 @router.post("/nodes", status_code=201)
-def create_node(body: BomNodeCreate):
+def create_node(body: BomNodeCreate, _=Depends(require_user)):
     return bom_repo.create_node(body.model_dump())
 
 
 @router.put("/nodes/{node_id}")
-def update_node(node_id: int, body: BomNodeUpdate):
+def update_node(node_id: int, body: BomNodeUpdate, _=Depends(require_user)):
     if not bom_repo.get_node_by_id(node_id):
         raise HTTPException(status_code=404, detail="노드를 찾을 수 없습니다.")
     return bom_repo.update_node(node_id, body.model_dump())
 
 
 @router.post("/nodes/{node_id}/move")
-def move_node(node_id: int, body: BomNodeMove):
+def move_node(node_id: int, body: BomNodeMove, _=Depends(require_user)):
     if not bom_repo.get_node_by_id(node_id):
         raise HTTPException(status_code=404, detail="노드를 찾을 수 없습니다.")
     return bom_repo.move_node(node_id, body.new_parent_id, body.new_vehicle_type_id)
 
 
 @router.put("/nodes/reorder")
-def reorder_nodes(body: BomReorder):
+def reorder_nodes(body: BomReorder, _=Depends(require_user)):
     bom_repo.reorder_nodes(body.ordered_ids)
     return {"ok": True}
 
 
 @router.delete("/nodes/{node_id}", status_code=204)
-def delete_node(node_id: int):
+def delete_node(node_id: int, _=Depends(require_user)):
     if not bom_repo.get_node_by_id(node_id):
         raise HTTPException(status_code=404, detail="노드를 찾을 수 없습니다.")
     bom_repo.delete_node(node_id)
@@ -163,7 +164,7 @@ def get_node_diagrams(node_id: int):
 
 
 @router.post("/nodes/{node_id}/diagrams", status_code=201)
-def link_diagram(node_id: int, body: DiagramLinkBody):
+def link_diagram(node_id: int, body: DiagramLinkBody, _=Depends(require_user)):
     """BOM 노드에 명칭도감 페이지 수동 연결"""
     if not bom_repo.get_node_by_id(node_id):
         raise HTTPException(status_code=404, detail="노드를 찾을 수 없습니다.")
@@ -186,7 +187,7 @@ def link_diagram(node_id: int, body: DiagramLinkBody):
 
 
 @router.delete("/nodes/{node_id}/diagrams/{link_id}", status_code=204)
-def unlink_diagram(node_id: int, link_id: int):
+def unlink_diagram(node_id: int, link_id: int, _=Depends(require_user)):
     """BOM 노드와 명칭도감 페이지 연결 해제"""
     conn = get_connection()
     try:
@@ -214,7 +215,7 @@ def list_materials(node_id: int):
 
 
 @router.post("/nodes/{node_id}/materials", status_code=201)
-def add_material(node_id: int, body: NodeMaterialBody):
+def add_material(node_id: int, body: NodeMaterialBody, _=Depends(require_user)):
     if not bom_repo.get_node_by_id(node_id):
         raise HTTPException(status_code=404, detail="노드를 찾을 수 없습니다.")
     try:
@@ -226,7 +227,7 @@ def add_material(node_id: int, body: NodeMaterialBody):
 
 
 @router.put("/nodes/{node_id}/materials/{mat_id}")
-def update_material(node_id: int, mat_id: int, body: NodeMaterialBody):
+def update_material(node_id: int, mat_id: int, body: NodeMaterialBody, _=Depends(require_user)):
     result = node_materials_repo.update(mat_id, body.model_dump())
     if not result:
         raise HTTPException(status_code=404, detail="자재번호를 찾을 수 없습니다.")
@@ -234,5 +235,5 @@ def update_material(node_id: int, mat_id: int, body: NodeMaterialBody):
 
 
 @router.delete("/nodes/{node_id}/materials/{mat_id}", status_code=204)
-def delete_material(node_id: int, mat_id: int):
+def delete_material(node_id: int, mat_id: int, _=Depends(require_user)):
     node_materials_repo.delete(mat_id)

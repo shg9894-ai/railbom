@@ -1,9 +1,10 @@
 import json
-from fastapi import APIRouter, HTTPException, UploadFile, File, Form
+from fastapi import APIRouter, HTTPException, UploadFile, File, Form, Depends
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from typing import Optional, List
 from database.connection import get_connection
+from routers.deps import require_user, require_admin
 
 router = APIRouter(prefix="/api/change-requests", tags=["change-requests"])
 
@@ -29,7 +30,7 @@ class ReviewBody(BaseModel):
 
 
 @router.post("", status_code=201)
-def create_request(body: SimpleRequestCreate):
+def create_request(body: SimpleRequestCreate, _=Depends(require_user)):
     if body.request_type not in VALID_TYPES:
         raise HTTPException(400, f"Invalid request_type: {body.request_type}")
 
@@ -61,6 +62,7 @@ async def create_request_with_photo(
     requester_note: Optional[str] = Form(None),
     current_value: Optional[str] = Form(None),
     photo: Optional[UploadFile] = File(None),
+    _=Depends(require_user),
 ):
     if request_type not in ('photo_add', 'photo_delete'):
         raise HTTPException(400, "Use /with-photo only for photo requests")
@@ -133,7 +135,7 @@ def get_request_photo(rid: int):
 
 
 @router.patch("/{rid}/approve")
-def approve_request(rid: int, body: ReviewBody = ReviewBody()):
+def approve_request(rid: int, body: ReviewBody = ReviewBody(), _=Depends(require_admin)):
     conn = get_connection()
     try:
         req = conn.execute("SELECT * FROM change_requests WHERE id = ?", (rid,)).fetchone()
@@ -281,7 +283,7 @@ def approve_request(rid: int, body: ReviewBody = ReviewBody()):
 
 
 @router.patch("/{rid}/reject")
-def reject_request(rid: int, body: ReviewBody = ReviewBody()):
+def reject_request(rid: int, body: ReviewBody = ReviewBody(), _=Depends(require_admin)):
     conn = get_connection()
     try:
         req = conn.execute("SELECT * FROM change_requests WHERE id=?", (rid,)).fetchone()

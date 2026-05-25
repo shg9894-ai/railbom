@@ -1,6 +1,7 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
 from schemas.vehicle import VehicleCreate, VehicleUpdate
 from database.repositories import vehicle_repo
+from routers.deps import require_admin
 
 router = APIRouter(prefix="/api/vehicles", tags=["vehicles"])
 
@@ -11,7 +12,7 @@ def list_vehicles():
 
 
 @router.post("", status_code=201)
-def create_vehicle(body: VehicleCreate):
+def create_vehicle(body: VehicleCreate, _=Depends(require_admin)):
     return vehicle_repo.create_vehicle(body.code, body.name, body.description)
 
 
@@ -24,7 +25,7 @@ def get_vehicle(vehicle_id: int):
 
 
 @router.put("/{vehicle_id}")
-def update_vehicle(vehicle_id: int, body: VehicleUpdate):
+def update_vehicle(vehicle_id: int, body: VehicleUpdate, _=Depends(require_admin)):
     vehicle = vehicle_repo.get_vehicle_by_id(vehicle_id)
     if not vehicle:
         raise HTTPException(status_code=404, detail="차종을 찾을 수 없습니다.")
@@ -32,7 +33,7 @@ def update_vehicle(vehicle_id: int, body: VehicleUpdate):
 
 
 @router.delete("/{vehicle_id}", status_code=204)
-def delete_vehicle(vehicle_id: int):
+def delete_vehicle(vehicle_id: int, _=Depends(require_admin)):
     vehicle = vehicle_repo.get_vehicle_by_id(vehicle_id)
     if not vehicle:
         raise HTTPException(status_code=404, detail="차종을 찾을 수 없습니다.")

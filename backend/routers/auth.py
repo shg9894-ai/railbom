@@ -3,17 +3,18 @@ from pydantic import BaseModel
 from jose import jwt
 from datetime import datetime, timedelta
 from database.connection import get_connection
+import os
 
 router = APIRouter(prefix="/api/auth", tags=["auth"])
 
-SECRET_KEY = "railway-bom-secret-2026"
-ALGORITHM = "HS256"
-TOKEN_EXPIRE_HOURS = 12
+SECRET_KEY          = os.environ.get("SECRET_KEY",    "railway-bom-secret-2026")
+ALGORITHM           = "HS256"
+TOKEN_EXPIRE_HOURS  = 12
 
-ADMIN_ID = "0417"
-ADMIN_PW = "asdf12345!@"
-STAFF_PW = "korail7788"
-ALLOWED_PLANT_CODES = {"1000", "5100", "5200", "5300", "5400", "5500"}
+ADMIN_ID            = os.environ.get("ADMIN_ID",      "0417")
+ADMIN_PW            = os.environ.get("ADMIN_PW",      "asdf12345!@")
+STAFF_PW            = os.environ.get("STAFF_PW",      "korail7788")
+ALLOWED_PLANT_CODES = set(os.environ.get("ALLOWED_PLANT_CODES", "1000,5100,5200,5300,5400,5500").split(","))
 
 
 class LoginRequest(BaseModel):

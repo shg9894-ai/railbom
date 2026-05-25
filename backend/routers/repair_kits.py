@@ -1,7 +1,8 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
 from pydantic import BaseModel
 from typing import Optional
 from database.repositories import repair_kit_repo
+from routers.deps import require_user
 
 router = APIRouter(prefix="/api/repair-kits", tags=["repair-kits"])
 
@@ -19,7 +20,7 @@ class ItemAdd(BaseModel):
 
 
 @router.post("", status_code=201)
-def create_kit(body: KitCreate):
+def create_kit(body: KitCreate, _=Depends(require_user)):
     try:
         return repair_kit_repo.create_kit(
             body.parent_id, body.name, body.ref_node_ids, body.quantities
@@ -42,7 +43,7 @@ def get_kit(kit_id: int):
 
 
 @router.post("/{kit_id}/items", status_code=201)
-def add_item(kit_id: int, body: ItemAdd):
+def add_item(kit_id: int, body: ItemAdd, _=Depends(require_user)):
     try:
         return repair_kit_repo.add_item(kit_id, body.ref_node_id, body.quantity)
     except Exception as e:
@@ -52,10 +53,10 @@ def add_item(kit_id: int, body: ItemAdd):
 
 
 @router.delete("/{kit_id}/items/{item_id}", status_code=204)
-def remove_item(kit_id: int, item_id: int):
+def remove_item(kit_id: int, item_id: int, _=Depends(require_user)):
     repair_kit_repo.remove_item(item_id)
 
 
 @router.delete("/{kit_id}", status_code=204)
-def delete_kit(kit_id: int):
+def delete_kit(kit_id: int, _=Depends(require_user)):
     repair_kit_repo.delete_kit(kit_id)

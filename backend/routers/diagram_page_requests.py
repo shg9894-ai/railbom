@@ -1,7 +1,8 @@
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter, HTTPException, Query, Depends
 from pydantic import BaseModel
 from typing import Optional
 from database.connection import get_connection
+from routers.deps import require_user, require_admin
 
 router = APIRouter(prefix="/api/diagram-page-requests", tags=["diagram-page-requests"])
 
@@ -56,7 +57,7 @@ def _ensure_table(conn):
 
 
 @router.post("", status_code=201)
-def create_request(body: DiagramPageRequestCreate):
+def create_request(body: DiagramPageRequestCreate, _=Depends(require_user)):
     VALID_TYPES = {'assembly_edit', 'page_delete', 'other'}
     if body.request_type not in VALID_TYPES:
         raise HTTPException(400, f"Invalid request_type: {body.request_type}")
@@ -99,7 +100,7 @@ def list_requests(status: Optional[str] = Query(None)):
 
 
 @router.patch("/{rid}/approve")
-def approve_request(rid: int, body: ReviewBody = ReviewBody()):
+def approve_request(rid: int, body: ReviewBody = ReviewBody(), _=Depends(require_admin)):
     conn = get_connection()
     try:
         _ensure_table(conn)
@@ -138,7 +139,7 @@ def approve_request(rid: int, body: ReviewBody = ReviewBody()):
 
 
 @router.patch("/{rid}/reject")
-def reject_request(rid: int, body: ReviewBody = ReviewBody()):
+def reject_request(rid: int, body: ReviewBody = ReviewBody(), _=Depends(require_admin)):
     conn = get_connection()
     try:
         _ensure_table(conn)

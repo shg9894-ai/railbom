@@ -1,14 +1,15 @@
 import json
-from fastapi import APIRouter, HTTPException, UploadFile, File, Form
+from fastapi import APIRouter, HTTPException, UploadFile, File, Form, Depends
 from fastapi.responses import Response
 from database.repositories import vehicle_repo
 from services import excel_service
+from routers.deps import require_user, require_admin
 
 router = APIRouter(prefix="/api/excel", tags=["excel"])
 
 
 @router.get("/template")
-def download_template():
+def download_template(_=Depends(require_user)):
     data = excel_service.get_template()
     return Response(
         content=data,
@@ -18,7 +19,7 @@ def download_template():
 
 
 @router.get("/export/{vehicle_type_id}")
-def export_bom(vehicle_type_id: int):
+def export_bom(vehicle_type_id: int, _=Depends(require_user)):
     vehicle = vehicle_repo.get_vehicle_by_id(vehicle_type_id)
     if not vehicle:
         raise HTTPException(status_code=404, detail="차종을 찾을 수 없습니다.")
@@ -32,7 +33,7 @@ def export_bom(vehicle_type_id: int):
 
 
 @router.post("/import/{vehicle_type_id}")
-async def import_bom(vehicle_type_id: int, file: UploadFile = File(...)):
+async def import_bom(vehicle_type_id: int, file: UploadFile = File(...), _=Depends(require_admin)):
     vehicle = vehicle_repo.get_vehicle_by_id(vehicle_type_id)
     if not vehicle:
         raise HTTPException(status_code=404, detail="차종을 찾을 수 없습니다.")
@@ -44,7 +45,7 @@ async def import_bom(vehicle_type_id: int, file: UploadFile = File(...)):
 # ── 네이티브 포맷 (BOM 그려본 자료.xlsx 형식) ──────────────────────────────────
 
 @router.post("/preview-native")
-async def preview_native(file: UploadFile = File(...)):
+async def preview_native(file: UploadFile = File(...), _=Depends(require_admin)):
     """파일 내 시트 목록과 예상 데이터 행 수 반환"""
     file_bytes = await file.read()
     return excel_service.preview_native(file_bytes)
@@ -56,6 +57,7 @@ async def import_native(
     file: UploadFile = File(...),
     sheet_name: str = Form(...),
     other_vehicle_map: str = Form(default="{}"),  # JSON: {"이음": 2, "원강": 3}
+    _=Depends(require_admin),
 ):
     """
     네이티브 BOM 포맷 import.
