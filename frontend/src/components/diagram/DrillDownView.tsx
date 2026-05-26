@@ -878,12 +878,7 @@ export default function DrillDownView({ vehicleTypeId, categoryCode, onBack, onC
     enabled:  currentNodeId !== null,
   })
 
-  useEffect(() => {
-    if (roots?.length === 1 && roots[0].node_type === 'category' && currentNodeId === null) {
-      setCurrentNodeId(roots[0].id)
-      setStack([{ id: roots[0].id, name: roots[0].name, material_no: roots[0].material_no, drawing_no: roots[0].drawing_no }])
-    }
-  }, [roots, currentNodeId])
+  // 루트가 1개여도 자동으로 진입하지 않음 — 카테고리 선택 화면 유지
 
   const isLoading    = rootsLoading || childLoading
   const rawNodes     = currentNodeId === null ? (roots ?? []) : (children ?? [])
