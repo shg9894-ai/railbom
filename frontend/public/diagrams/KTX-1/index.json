@@ -828,7 +828,58 @@
     },
     "cat2": {
       "label": "연결장치",
-      "pages": []
+      "pages": [
+        {
+          "page": 111,
+          "file": "ktx1_p111.jpg",
+          "mat_nos": [],
+          "assembly": "Traction Hook Eye 1MN 45-273",
+          "sub_assembly": null,
+          "chapter": "PART200",
+          "parts": [],
+          "diagram_page_id": 2448
+        },
+        {
+          "page": 112,
+          "file": "ktx1_p112.jpg",
+          "mat_nos": [],
+          "assembly": "Traction Hook Eye 1MN 45-273",
+          "sub_assembly": null,
+          "chapter": "PART200 기계계통",
+          "parts": [],
+          "diagram_page_id": 2449
+        },
+        {
+          "page": 178,
+          "file": "ktx1_p178.jpg",
+          "mat_nos": [],
+          "assembly": "Carbone Strip For Bow / Elastic Knuckle For Anti Yaw Damper",
+          "sub_assembly": null,
+          "chapter": "PART200 기계계통",
+          "parts": [],
+          "diagram_page_id": 2515
+        },
+        {
+          "page": 179,
+          "file": "ktx1_p179.jpg",
+          "mat_nos": [],
+          "assembly": "Emergency Coupling And Accessories",
+          "sub_assembly": null,
+          "chapter": "PART200",
+          "parts": [],
+          "diagram_page_id": 2516
+        },
+        {
+          "page": 469,
+          "file": "ktx1_p469.jpg",
+          "mat_nos": [],
+          "assembly": "CNVP Plug-In Block : Network Coupler / MESP Plug-In Block : I/O Supervisor Board",
+          "sub_assembly": null,
+          "chapter": "PART 800 제어안전계통",
+          "parts": [],
+          "diagram_page_id": 2806
+        }
+      ]
     },
     "cat3": {
       "label": "보조전원장치",
@@ -1032,12 +1083,7 @@
           "chapter": "PART 600 전기계통",
           "parts": [],
           "diagram_page_id": 2692
-        }
-      ]
-    },
-    "cat4": {
-      "label": "운전실·제어장치",
-      "pages": [
+        },
         {
           "page": 357,
           "file": "ktx1_p357.jpg",
@@ -1827,17 +1873,12 @@
           "chapter": "PART 700",
           "parts": [],
           "diagram_page_id": 2772
-        },
-        {
-          "page": 437,
-          "file": "ktx1_p437.jpg",
-          "mat_nos": [],
-          "assembly": "Alarm-Signal Switch / Air Filter For Suspension Panel",
-          "sub_assembly": null,
-          "chapter": "PART 800 제어안전계통",
-          "parts": [],
-          "diagram_page_id": 2774
-        },
+        }
+      ]
+    },
+    "cat4": {
+      "label": "운전실·제어장치",
+      "pages": [
         {
           "page": 438,
           "file": "ktx1_p438.jpg",
@@ -2147,16 +2188,6 @@
           "chapter": "PART 800 제어안전계통",
           "parts": [],
           "diagram_page_id": 2805
-        },
-        {
-          "page": 469,
-          "file": "ktx1_p469.jpg",
-          "mat_nos": [],
-          "assembly": "CNVP Plug-In Block : Network Coupler / MESP Plug-In Block : I/O Supervisor Board",
-          "sub_assembly": null,
-          "chapter": "PART 800 제어안전계통",
-          "parts": [],
-          "diagram_page_id": 2806
         },
         {
           "page": 470,
@@ -2889,26 +2920,6 @@
           "diagram_page_id": 2447
         },
         {
-          "page": 111,
-          "file": "ktx1_p111.jpg",
-          "mat_nos": [],
-          "assembly": "Traction Hook Eye 1MN 45-273",
-          "sub_assembly": null,
-          "chapter": "PART200",
-          "parts": [],
-          "diagram_page_id": 2448
-        },
-        {
-          "page": 112,
-          "file": "ktx1_p112.jpg",
-          "mat_nos": [],
-          "assembly": "Traction Hook Eye 1MN 45-273",
-          "sub_assembly": null,
-          "chapter": "PART200 기계계통",
-          "parts": [],
-          "diagram_page_id": 2449
-        },
-        {
           "page": 113,
           "file": "ktx1_p113.jpg",
           "mat_nos": [],
@@ -3539,26 +3550,6 @@
           "diagram_page_id": 2514
         },
         {
-          "page": 178,
-          "file": "ktx1_p178.jpg",
-          "mat_nos": [],
-          "assembly": "Carbone Strip For Bow / Elastic Knuckle For Anti Yaw Damper",
-          "sub_assembly": null,
-          "chapter": "PART200 기계계통",
-          "parts": [],
-          "diagram_page_id": 2515
-        },
-        {
-          "page": 179,
-          "file": "ktx1_p179.jpg",
-          "mat_nos": [],
-          "assembly": "Emergency Coupling And Accessories",
-          "sub_assembly": null,
-          "chapter": "PART200",
-          "parts": [],
-          "diagram_page_id": 2516
-        },
-        {
           "page": 180,
           "file": "ktx1_p180.jpg",
           "mat_nos": [],
@@ -3662,7 +3653,68 @@
     },
     "cat7": {
       "label": "차상신호장치",
-      "pages": []
+      "pages": [
+        {
+          "page": 47,
+          "file": "ktx1_p47.jpg",
+          "mat_nos": [],
+          "assembly": "Hatch Framework",
+          "sub_assembly": null,
+          "chapter": "PART100",
+          "parts": [],
+          "diagram_page_id": 2384
+        },
+        {
+          "page": 48,
+          "file": "ktx1_p48.jpg",
+          "mat_nos": [],
+          "assembly": "Hatch Framework",
+          "sub_assembly": null,
+          "chapter": "PART100",
+          "parts": [],
+          "diagram_page_id": 2385
+        },
+        {
+          "page": 49,
+          "file": "ktx1_p49.jpg",
+          "mat_nos": [],
+          "assembly": "Right Hatch Framework / Left Hatch Framework",
+          "sub_assembly": null,
+          "chapter": "PART100",
+          "parts": [],
+          "diagram_page_id": 2386
+        },
+        {
+          "page": 437,
+          "file": "ktx1_p437.jpg",
+          "mat_nos": [],
+          "assembly": "Alarm-Signal Switch / Air Filter For Suspension Panel",
+          "sub_assembly": null,
+          "chapter": "PART 800 제어안전계통",
+          "parts": [],
+          "diagram_page_id": 2774
+        },
+        {
+          "page": 498,
+          "file": "ktx1_p498.jpg",
+          "mat_nos": [],
+          "assembly": "Cab Signal Box 27 Stacker",
+          "sub_assembly": null,
+          "chapter": "",
+          "parts": [],
+          "diagram_page_id": 2835
+        },
+        {
+          "page": 525,
+          "file": "ktx1_p525.jpg",
+          "mat_nos": [],
+          "assembly": "TVM/Antenna",
+          "sub_assembly": null,
+          "chapter": "",
+          "parts": [],
+          "diagram_page_id": 2862
+        }
+      ]
     },
     "cat8": {
       "label": "차체·설비",
@@ -3888,6 +3940,16 @@
           "diagram_page_id": 2371
         },
         {
+          "page": 35,
+          "file": "ktx1_p35.jpg",
+          "mat_nos": [],
+          "assembly": "하부설비 (PC1) / 하부설비 (TR1)",
+          "sub_assembly": null,
+          "chapter": "하부설비",
+          "parts": [],
+          "diagram_page_id": 2372
+        },
+        {
           "page": 36,
           "file": "ktx1_p36.jpg",
           "mat_nos": [],
@@ -3968,6 +4030,16 @@
           "diagram_page_id": 2380
         },
         {
+          "page": 44,
+          "file": "ktx1_p44.jpg",
+          "mat_nos": [],
+          "assembly": "하부설비 (TR18) / 하부설비 (PC2)",
+          "sub_assembly": null,
+          "chapter": "하부설비",
+          "parts": [],
+          "diagram_page_id": 2381
+        },
+        {
           "page": 45,
           "file": "ktx1_p45.jpg",
           "mat_nos": [],
@@ -3986,36 +4058,6 @@
           "chapter": "PART 100",
           "parts": [],
           "diagram_page_id": 2383
-        },
-        {
-          "page": 47,
-          "file": "ktx1_p47.jpg",
-          "mat_nos": [],
-          "assembly": "Hatch Framework",
-          "sub_assembly": null,
-          "chapter": "PART100",
-          "parts": [],
-          "diagram_page_id": 2384
-        },
-        {
-          "page": 48,
-          "file": "ktx1_p48.jpg",
-          "mat_nos": [],
-          "assembly": "Hatch Framework",
-          "sub_assembly": null,
-          "chapter": "PART100",
-          "parts": [],
-          "diagram_page_id": 2385
-        },
-        {
-          "page": 49,
-          "file": "ktx1_p49.jpg",
-          "mat_nos": [],
-          "assembly": "Right Hatch Framework / Left Hatch Framework",
-          "sub_assembly": null,
-          "chapter": "PART100",
-          "parts": [],
-          "diagram_page_id": 2386
         },
         {
           "page": 50,
@@ -4868,16 +4910,6 @@
           "diagram_page_id": 2834
         },
         {
-          "page": 498,
-          "file": "ktx1_p498.jpg",
-          "mat_nos": [],
-          "assembly": "Cab Signal Box 27 Stacker",
-          "sub_assembly": null,
-          "chapter": "",
-          "parts": [],
-          "diagram_page_id": 2835
-        },
-        {
           "page": 499,
           "file": "ktx1_p499.jpg",
           "mat_nos": [],
@@ -5136,16 +5168,6 @@
           "chapter": "",
           "parts": [],
           "diagram_page_id": 2861
-        },
-        {
-          "page": 525,
-          "file": "ktx1_p525.jpg",
-          "mat_nos": [],
-          "assembly": "TVM/Antenna",
-          "sub_assembly": null,
-          "chapter": "",
-          "parts": [],
-          "diagram_page_id": 2862
         },
         {
           "page": 526,
