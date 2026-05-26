@@ -17,3 +17,6 @@ CORS_ORIGINS = os.getenv("CORS_ORIGINS", "http://localhost:5173,http://localhost
 SUPABASE_URL = os.getenv("SUPABASE_URL", "")
 SUPABASE_SERVICE_KEY = os.getenv("SUPABASE_SERVICE_KEY", "")
 SUPABASE_BUCKET = os.getenv("SUPABASE_BUCKET", "assembly-photos")
+
+# 프론트엔드 정적 파일 URL (KTX-1 등 Supabase에 없는 이미지용)
+FRONTEND_URL = os.getenv("FRONTEND_URL", "https://korailbom.up.railway.app")

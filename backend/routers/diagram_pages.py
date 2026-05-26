@@ -4,7 +4,7 @@ from typing import Optional, List
 from pathlib import Path
 from pydantic import BaseModel
 from database.connection import get_connection
-from config.settings import DATABASE_URL, SUPABASE_URL, SUPABASE_BUCKET
+from config.settings import DATABASE_URL, SUPABASE_URL, SUPABASE_BUCKET, FRONTEND_URL
 
 router = APIRouter(prefix="/api/diagram-pages", tags=["diagram-pages"])
 
@@ -18,7 +18,11 @@ CLOUD_FILENAMES = {
     "KTX-산천1": lambda n: f"ktx750_p{n:03d}.jpg",
     "KTX-산천3": lambda n: f"ktx760_p{n:03d}.jpg",
     "ITX-마음":  lambda n: f"itxmaum_p{n:03d}.jpg",
-    "KTX-1":     lambda n: f"ktx1_p{n:03d}.jpg",
+}
+
+# 프론트엔드 정적 파일로 서빙하는 차종 (Supabase에 미업로드)
+STATIC_FILENAMES = {
+    "KTX-1": lambda n: f"/diagrams/KTX-1/ktx1_p{n}.jpg",
 }
 
 # 로컬 모드: 원본 파일 경로
@@ -46,6 +50,11 @@ IMAGE_DIR = IMAGE_DIRS["emu260"]
 
 @router.get("/image/{file_no}")
 def get_image(file_no: int, vehicle: Optional[str] = Query("emu260")):
+    # 프론트엔드 정적 파일로 서빙하는 차종 먼저 처리
+    if vehicle in STATIC_FILENAMES:
+        path = STATIC_FILENAMES[vehicle](file_no)
+        return RedirectResponse(f"{FRONTEND_URL}{path}", status_code=302)
+
     if DATABASE_URL and SUPABASE_URL:
         name_fn = CLOUD_FILENAMES.get(vehicle, CLOUD_FILENAMES.get("emu260"))
         if name_fn is None:
