@@ -1028,6 +1028,15 @@ export default function DrillDownView({ vehicleTypeId, categoryCode, onBack, onC
   const getPhotos = (nodeId: number) => photoIndex[String(nodeId)] ?? []
 
   const handleClickNode = useCallback((node: BomNode) => {
+    // category 타입 노드는 카드 클릭 시 바로 드릴다운
+    if (node.node_type === 'category') {
+      setCurrentNodeId(node.id)
+      setStack(prev => [...prev, { id: node.id, name: node.name, material_no: node.material_no, drawing_no: node.drawing_no }])
+      setSelectedLeaf(null)
+      setSearch('')
+      setHighlightFile(null)
+      return
+    }
     const pages = getPages(node)
     setHighlightFile(pages.length > 0 ? pages[0].file : null)
     setSelectedLeaf(node)
