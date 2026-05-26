@@ -1,0 +1,5163 @@
+{
+  "mat_index": {},
+  "manifest": {
+    "cat1": {
+      "label": "전력추진장치",
+      "pages": [
+        {
+          "page": 254,
+          "file": "ktx1_p254.jpg",
+          "mat_nos": [],
+          "assembly": "견인제동계통",
+          "sub_assembly": null,
+          "chapter": "PART 500",
+          "parts": [],
+          "diagram_page_id": 2591
+        },
+        {
+          "page": 255,
+          "file": "ktx1_p255.jpg",
+          "mat_nos": [],
+          "assembly": "Single Phase Circuit Breaker ACB 2510 P",
+          "sub_assembly": null,
+          "chapter": "PART500",
+          "parts": [],
+          "diagram_page_id": 2592
+        },
+        {
+          "page": 256,
+          "file": "ktx1_p256.jpg",
+          "mat_nos": [],
+          "assembly": "Single Phase Circuit Breaker ACB 2510 P",
+          "sub_assembly": null,
+          "chapter": "PART500",
+          "parts": [],
+          "diagram_page_id": 2593
+        },
+        {
+          "page": 257,
+          "file": "ktx1_p257.jpg",
+          "mat_nos": [],
+          "assembly": "Sensing Transformer",
+          "sub_assembly": null,
+          "chapter": "PART500",
+          "parts": [],
+          "diagram_page_id": 2594
+        },
+        {
+          "page": 258,
+          "file": "ktx1_p258.jpg",
+          "mat_nos": [],
+          "assembly": "250/5A Current Transformer / Regulator FRL",
+          "sub_assembly": null,
+          "chapter": "PART500",
+          "parts": [],
+          "diagram_page_id": 2595
+        },
+        {
+          "page": 259,
+          "file": "ktx1_p259.jpg",
+          "mat_nos": [],
+          "assembly": "25 KV Insulator (Roof)",
+          "sub_assembly": null,
+          "chapter": "PART500",
+          "parts": [],
+          "diagram_page_id": 2596
+        },
+        {
+          "page": 260,
+          "file": "ktx1_p260.jpg",
+          "mat_nos": [],
+          "assembly": "Isolation Transformer 100/100V (Palpage Circuit)",
+          "sub_assembly": null,
+          "chapter": "PART500",
+          "parts": [],
+          "diagram_page_id": 2597
+        },
+        {
+          "page": 261,
+          "file": "ktx1_p261.jpg",
+          "mat_nos": [],
+          "assembly": "Motor-Pump",
+          "sub_assembly": null,
+          "chapter": "PART500",
+          "parts": [],
+          "diagram_page_id": 2598
+        },
+        {
+          "page": 262,
+          "file": "ktx1_p262.jpg",
+          "mat_nos": [],
+          "assembly": "Motor-Pump",
+          "sub_assembly": null,
+          "chapter": "PART500 견인제동계통",
+          "parts": [],
+          "diagram_page_id": 2599
+        },
+        {
+          "page": 263,
+          "file": "ktx1_p263.jpg",
+          "mat_nos": [],
+          "assembly": "견인제동계통",
+          "sub_assembly": null,
+          "chapter": "PART500",
+          "parts": [],
+          "diagram_page_id": 2600
+        },
+        {
+          "page": 264,
+          "file": "ktx1_p264.jpg",
+          "mat_nos": [],
+          "assembly": "Air Dryer",
+          "sub_assembly": null,
+          "chapter": "PART500",
+          "parts": [],
+          "diagram_page_id": 2601
+        },
+        {
+          "page": 265,
+          "file": "ktx1_p265.jpg",
+          "mat_nos": [],
+          "assembly": "Thermostat 13° / Thermostat 70°",
+          "sub_assembly": null,
+          "chapter": "PART500 견인제동계통",
+          "parts": [],
+          "diagram_page_id": 2602
+        },
+        {
+          "page": 266,
+          "file": "ktx1_p266.jpg",
+          "mat_nos": [],
+          "assembly": "Thermostat 130° / Thermostat 120°",
+          "sub_assembly": null,
+          "chapter": "PART500",
+          "parts": [],
+          "diagram_page_id": 2603
+        },
+        {
+          "page": 267,
+          "file": "ktx1_p267.jpg",
+          "mat_nos": [],
+          "assembly": "HV Bushing",
+          "sub_assembly": null,
+          "chapter": "PART500",
+          "parts": [],
+          "diagram_page_id": 2604
+        },
+        {
+          "page": 268,
+          "file": "ktx1_p268.jpg",
+          "mat_nos": [],
+          "assembly": "Motor Block (Without Electronic Racks And Enclosures)",
+          "sub_assembly": null,
+          "chapter": "PART500",
+          "parts": [],
+          "diagram_page_id": 2605
+        },
+        {
+          "page": 269,
+          "file": "ktx1_p269.jpg",
+          "mat_nos": [],
+          "assembly": "Relay Monostable H CODWZY",
+          "sub_assembly": null,
+          "chapter": "PART500",
+          "parts": [],
+          "diagram_page_id": 2606
+        },
+        {
+          "page": 270,
+          "file": "ktx1_p270.jpg",
+          "mat_nos": [],
+          "assembly": "Timed Relay Thlao-72-YWY",
+          "sub_assembly": null,
+          "chapter": "PART500",
+          "parts": [],
+          "diagram_page_id": 2607
+        },
+        {
+          "page": 271,
+          "file": "ktx1_p271.jpg",
+          "mat_nos": [],
+          "assembly": "Enclosure CV-TT",
+          "sub_assembly": null,
+          "chapter": "PART500",
+          "parts": [],
+          "diagram_page_id": 2608
+        },
+        {
+          "page": 272,
+          "file": "ktx1_p272.jpg",
+          "mat_nos": [],
+          "assembly": "Enclosure IR-TT",
+          "sub_assembly": null,
+          "chapter": "PART500",
+          "parts": [],
+          "diagram_page_id": 2609
+        },
+        {
+          "page": 273,
+          "file": "ktx1_p273.jpg",
+          "mat_nos": [],
+          "assembly": "CO-BK Enclosure",
+          "sub_assembly": null,
+          "chapter": "PART500",
+          "parts": [],
+          "diagram_page_id": 2610
+        },
+        {
+          "page": 274,
+          "file": "ktx1_p274.jpg",
+          "mat_nos": [],
+          "assembly": "PFC Power Case",
+          "sub_assembly": null,
+          "chapter": "PART500",
+          "parts": [],
+          "diagram_page_id": 2611
+        },
+        {
+          "page": 275,
+          "file": "ktx1_p275.jpg",
+          "mat_nos": [],
+          "assembly": "Inverter 52kVA",
+          "sub_assembly": null,
+          "chapter": "PART500",
+          "parts": [],
+          "diagram_page_id": 2612
+        },
+        {
+          "page": 276,
+          "file": "ktx1_p276.jpg",
+          "mat_nos": [],
+          "assembly": "Current Sensor",
+          "sub_assembly": null,
+          "chapter": "PART500",
+          "parts": [],
+          "diagram_page_id": 2613
+        },
+        {
+          "page": 277,
+          "file": "ktx1_p277.jpg",
+          "mat_nos": [],
+          "assembly": "견인제동계통",
+          "sub_assembly": null,
+          "chapter": "PART500",
+          "parts": [],
+          "diagram_page_id": 2614
+        },
+        {
+          "page": 278,
+          "file": "ktx1_p278.jpg",
+          "mat_nos": [],
+          "assembly": "Electronic Control Unit For Motor Block",
+          "sub_assembly": null,
+          "chapter": "PART 500 전기계통",
+          "parts": [],
+          "diagram_page_id": 2615
+        },
+        {
+          "page": 279,
+          "file": "ktx1_p279.jpg",
+          "mat_nos": [],
+          "assembly": "견인제동계통",
+          "sub_assembly": null,
+          "chapter": "PART500",
+          "parts": [],
+          "diagram_page_id": 2616
+        },
+        {
+          "page": 280,
+          "file": "ktx1_p280.jpg",
+          "mat_nos": [],
+          "assembly": "견인제동계통",
+          "sub_assembly": null,
+          "chapter": "PART500",
+          "parts": [],
+          "diagram_page_id": 2617
+        },
+        {
+          "page": 281,
+          "file": "ktx1_p281.jpg",
+          "mat_nos": [],
+          "assembly": "견인제동계통",
+          "sub_assembly": null,
+          "chapter": "PART500",
+          "parts": [],
+          "diagram_page_id": 2618
+        },
+        {
+          "page": 282,
+          "file": "ktx1_p282.jpg",
+          "mat_nos": [],
+          "assembly": "IMON Mono Phase Interface / INCA Analog DC Interface",
+          "sub_assembly": null,
+          "chapter": "PART500",
+          "parts": [],
+          "diagram_page_id": 2619
+        },
+        {
+          "page": 283,
+          "file": "ktx1_p283.jpg",
+          "mat_nos": [],
+          "assembly": "Thyristor Impulse Amplifier",
+          "sub_assembly": null,
+          "chapter": "PART500",
+          "parts": [],
+          "diagram_page_id": 2620
+        },
+        {
+          "page": 284,
+          "file": "ktx1_p284.jpg",
+          "mat_nos": [],
+          "assembly": "ESL1 Board / ESL2 Board",
+          "sub_assembly": null,
+          "chapter": "PART500",
+          "parts": [],
+          "diagram_page_id": 2621
+        },
+        {
+          "page": 285,
+          "file": "ktx1_p285.jpg",
+          "mat_nos": [],
+          "assembly": "ESL3 Board / MV Board",
+          "sub_assembly": null,
+          "chapter": "PART500",
+          "parts": [],
+          "diagram_page_id": 2622
+        },
+        {
+          "page": 286,
+          "file": "ktx1_p286.jpg",
+          "mat_nos": [],
+          "assembly": "CAL3 Board / CAL2 Board",
+          "sub_assembly": null,
+          "chapter": "PART500",
+          "parts": [],
+          "diagram_page_id": 2623
+        },
+        {
+          "page": 287,
+          "file": "ktx1_p287.jpg",
+          "mat_nos": [],
+          "assembly": "견인제동계통",
+          "sub_assembly": null,
+          "chapter": "PART500",
+          "parts": [],
+          "diagram_page_id": 2624
+        },
+        {
+          "page": 288,
+          "file": "ktx1_p288.jpg",
+          "mat_nos": [],
+          "assembly": "CRVB 모터블록용 커플러 보드 / AG 일반 전원공급장치",
+          "sub_assembly": null,
+          "chapter": "PART 500",
+          "parts": [],
+          "diagram_page_id": 2625
+        },
+        {
+          "page": 289,
+          "file": "ktx1_p289.jpg",
+          "mat_nos": [],
+          "assembly": "견인제동계통",
+          "sub_assembly": null,
+          "chapter": "PART500",
+          "parts": [],
+          "diagram_page_id": 2626
+        },
+        {
+          "page": 290,
+          "file": "ktx1_p290.jpg",
+          "mat_nos": [],
+          "assembly": "견인제동계통",
+          "sub_assembly": null,
+          "chapter": "PART500",
+          "parts": [],
+          "diagram_page_id": 2627
+        },
+        {
+          "page": 291,
+          "file": "ktx1_p291.jpg",
+          "mat_nos": [],
+          "assembly": "견인제동계통",
+          "sub_assembly": null,
+          "chapter": "PART500",
+          "parts": [],
+          "diagram_page_id": 2628
+        },
+        {
+          "page": 292,
+          "file": "ktx1_p292.jpg",
+          "mat_nos": [],
+          "assembly": "Voltage Measurement Device 3000V / 500V",
+          "sub_assembly": null,
+          "chapter": "PART500",
+          "parts": [],
+          "diagram_page_id": 2629
+        },
+        {
+          "page": 293,
+          "file": "ktx1_p293.jpg",
+          "mat_nos": [],
+          "assembly": "Upper Capacitor Baseplate",
+          "sub_assembly": null,
+          "chapter": "PART500",
+          "parts": [],
+          "diagram_page_id": 2630
+        },
+        {
+          "page": 294,
+          "file": "ktx1_p294.jpg",
+          "mat_nos": [],
+          "assembly": "Upper Capacitor Baseplate",
+          "sub_assembly": null,
+          "chapter": "PART 500 전기계통",
+          "parts": [],
+          "diagram_page_id": 2631
+        },
+        {
+          "page": 295,
+          "file": "ktx1_p295.jpg",
+          "mat_nos": [],
+          "assembly": "Upper Capacitor Baseplate",
+          "sub_assembly": null,
+          "chapter": "PART500",
+          "parts": [],
+          "diagram_page_id": 2632
+        },
+        {
+          "page": 296,
+          "file": "ktx1_p296.jpg",
+          "mat_nos": [],
+          "assembly": "Capacitor Platine",
+          "sub_assembly": null,
+          "chapter": "PART500",
+          "parts": [],
+          "diagram_page_id": 2633
+        },
+        {
+          "page": 297,
+          "file": "ktx1_p297.jpg",
+          "mat_nos": [],
+          "assembly": "Capacitor Platine",
+          "sub_assembly": null,
+          "chapter": "PART 500 전기계통",
+          "parts": [],
+          "diagram_page_id": 2634
+        },
+        {
+          "page": 298,
+          "file": "ktx1_p298.jpg",
+          "mat_nos": [],
+          "assembly": "Capacitor Platine",
+          "sub_assembly": null,
+          "chapter": "PART500",
+          "parts": [],
+          "diagram_page_id": 2635
+        },
+        {
+          "page": 299,
+          "file": "ktx1_p299.jpg",
+          "mat_nos": [],
+          "assembly": "견인제동계통",
+          "sub_assembly": null,
+          "chapter": "PART500",
+          "parts": [],
+          "diagram_page_id": 2636
+        },
+        {
+          "page": 300,
+          "file": "ktx1_p300.jpg",
+          "mat_nos": [],
+          "assembly": "견인제동계통",
+          "sub_assembly": null,
+          "chapter": "PART500",
+          "parts": [],
+          "diagram_page_id": 2637
+        },
+        {
+          "page": 301,
+          "file": "ktx1_p301.jpg",
+          "mat_nos": [],
+          "assembly": "견인제동계통",
+          "sub_assembly": null,
+          "chapter": "PART500",
+          "parts": [],
+          "diagram_page_id": 2638
+        },
+        {
+          "page": 302,
+          "file": "ktx1_p302.jpg",
+          "mat_nos": [],
+          "assembly": "Relay 350V DC 500V",
+          "sub_assembly": null,
+          "chapter": "PART500",
+          "parts": [],
+          "diagram_page_id": 2639
+        },
+        {
+          "page": 303,
+          "file": "ktx1_p303.jpg",
+          "mat_nos": [],
+          "assembly": "Switch TS 2525",
+          "sub_assembly": null,
+          "chapter": "PART500",
+          "parts": [],
+          "diagram_page_id": 2640
+        },
+        {
+          "page": 304,
+          "file": "ktx1_p304.jpg",
+          "mat_nos": [],
+          "assembly": "Contactor TCP 3467-06-A-24-B-S00-T",
+          "sub_assembly": null,
+          "chapter": "PART500",
+          "parts": [],
+          "diagram_page_id": 2641
+        },
+        {
+          "page": 305,
+          "file": "ktx1_p305.jpg",
+          "mat_nos": [],
+          "assembly": "Contactor TCP 3437-06-A-24-A-R00-T",
+          "sub_assembly": null,
+          "chapter": "PART500",
+          "parts": [],
+          "diagram_page_id": 2642
+        },
+        {
+          "page": 306,
+          "file": "ktx1_p306.jpg",
+          "mat_nos": [],
+          "assembly": "견인제동계통",
+          "sub_assembly": null,
+          "chapter": "PART500",
+          "parts": [],
+          "diagram_page_id": 2643
+        },
+        {
+          "page": 307,
+          "file": "ktx1_p307.jpg",
+          "mat_nos": [],
+          "assembly": "Gate Drive Base Plate / Capacitor 235uF 1500V",
+          "sub_assembly": null,
+          "chapter": "PART500 견인제동계통",
+          "parts": [],
+          "diagram_page_id": 2644
+        },
+        {
+          "page": 308,
+          "file": "ktx1_p308.jpg",
+          "mat_nos": [],
+          "assembly": "Capacitor C-PFC 108uF 3700V",
+          "sub_assembly": null,
+          "chapter": "PART500",
+          "parts": [],
+          "diagram_page_id": 2645
+        },
+        {
+          "page": 309,
+          "file": "ktx1_p309.jpg",
+          "mat_nos": [],
+          "assembly": "Capacitor C-PFC 108uF 3700V",
+          "sub_assembly": null,
+          "chapter": "PART500",
+          "parts": [],
+          "diagram_page_id": 2646
+        },
+        {
+          "page": 310,
+          "file": "ktx1_p310.jpg",
+          "mat_nos": [],
+          "assembly": "Arc Chute 24B / Arc Chute 24A",
+          "sub_assembly": null,
+          "chapter": "PART500",
+          "parts": [],
+          "diagram_page_id": 2647
+        },
+        {
+          "page": 311,
+          "file": "ktx1_p311.jpg",
+          "mat_nos": [],
+          "assembly": "Contactor TCP3437-06-A-24-A-S00-T, (K-BK-01)",
+          "sub_assembly": null,
+          "chapter": "PART500",
+          "parts": [],
+          "diagram_page_id": 2648
+        },
+        {
+          "page": 312,
+          "file": "ktx1_p312.jpg",
+          "mat_nos": [],
+          "assembly": "견인제동계통",
+          "sub_assembly": null,
+          "chapter": "PART500",
+          "parts": [],
+          "diagram_page_id": 2649
+        },
+        {
+          "page": 313,
+          "file": "ktx1_p313.jpg",
+          "mat_nos": [],
+          "assembly": "Motor Fan Group",
+          "sub_assembly": null,
+          "chapter": "PART500",
+          "parts": [],
+          "diagram_page_id": 2650
+        },
+        {
+          "page": 314,
+          "file": "ktx1_p314.jpg",
+          "mat_nos": [],
+          "assembly": "Hht Earthing Switch",
+          "sub_assembly": null,
+          "chapter": "PART500",
+          "parts": [],
+          "diagram_page_id": 2651
+        },
+        {
+          "page": 315,
+          "file": "ktx1_p315.jpg",
+          "mat_nos": [],
+          "assembly": "Complete Shunt For Roof Ligne / RC Circuit Moulded",
+          "sub_assembly": null,
+          "chapter": "PART500",
+          "parts": [],
+          "diagram_page_id": 2652
+        },
+        {
+          "page": 316,
+          "file": "ktx1_p316.jpg",
+          "mat_nos": [],
+          "assembly": "Contactor K.IR.TR",
+          "sub_assembly": null,
+          "chapter": "PART500",
+          "parts": [],
+          "diagram_page_id": 2653
+        },
+        {
+          "page": 317,
+          "file": "ktx1_p317.jpg",
+          "mat_nos": [],
+          "assembly": "Arc Chute / Fuse Cartridge CC7000. C3 .RC .120. E125",
+          "sub_assembly": null,
+          "chapter": "PART500",
+          "parts": [],
+          "diagram_page_id": 2654
+        },
+        {
+          "page": 318,
+          "file": "ktx1_p318.jpg",
+          "mat_nos": [],
+          "assembly": "견인제동계통",
+          "sub_assembly": null,
+          "chapter": "PART500",
+          "parts": [],
+          "diagram_page_id": 2655
+        },
+        {
+          "page": 319,
+          "file": "ktx1_p319.jpg",
+          "mat_nos": [],
+          "assembly": "견인제동계통",
+          "sub_assembly": null,
+          "chapter": "PART500",
+          "parts": [],
+          "diagram_page_id": 2656
+        },
+        {
+          "page": 320,
+          "file": "ktx1_p320.jpg",
+          "mat_nos": [],
+          "assembly": "Bearings NU216 / Bearings NU2220",
+          "sub_assembly": null,
+          "chapter": "PART500",
+          "parts": [],
+          "diagram_page_id": 2657
+        },
+        {
+          "page": 321,
+          "file": "ktx1_p321.jpg",
+          "mat_nos": [],
+          "assembly": "견인제동계통",
+          "sub_assembly": null,
+          "chapter": "PART500",
+          "parts": [],
+          "diagram_page_id": 2658
+        },
+        {
+          "page": 322,
+          "file": "ktx1_p322.jpg",
+          "mat_nos": [],
+          "assembly": "Capacitor RC 0.47uF 4000V / Current Transformer 500A/0.5A",
+          "sub_assembly": null,
+          "chapter": "PART500",
+          "parts": [],
+          "diagram_page_id": 2659
+        },
+        {
+          "page": 323,
+          "file": "ktx1_p323.jpg",
+          "mat_nos": [],
+          "assembly": "Enclosure CO-EX / FEMC Common Mode Input Filter",
+          "sub_assembly": null,
+          "chapter": "PART500",
+          "parts": [],
+          "diagram_page_id": 2660
+        },
+        {
+          "page": 324,
+          "file": "ktx1_p324.jpg",
+          "mat_nos": [],
+          "assembly": "Inductance Triphase 3*4 5uH / Left Oil Cooler",
+          "sub_assembly": null,
+          "chapter": "PART500 견인제동계통",
+          "parts": [],
+          "diagram_page_id": 2661
+        },
+        {
+          "page": 325,
+          "file": "ktx1_p325.jpg",
+          "mat_nos": [],
+          "assembly": "Lightning Arrester",
+          "sub_assembly": null,
+          "chapter": "PART500",
+          "parts": [],
+          "diagram_page_id": 2662
+        },
+        {
+          "page": 326,
+          "file": "ktx1_p326.jpg",
+          "mat_nos": [],
+          "assembly": "M_BBM Assembly Bay",
+          "sub_assembly": null,
+          "chapter": "PART500",
+          "parts": [],
+          "diagram_page_id": 2663
+        },
+        {
+          "page": 327,
+          "file": "ktx1_p327.jpg",
+          "mat_nos": [],
+          "assembly": "견인제동계통",
+          "sub_assembly": null,
+          "chapter": "PART500",
+          "parts": [],
+          "diagram_page_id": 2664
+        },
+        {
+          "page": 328,
+          "file": "ktx1_p328.jpg",
+          "mat_nos": [],
+          "assembly": "Overvoltage Relay QL-RM1&2 / Pick-Up Transformer 25KV/100V",
+          "sub_assembly": null,
+          "chapter": "PART500",
+          "parts": [],
+          "diagram_page_id": 2665
+        },
+        {
+          "page": 329,
+          "file": "ktx1_p329.jpg",
+          "mat_nos": [],
+          "assembly": "견인제동계통",
+          "sub_assembly": null,
+          "chapter": "PART500",
+          "parts": [],
+          "diagram_page_id": 2666
+        },
+        {
+          "page": 330,
+          "file": "ktx1_p330.jpg",
+          "mat_nos": [],
+          "assembly": "Relay 1001-S 72V",
+          "sub_assembly": null,
+          "chapter": "PART500",
+          "parts": [],
+          "diagram_page_id": 2667
+        },
+        {
+          "page": 331,
+          "file": "ktx1_p331.jpg",
+          "mat_nos": [],
+          "assembly": "견인제동계통",
+          "sub_assembly": null,
+          "chapter": "PART500",
+          "parts": [],
+          "diagram_page_id": 2668
+        },
+        {
+          "page": 332,
+          "file": "ktx1_p332.jpg",
+          "mat_nos": [],
+          "assembly": "Right Oil Cooler / Roof Connection",
+          "sub_assembly": null,
+          "chapter": "PART500",
+          "parts": [],
+          "diagram_page_id": 2669
+        },
+        {
+          "page": 333,
+          "file": "ktx1_p333.jpg",
+          "mat_nos": [],
+          "assembly": "Roof Ligne (R2/R17) / Roof Line (R1/R18)",
+          "sub_assembly": null,
+          "chapter": "PART 500 견인제동계통",
+          "parts": [],
+          "diagram_page_id": 2670
+        },
+        {
+          "page": 334,
+          "file": "ktx1_p334.jpg",
+          "mat_nos": [],
+          "assembly": "Rotary Head Support / Traction Motor",
+          "sub_assembly": null,
+          "chapter": "PART500",
+          "parts": [],
+          "diagram_page_id": 2671
+        },
+        {
+          "page": 335,
+          "file": "ktx1_p335.jpg",
+          "mat_nos": [],
+          "assembly": "견인제동계통",
+          "sub_assembly": null,
+          "chapter": "PART500",
+          "parts": [],
+          "diagram_page_id": 2672
+        }
+      ]
+    },
+    "cat2": {
+      "label": "연결장치",
+      "pages": []
+    },
+    "cat3": {
+      "label": "보조전원장치",
+      "pages": [
+        {
+          "page": 336,
+          "file": "ktx1_p336.jpg",
+          "mat_nos": [],
+          "assembly": "전기계통",
+          "sub_assembly": null,
+          "chapter": "PART 600",
+          "parts": [],
+          "diagram_page_id": 2673
+        },
+        {
+          "page": 337,
+          "file": "ktx1_p337.jpg",
+          "mat_nos": [],
+          "assembly": "Bbm Wired Rack",
+          "sub_assembly": null,
+          "chapter": "PART600",
+          "parts": [],
+          "diagram_page_id": 2674
+        },
+        {
+          "page": 338,
+          "file": "ktx1_p338.jpg",
+          "mat_nos": [],
+          "assembly": "All3 Gate Drive Panel",
+          "sub_assembly": null,
+          "chapter": "PART600",
+          "parts": [],
+          "diagram_page_id": 2675
+        },
+        {
+          "page": 339,
+          "file": "ktx1_p339.jpg",
+          "mat_nos": [],
+          "assembly": "Rotor Pole / Stator Coils Equipped",
+          "sub_assembly": null,
+          "chapter": "PART600 전기계통",
+          "parts": [],
+          "diagram_page_id": 2676
+        },
+        {
+          "page": 340,
+          "file": "ktx1_p340.jpg",
+          "mat_nos": [],
+          "assembly": "Heating Contactor KRCS B357 4453-30001 / Aux. Inverter KRCS B294",
+          "sub_assembly": null,
+          "chapter": "PART600",
+          "parts": [],
+          "diagram_page_id": 2677
+        },
+        {
+          "page": 341,
+          "file": "ktx1_p341.jpg",
+          "mat_nos": [],
+          "assembly": "KRCS B302 350KVA Trailer Inverter",
+          "sub_assembly": null,
+          "chapter": "PART600",
+          "parts": [],
+          "diagram_page_id": 2678
+        },
+        {
+          "page": 342,
+          "file": "ktx1_p342.jpg",
+          "mat_nos": [],
+          "assembly": "KRCS B301 Aux. Converter Of PC 4251-10010",
+          "sub_assembly": null,
+          "chapter": "PART600",
+          "parts": [],
+          "diagram_page_id": 2679
+        },
+        {
+          "page": 343,
+          "file": "ktx1_p343.jpg",
+          "mat_nos": [],
+          "assembly": "KRCS B312 Trailer Battery Charger 4455-30010",
+          "sub_assembly": null,
+          "chapter": "PART600",
+          "parts": [],
+          "diagram_page_id": 2680
+        },
+        {
+          "page": 344,
+          "file": "ktx1_p344.jpg",
+          "mat_nos": [],
+          "assembly": "Power Car Battery Charger KRCS B323",
+          "sub_assembly": null,
+          "chapter": "PART600",
+          "parts": [],
+          "diagram_page_id": 2681
+        },
+        {
+          "page": 345,
+          "file": "ktx1_p345.jpg",
+          "mat_nos": [],
+          "assembly": "전기계통",
+          "sub_assembly": null,
+          "chapter": "PART600",
+          "parts": [],
+          "diagram_page_id": 2682
+        },
+        {
+          "page": 346,
+          "file": "ktx1_p346.jpg",
+          "mat_nos": [],
+          "assembly": "동력차 접촉기 (TCP-DC Double / TCP-DC)",
+          "sub_assembly": null,
+          "chapter": "PART600",
+          "parts": [],
+          "diagram_page_id": 2683
+        },
+        {
+          "page": 347,
+          "file": "ktx1_p347.jpg",
+          "mat_nos": [],
+          "assembly": "전기계통",
+          "sub_assembly": null,
+          "chapter": "PART600",
+          "parts": [],
+          "diagram_page_id": 2684
+        },
+        {
+          "page": 348,
+          "file": "ktx1_p348.jpg",
+          "mat_nos": [],
+          "assembly": "전기계통",
+          "sub_assembly": null,
+          "chapter": "PART600",
+          "parts": [],
+          "diagram_page_id": 2685
+        },
+        {
+          "page": 349,
+          "file": "ktx1_p349.jpg",
+          "mat_nos": [],
+          "assembly": "전기계통 - Cooling Blower",
+          "sub_assembly": null,
+          "chapter": "PART600",
+          "parts": [],
+          "diagram_page_id": 2686
+        },
+        {
+          "page": 350,
+          "file": "ktx1_p350.jpg",
+          "mat_nos": [],
+          "assembly": "DC/DC Converter Of Headlight",
+          "sub_assembly": null,
+          "chapter": "PART600",
+          "parts": [],
+          "diagram_page_id": 2687
+        },
+        {
+          "page": 351,
+          "file": "ktx1_p351.jpg",
+          "mat_nos": [],
+          "assembly": "ALMP Board / MELP Board KRCS B338",
+          "sub_assembly": null,
+          "chapter": "PART600",
+          "parts": [],
+          "diagram_page_id": 2688
+        },
+        {
+          "page": 352,
+          "file": "ktx1_p352.jpg",
+          "mat_nos": [],
+          "assembly": "MSRA Board KRCS B338 / MSRB Board KRCS B338",
+          "sub_assembly": null,
+          "chapter": "PART600",
+          "parts": [],
+          "diagram_page_id": 2689
+        },
+        {
+          "page": 353,
+          "file": "ktx1_p353.jpg",
+          "mat_nos": [],
+          "assembly": "MSSP Board KRCS B338 / INRP Board KRCS B338",
+          "sub_assembly": null,
+          "chapter": "PART600",
+          "parts": [],
+          "diagram_page_id": 2690
+        },
+        {
+          "page": 354,
+          "file": "ktx1_p354.jpg",
+          "mat_nos": [],
+          "assembly": "Grid Resistor",
+          "sub_assembly": null,
+          "chapter": "PART600",
+          "parts": [],
+          "diagram_page_id": 2691
+        },
+        {
+          "page": 355,
+          "file": "ktx1_p355.jpg",
+          "mat_nos": [],
+          "assembly": "Evaporator Ventilation Inverter KRCS B386",
+          "sub_assembly": null,
+          "chapter": "PART 600 전기계통",
+          "parts": [],
+          "diagram_page_id": 2692
+        }
+      ]
+    },
+    "cat4": {
+      "label": "운전실·제어장치",
+      "pages": [
+        {
+          "page": 357,
+          "file": "ktx1_p357.jpg",
+          "mat_nos": [],
+          "assembly": "Air Conditioning System Ducts",
+          "sub_assembly": null,
+          "chapter": "PART 700 보조 및 공기초화계통",
+          "parts": [],
+          "diagram_page_id": 2694
+        },
+        {
+          "page": 358,
+          "file": "ktx1_p358.jpg",
+          "mat_nos": [],
+          "assembly": "Magnet Valve W3d For Vent WC",
+          "sub_assembly": null,
+          "chapter": "PART 700 보조 및 공기초화계통",
+          "parts": [],
+          "diagram_page_id": 2695
+        },
+        {
+          "page": 359,
+          "file": "ktx1_p359.jpg",
+          "mat_nos": [],
+          "assembly": "Air Conditioning Unit",
+          "sub_assembly": null,
+          "chapter": "PART 700 보조 및 공기초화계통",
+          "parts": [],
+          "diagram_page_id": 2696
+        },
+        {
+          "page": 360,
+          "file": "ktx1_p360.jpg",
+          "mat_nos": [],
+          "assembly": "Air Conditioning Unit",
+          "sub_assembly": null,
+          "chapter": "PART 700 보조 및 공기초화계통",
+          "parts": [],
+          "diagram_page_id": 2697
+        },
+        {
+          "page": 361,
+          "file": "ktx1_p361.jpg",
+          "mat_nos": [],
+          "assembly": "Motor Fan Transformer Unit / Air Conditioning Unit Inverter",
+          "sub_assembly": null,
+          "chapter": "PART 700 보조 및 공기초화계통",
+          "parts": [],
+          "diagram_page_id": 2698
+        },
+        {
+          "page": 362,
+          "file": "ktx1_p362.jpg",
+          "mat_nos": [],
+          "assembly": "Motor AM100L1S / Air Manostat AP-5081",
+          "sub_assembly": null,
+          "chapter": "PART 700 보조 및 공기초화계통",
+          "parts": [],
+          "diagram_page_id": 2699
+        },
+        {
+          "page": 363,
+          "file": "ktx1_p363.jpg",
+          "mat_nos": [],
+          "assembly": "Thermastat Klixon 20981-80L / Evaporator Unit",
+          "sub_assembly": null,
+          "chapter": "PART 700 보조 및 공기초화계통",
+          "parts": [],
+          "diagram_page_id": 2700
+        },
+        {
+          "page": 364,
+          "file": "ktx1_p364.jpg",
+          "mat_nos": [],
+          "assembly": "Mixing Chamber",
+          "sub_assembly": null,
+          "chapter": "PART 700 보조 및 공기초화계통",
+          "parts": [],
+          "diagram_page_id": 2701
+        },
+        {
+          "page": 365,
+          "file": "ktx1_p365.jpg",
+          "mat_nos": [],
+          "assembly": "Treated Air Sensor / Motor AM032KK2",
+          "sub_assembly": null,
+          "chapter": "PART 700 보조 및 공기초화계통",
+          "parts": [],
+          "diagram_page_id": 2702
+        },
+        {
+          "page": 366,
+          "file": "ktx1_p366.jpg",
+          "mat_nos": [],
+          "assembly": "Condensing Unit",
+          "sub_assembly": null,
+          "chapter": "PART 700 보조 및 공기초화계통",
+          "parts": [],
+          "diagram_page_id": 2703
+        },
+        {
+          "page": 367,
+          "file": "ktx1_p367.jpg",
+          "mat_nos": [],
+          "assembly": "Condensing Unit",
+          "sub_assembly": null,
+          "chapter": "PART 700 보조 및 공기초화계통",
+          "parts": [],
+          "diagram_page_id": 2704
+        },
+        {
+          "page": 368,
+          "file": "ktx1_p368.jpg",
+          "mat_nos": [],
+          "assembly": "Reading Lamp Supply Converter",
+          "sub_assembly": null,
+          "chapter": "PART 700 보조 및 공기초화계통",
+          "parts": [],
+          "diagram_page_id": 2705
+        },
+        {
+          "page": 369,
+          "file": "ktx1_p369.jpg",
+          "mat_nos": [],
+          "assembly": "Electrovalve For Start-Up With Low Temp / Pressure Switch 2 Contacts No Type S-141319-SRPS-SI-MML",
+          "sub_assembly": null,
+          "chapter": "PART 700 보조 및 공기초화계통",
+          "parts": [],
+          "diagram_page_id": 2706
+        },
+        {
+          "page": 370,
+          "file": "ktx1_p370.jpg",
+          "mat_nos": [],
+          "assembly": "Fixed Connector For Monostable Type H Relay / Type H Relay 400-72-WUU",
+          "sub_assembly": null,
+          "chapter": "PART 700 보조 및 공기초화계통",
+          "parts": [],
+          "diagram_page_id": 2707
+        },
+        {
+          "page": 371,
+          "file": "ktx1_p371.jpg",
+          "mat_nos": [],
+          "assembly": "Time Delay Relay Type Thlor-72-ZWY",
+          "sub_assembly": null,
+          "chapter": "PART 700 보조 및 공기초화계통",
+          "parts": [],
+          "diagram_page_id": 2708
+        },
+        {
+          "page": 372,
+          "file": "ktx1_p372.jpg",
+          "mat_nos": [],
+          "assembly": "Motor Fan MF-VT-AUX (Fan + Motor Assembly)",
+          "sub_assembly": null,
+          "chapter": "PART 700 보조 및 공기초화계통",
+          "parts": [],
+          "diagram_page_id": 2709
+        },
+        {
+          "page": 373,
+          "file": "ktx1_p373.jpg",
+          "mat_nos": [],
+          "assembly": "Battery Charger Double Control Unit",
+          "sub_assembly": null,
+          "chapter": "PART 700 보조 및 공기초화계통",
+          "parts": [],
+          "diagram_page_id": 2710
+        },
+        {
+          "page": 374,
+          "file": "ktx1_p374.jpg",
+          "mat_nos": [],
+          "assembly": "CBMM Battery Charger Logical Rack / CDMM Motor Car Control",
+          "sub_assembly": null,
+          "chapter": "PART 700 보조 및 공기초화계통",
+          "parts": [],
+          "diagram_page_id": 2711
+        },
+        {
+          "page": 375,
+          "file": "ktx1_p375.jpg",
+          "mat_nos": [],
+          "assembly": "30 MH 70A RMS Filter Inductor",
+          "sub_assembly": null,
+          "chapter": "PART 700 보조 및 공기초화계통",
+          "parts": [],
+          "diagram_page_id": 2712
+        },
+        {
+          "page": 376,
+          "file": "ktx1_p376.jpg",
+          "mat_nos": [],
+          "assembly": "92 Ohm Resistor / Fuse Cartridge HBC E Size 2 GF250 250A",
+          "sub_assembly": null,
+          "chapter": "PART 700 보조 및 공기초화계통",
+          "parts": [],
+          "diagram_page_id": 2713
+        },
+        {
+          "page": 377,
+          "file": "ktx1_p377.jpg",
+          "mat_nos": [],
+          "assembly": "Auxiliary Box (Without Electronic Racks And Enclosures)",
+          "sub_assembly": null,
+          "chapter": "PART 700 보조 및 공기초화계통",
+          "parts": [],
+          "diagram_page_id": 2714
+        },
+        {
+          "page": 378,
+          "file": "ktx1_p378.jpg",
+          "mat_nos": [],
+          "assembly": "UTAUX-2174 Equipped Rack",
+          "sub_assembly": null,
+          "chapter": "PART 700 보조 및 공기초화계통",
+          "parts": [],
+          "diagram_page_id": 2715
+        },
+        {
+          "page": 379,
+          "file": "ktx1_p379.jpg",
+          "mat_nos": [],
+          "assembly": "AUF3 72V Battery Brake Power Supply / BFAS Battery Filter And Stand By Power Supply",
+          "sub_assembly": null,
+          "chapter": "PART 700",
+          "parts": [],
+          "diagram_page_id": 2716
+        },
+        {
+          "page": 380,
+          "file": "ktx1_p380.jpg",
+          "mat_nos": [],
+          "assembly": "CBA Auxiliary Block Interfaces / CALC Board",
+          "sub_assembly": null,
+          "chapter": "PART 700",
+          "parts": [],
+          "diagram_page_id": 2717
+        },
+        {
+          "page": 381,
+          "file": "ktx1_p381.jpg",
+          "mat_nos": [],
+          "assembly": "IMBA Auxiliary Block Monophase Interface",
+          "sub_assembly": null,
+          "chapter": "PART 700",
+          "parts": [],
+          "diagram_page_id": 2718
+        },
+        {
+          "page": 382,
+          "file": "ktx1_p382.jpg",
+          "mat_nos": [],
+          "assembly": "UTOND-1150 Equipped Rack",
+          "sub_assembly": null,
+          "chapter": "PART 700",
+          "parts": [],
+          "diagram_page_id": 2719
+        },
+        {
+          "page": 383,
+          "file": "ktx1_p383.jpg",
+          "mat_nos": [],
+          "assembly": "UTOND - MAM Modulation Amplitude Auxiliary Impulses / UTOND - FRCV CPR Frequency and Visualization",
+          "sub_assembly": null,
+          "chapter": "PART 700",
+          "parts": [],
+          "diagram_page_id": 2720
+        },
+        {
+          "page": 384,
+          "file": "ktx1_p384.jpg",
+          "mat_nos": [],
+          "assembly": "UTOND - TDS Failure Processing and Supervision / UTOND - DCC Failure Contactor",
+          "sub_assembly": null,
+          "chapter": "PART 700",
+          "parts": [],
+          "diagram_page_id": 2721
+        },
+        {
+          "page": 385,
+          "file": "ktx1_p385.jpg",
+          "mat_nos": [],
+          "assembly": "UTOND - MCAI Modulation Amplitude CRP Impulses / UTOND - TDSC CPR Failure Processing and Supervision",
+          "sub_assembly": null,
+          "chapter": "PART 700",
+          "parts": [],
+          "diagram_page_id": 2722
+        },
+        {
+          "page": 386,
+          "file": "ktx1_p386.jpg",
+          "mat_nos": [],
+          "assembly": "UTOND Wired Rack / Key Switch 7081B/101",
+          "sub_assembly": null,
+          "chapter": "PART 700",
+          "parts": [],
+          "diagram_page_id": 2723
+        },
+        {
+          "page": 387,
+          "file": "ktx1_p387.jpg",
+          "mat_nos": [],
+          "assembly": "Enclosure CV-AUX",
+          "sub_assembly": null,
+          "chapter": "PART 700",
+          "parts": [],
+          "diagram_page_id": 2724
+        },
+        {
+          "page": 388,
+          "file": "ktx1_p388.jpg",
+          "mat_nos": [],
+          "assembly": "Contactor TCP B-22 Root 2200A/750V",
+          "sub_assembly": null,
+          "chapter": "PART 700",
+          "parts": [],
+          "diagram_page_id": 2725
+        },
+        {
+          "page": 389,
+          "file": "ktx1_p389.jpg",
+          "mat_nos": [],
+          "assembly": "TCP 622 Contactor",
+          "sub_assembly": null,
+          "chapter": "PART 700",
+          "parts": [],
+          "diagram_page_id": 2726
+        },
+        {
+          "page": 390,
+          "file": "ktx1_p390.jpg",
+          "mat_nos": [],
+          "assembly": "Voltage Indication Lamp Unit 1500V / Voltage Measurement 500V +- 1%",
+          "sub_assembly": null,
+          "chapter": "PART 700",
+          "parts": [],
+          "diagram_page_id": 2727
+        },
+        {
+          "page": 391,
+          "file": "ktx1_p391.jpg",
+          "mat_nos": [],
+          "assembly": "Voltage Threshold Relay / Overvoltage Relay QESUR5Aux",
+          "sub_assembly": null,
+          "chapter": "PART 700",
+          "parts": [],
+          "diagram_page_id": 2728
+        },
+        {
+          "page": 392,
+          "file": "ktx1_p392.jpg",
+          "mat_nos": [],
+          "assembly": "Relay H 400-72-WXU / RELAT H 400-72-WXU",
+          "sub_assembly": null,
+          "chapter": "PART 700",
+          "parts": [],
+          "diagram_page_id": 2729
+        },
+        {
+          "page": 393,
+          "file": "ktx1_p393.jpg",
+          "mat_nos": [],
+          "assembly": "Relay H(4T) COIL 72 Vcc / Measurement Transformer 6VA 380/33V",
+          "sub_assembly": null,
+          "chapter": "PART 700",
+          "parts": [],
+          "diagram_page_id": 2730
+        },
+        {
+          "page": 394,
+          "file": "ktx1_p394.jpg",
+          "mat_nos": [],
+          "assembly": "Relay QL-RMA4-AUX / Return To Rail Protection Relay (QMT)",
+          "sub_assembly": null,
+          "chapter": "PART 700",
+          "parts": [],
+          "diagram_page_id": 2731
+        },
+        {
+          "page": 395,
+          "file": "ktx1_p395.jpg",
+          "mat_nos": [],
+          "assembly": "Arc Box Assembly",
+          "sub_assembly": null,
+          "chapter": "PART 700",
+          "parts": [],
+          "diagram_page_id": 2732
+        },
+        {
+          "page": 396,
+          "file": "ktx1_p396.jpg",
+          "mat_nos": [],
+          "assembly": "MT Battery Charger Control Unit",
+          "sub_assembly": null,
+          "chapter": "PART 700",
+          "parts": [],
+          "diagram_page_id": 2733
+        },
+        {
+          "page": 397,
+          "file": "ktx1_p397.jpg",
+          "mat_nos": [],
+          "assembly": "Battery Case",
+          "sub_assembly": null,
+          "chapter": "PART 700",
+          "parts": [],
+          "diagram_page_id": 2734
+        },
+        {
+          "page": 398,
+          "file": "ktx1_p398.jpg",
+          "mat_nos": [],
+          "assembly": "Battery Case",
+          "sub_assembly": null,
+          "chapter": "PART 700",
+          "parts": [],
+          "diagram_page_id": 2735
+        },
+        {
+          "page": 399,
+          "file": "ktx1_p399.jpg",
+          "mat_nos": [],
+          "assembly": "1/2 Battery Assembly",
+          "sub_assembly": null,
+          "chapter": "PART 700",
+          "parts": [],
+          "diagram_page_id": 2736
+        },
+        {
+          "page": 400,
+          "file": "ktx1_p400.jpg",
+          "mat_nos": [],
+          "assembly": "1/2 Battery Assembly",
+          "sub_assembly": null,
+          "chapter": "PART 700",
+          "parts": [],
+          "diagram_page_id": 2737
+        },
+        {
+          "page": 401,
+          "file": "ktx1_p401.jpg",
+          "mat_nos": [],
+          "assembly": "Single Phase Isolation Transformer / Battery Isolating Switch",
+          "sub_assembly": null,
+          "chapter": "PART 700",
+          "parts": [],
+          "diagram_page_id": 2738
+        },
+        {
+          "page": 402,
+          "file": "ktx1_p402.jpg",
+          "mat_nos": [],
+          "assembly": "BC Batt. Charger Control Unit",
+          "sub_assembly": null,
+          "chapter": "PART 700",
+          "parts": [],
+          "diagram_page_id": 2739
+        },
+        {
+          "page": 403,
+          "file": "ktx1_p403.jpg",
+          "mat_nos": [],
+          "assembly": "CPM Board / CCDM Board",
+          "sub_assembly": null,
+          "chapter": "PART 700",
+          "parts": [],
+          "diagram_page_id": 2740
+        },
+        {
+          "page": 404,
+          "file": "ktx1_p404.jpg",
+          "mat_nos": [],
+          "assembly": "335 KVA Trailer Inverter",
+          "sub_assembly": null,
+          "chapter": "PART 700",
+          "parts": [],
+          "diagram_page_id": 2741
+        },
+        {
+          "page": 405,
+          "file": "ktx1_p405.jpg",
+          "mat_nos": [],
+          "assembly": "360KVA Trailer Inverter Control Unit",
+          "sub_assembly": null,
+          "chapter": "PART 700",
+          "parts": [],
+          "diagram_page_id": 2742
+        },
+        {
+          "page": 406,
+          "file": "ktx1_p406.jpg",
+          "mat_nos": [],
+          "assembly": "360KVA Trailer Inverter Control Unit",
+          "sub_assembly": null,
+          "chapter": "PART 700",
+          "parts": [],
+          "diagram_page_id": 2743
+        },
+        {
+          "page": 407,
+          "file": "ktx1_p407.jpg",
+          "mat_nos": [],
+          "assembly": "ONDR SVI Card / Three Phase Isolation Transformer",
+          "sub_assembly": null,
+          "chapter": "PART 700",
+          "parts": [],
+          "diagram_page_id": 2744
+        },
+        {
+          "page": 408,
+          "file": "ktx1_p408.jpg",
+          "mat_nos": [],
+          "assembly": "Key Box / Contactor K.SW.AUX.01 (TCP38330SAKO41)",
+          "sub_assembly": null,
+          "chapter": "PART 700",
+          "parts": [],
+          "diagram_page_id": 2745
+        },
+        {
+          "page": 409,
+          "file": "ktx1_p409.jpg",
+          "mat_nos": [],
+          "assembly": "Contactor KM 302",
+          "sub_assembly": null,
+          "chapter": "PART 700",
+          "parts": [],
+          "diagram_page_id": 2746
+        },
+        {
+          "page": 410,
+          "file": "ktx1_p410.jpg",
+          "mat_nos": [],
+          "assembly": "DPC 8649Contactor",
+          "sub_assembly": null,
+          "chapter": "PART 700",
+          "parts": [],
+          "diagram_page_id": 2747
+        },
+        {
+          "page": 411,
+          "file": "ktx1_p411.jpg",
+          "mat_nos": [],
+          "assembly": "Contactor / Protection Valve VPX100 C-38735",
+          "sub_assembly": null,
+          "chapter": "PART 700",
+          "parts": [],
+          "diagram_page_id": 2748
+        },
+        {
+          "page": 412,
+          "file": "ktx1_p412.jpg",
+          "mat_nos": [],
+          "assembly": "Relay 1001 TS 080 S 72Vcc / RPU21 Wired Rack",
+          "sub_assembly": null,
+          "chapter": "PART 700",
+          "parts": [],
+          "diagram_page_id": 2749
+        },
+        {
+          "page": 413,
+          "file": "ktx1_p413.jpg",
+          "mat_nos": [],
+          "assembly": "ASICB Card 35229 / Air Conditioning Regulation Card",
+          "sub_assembly": null,
+          "chapter": "PART 700",
+          "parts": [],
+          "diagram_page_id": 2750
+        },
+        {
+          "page": 414,
+          "file": "ktx1_p414.jpg",
+          "mat_nos": [],
+          "assembly": "Power Supply Card ALM111 3S212 Card / Interface Card INAE2 3S211 Card",
+          "sub_assembly": null,
+          "chapter": "PART 700",
+          "parts": [],
+          "diagram_page_id": 2751
+        },
+        {
+          "page": 415,
+          "file": "ktx1_p415.jpg",
+          "mat_nos": [],
+          "assembly": "Processing Card TMAE2 3S210 Card / AEUX Adaptation For Logic Inputs",
+          "sub_assembly": null,
+          "chapter": "PART 700",
+          "parts": [],
+          "diagram_page_id": 2752
+        },
+        {
+          "page": 416,
+          "file": "ktx1_p416.jpg",
+          "mat_nos": [],
+          "assembly": "RPU22 Wired Rack / RPU23 Wired Rack",
+          "sub_assembly": null,
+          "chapter": "PART 700",
+          "parts": [],
+          "diagram_page_id": 2753
+        },
+        {
+          "page": 417,
+          "file": "ktx1_p417.jpg",
+          "mat_nos": [],
+          "assembly": "RPU24 Wired Rack / RPU25 Wired Rack",
+          "sub_assembly": null,
+          "chapter": "PART 700",
+          "parts": [],
+          "diagram_page_id": 2754
+        },
+        {
+          "page": 418,
+          "file": "ktx1_p418.jpg",
+          "mat_nos": [],
+          "assembly": "Single Phase Transformer 440/85V / Four-Pole Contactor LP1-D4004S SW S96",
+          "sub_assembly": null,
+          "chapter": "PART 700",
+          "parts": [],
+          "diagram_page_id": 2755
+        },
+        {
+          "page": 419,
+          "file": "ktx1_p419.jpg",
+          "mat_nos": [],
+          "assembly": "Type B Relay 400-72-BGS / Thermal Relay LR2-D1307",
+          "sub_assembly": null,
+          "chapter": "PART 700",
+          "parts": [],
+          "diagram_page_id": 2756
+        },
+        {
+          "page": 420,
+          "file": "ktx1_p420.jpg",
+          "mat_nos": [],
+          "assembly": "Type C Relay 027-72-11BS / Tripped Relay C1X.1007 AK 044S",
+          "sub_assembly": null,
+          "chapter": "PART 700",
+          "parts": [],
+          "diagram_page_id": 2757
+        },
+        {
+          "page": 421,
+          "file": "ktx1_p421.jpg",
+          "mat_nos": [],
+          "assembly": "Three-Pole Contactor LP1-D1210 SW / Miniature Circuit-Breaker iMT16 iETRA 4A22/B11-0.1A",
+          "sub_assembly": null,
+          "chapter": "PART 700",
+          "parts": [],
+          "diagram_page_id": 2758
+        },
+        {
+          "page": 422,
+          "file": "ktx1_p422.jpg",
+          "mat_nos": [],
+          "assembly": "Differential Circuit Breaker DPN VGI 30MA 10A REF:20901 / Input Resistor Of CTUET",
+          "sub_assembly": null,
+          "chapter": "PART 700",
+          "parts": [],
+          "diagram_page_id": 2759
+        },
+        {
+          "page": 423,
+          "file": "ktx1_p423.jpg",
+          "mat_nos": [],
+          "assembly": "72V Motortan Inverter Card / Axial Fan 450/12/35/3N PAC V1",
+          "sub_assembly": null,
+          "chapter": "PART 700",
+          "parts": [],
+          "diagram_page_id": 2760
+        },
+        {
+          "page": 424,
+          "file": "ktx1_p424.jpg",
+          "mat_nos": [],
+          "assembly": "CMTA Supply Voltage Measurement Panel / Compressor U60337",
+          "sub_assembly": null,
+          "chapter": "PART 700",
+          "parts": [],
+          "diagram_page_id": 2761
+        },
+        {
+          "page": 425,
+          "file": "ktx1_p425.jpg",
+          "mat_nos": [],
+          "assembly": "CRM Measure Repartition Board / CRP Device Protection Board",
+          "sub_assembly": null,
+          "chapter": "PART 700",
+          "parts": [],
+          "diagram_page_id": 2762
+        },
+        {
+          "page": 426,
+          "file": "ktx1_p426.jpg",
+          "mat_nos": [],
+          "assembly": "CTUET_2 Input Resistor Panel / Expansion Valve SJE 5 JPC60",
+          "sub_assembly": null,
+          "chapter": "PART 700",
+          "parts": [],
+          "diagram_page_id": 2763
+        },
+        {
+          "page": 427,
+          "file": "ktx1_p427.jpg",
+          "mat_nos": [],
+          "assembly": "Input Filter Coil / Inverter Voltage Relay",
+          "sub_assembly": null,
+          "chapter": "PART 700",
+          "parts": [],
+          "diagram_page_id": 2764
+        },
+        {
+          "page": 428,
+          "file": "ktx1_p428.jpg",
+          "mat_nos": [],
+          "assembly": "Magnet Valve + Seal / Motor AG00NY4",
+          "sub_assembly": null,
+          "chapter": "PART 700",
+          "parts": [],
+          "diagram_page_id": 2765
+        },
+        {
+          "page": 429,
+          "file": "ktx1_p429.jpg",
+          "mat_nos": [],
+          "assembly": "Motor AG50NY4 / Motor AM65KY4",
+          "sub_assembly": null,
+          "chapter": "PART 700",
+          "parts": [],
+          "diagram_page_id": 2766
+        },
+        {
+          "page": 430,
+          "file": "ktx1_p430.jpg",
+          "mat_nos": [],
+          "assembly": "Output Filter / PCB Sandwich Bases",
+          "sub_assembly": null,
+          "chapter": "PART 700",
+          "parts": [],
+          "diagram_page_id": 2767
+        },
+        {
+          "page": 431,
+          "file": "ktx1_p431.jpg",
+          "mat_nos": [],
+          "assembly": "Pressure Switch PS 1.00 / Relay Type S10AT.09S",
+          "sub_assembly": null,
+          "chapter": "PART 700",
+          "parts": [],
+          "diagram_page_id": 2768
+        },
+        {
+          "page": 432,
+          "file": "ktx1_p432.jpg",
+          "mat_nos": [],
+          "assembly": "Safety Thermostat / Solenoide Valve E10S2 24V",
+          "sub_assembly": null,
+          "chapter": "PART 700",
+          "parts": [],
+          "diagram_page_id": 2769
+        },
+        {
+          "page": 433,
+          "file": "ktx1_p433.jpg",
+          "mat_nos": [],
+          "assembly": "Suction Valve 1-3/8 060A693865 / Temperature Sensor",
+          "sub_assembly": null,
+          "chapter": "PART 700",
+          "parts": [],
+          "diagram_page_id": 2770
+        },
+        {
+          "page": 434,
+          "file": "ktx1_p434.jpg",
+          "mat_nos": [],
+          "assembly": "Air-Condition Of Cab.",
+          "sub_assembly": null,
+          "chapter": "PART 700",
+          "parts": [],
+          "diagram_page_id": 2771
+        },
+        {
+          "page": 435,
+          "file": "ktx1_p435.jpg",
+          "mat_nos": [],
+          "assembly": "Control Card Of Air-Condition PC / Control Card Of Ventilation Inverter",
+          "sub_assembly": null,
+          "chapter": "PART 700",
+          "parts": [],
+          "diagram_page_id": 2772
+        },
+        {
+          "page": 437,
+          "file": "ktx1_p437.jpg",
+          "mat_nos": [],
+          "assembly": "Alarm-Signal Switch / Air Filter For Suspension Panel",
+          "sub_assembly": null,
+          "chapter": "PART 800 제어안전계통",
+          "parts": [],
+          "diagram_page_id": 2774
+        },
+        {
+          "page": 438,
+          "file": "ktx1_p438.jpg",
+          "mat_nos": [],
+          "assembly": "Monitor Video Of Passenger Area",
+          "sub_assembly": null,
+          "chapter": "PART 800 제어안전계통",
+          "parts": [],
+          "diagram_page_id": 2775
+        },
+        {
+          "page": 439,
+          "file": "ktx1_p439.jpg",
+          "mat_nos": [],
+          "assembly": "Public Address Power Amplifier 10W",
+          "sub_assembly": null,
+          "chapter": "PART 800 제어안전계통",
+          "parts": [],
+          "diagram_page_id": 2776
+        },
+        {
+          "page": 440,
+          "file": "ktx1_p440.jpg",
+          "mat_nos": [],
+          "assembly": "Train Master Display",
+          "sub_assembly": null,
+          "chapter": "PART 800 제어안전계통",
+          "parts": [],
+          "diagram_page_id": 2777
+        },
+        {
+          "page": 441,
+          "file": "ktx1_p441.jpg",
+          "mat_nos": [],
+          "assembly": "Distribution Rack / Pre-Wired HF Rack",
+          "sub_assembly": null,
+          "chapter": "PART 800 제어안전계통",
+          "parts": [],
+          "diagram_page_id": 2778
+        },
+        {
+          "page": 442,
+          "file": "ktx1_p442.jpg",
+          "mat_nos": [],
+          "assembly": "Supply Board 72/12V / Supply Board 72/28V",
+          "sub_assembly": null,
+          "chapter": "PART 800 제어안전계통",
+          "parts": [],
+          "diagram_page_id": 2779
+        },
+        {
+          "page": 443,
+          "file": "ktx1_p443.jpg",
+          "mat_nos": [],
+          "assembly": "Video Recorder Management Board / FM Amplifier",
+          "sub_assembly": null,
+          "chapter": "PART 800 제어안전계통",
+          "parts": [],
+          "diagram_page_id": 2780
+        },
+        {
+          "page": 444,
+          "file": "ktx1_p444.jpg",
+          "mat_nos": [],
+          "assembly": "Modulation Board / Seat Amplifier Drawer",
+          "sub_assembly": null,
+          "chapter": "PART 800 제어안전계통",
+          "parts": [],
+          "diagram_page_id": 2781
+        },
+        {
+          "page": 445,
+          "file": "ktx1_p445.jpg",
+          "mat_nos": [],
+          "assembly": "Transformer / Contactor LP1-D254EW A85 72V 25A",
+          "sub_assembly": null,
+          "chapter": "PART 800 제어안전계통",
+          "parts": [],
+          "diagram_page_id": 2782
+        },
+        {
+          "page": 446,
+          "file": "ktx1_p446.jpg",
+          "mat_nos": [],
+          "assembly": "Pressure Switch 1 Contact NO + 1 Contact NF Type 12-1401(018-DRPS-I) / Speed Sensor FYCAP V78635 (MB)",
+          "sub_assembly": null,
+          "chapter": "PART 800 제어안전계통",
+          "parts": [],
+          "diagram_page_id": 2783
+        },
+        {
+          "page": 447,
+          "file": "ktx1_p447.jpg",
+          "mat_nos": [],
+          "assembly": "Speed Sensor FYCAP V78755 (BCB)",
+          "sub_assembly": null,
+          "chapter": "PART 800 제어안전계통",
+          "parts": [],
+          "diagram_page_id": 2784
+        },
+        {
+          "page": 448,
+          "file": "ktx1_p448.jpg",
+          "mat_nos": [],
+          "assembly": "Speed Sensor FYCAP V78755 (BCB)",
+          "sub_assembly": null,
+          "chapter": "PART 800 제어안전계통",
+          "parts": [],
+          "diagram_page_id": 2785
+        },
+        {
+          "page": 449,
+          "file": "ktx1_p449.jpg",
+          "mat_nos": [],
+          "assembly": "HOM Grounding Switch",
+          "sub_assembly": null,
+          "chapter": "PART 800 제어안전계통",
+          "parts": [],
+          "diagram_page_id": 2786
+        },
+        {
+          "page": 450,
+          "file": "ktx1_p450.jpg",
+          "mat_nos": [],
+          "assembly": "Contactor CMB 8629-03-E-002-K03-T",
+          "sub_assembly": null,
+          "chapter": "PART 800 제어안전계통",
+          "parts": [],
+          "diagram_page_id": 2787
+        },
+        {
+          "page": 451,
+          "file": "ktx1_p451.jpg",
+          "mat_nos": [],
+          "assembly": "Contactor CMB 8629-03-E-000",
+          "sub_assembly": null,
+          "chapter": "PART 800 제어안전계통",
+          "parts": [],
+          "diagram_page_id": 2788
+        },
+        {
+          "page": 452,
+          "file": "ktx1_p452.jpg",
+          "mat_nos": [],
+          "assembly": "Brake Anti-Skid Panel (Dual)",
+          "sub_assembly": null,
+          "chapter": "PART 800 제어안전계통",
+          "parts": [],
+          "diagram_page_id": 2789
+        },
+        {
+          "page": 453,
+          "file": "ktx1_p453.jpg",
+          "mat_nos": [],
+          "assembly": "Surge Arrestor CLS IR8",
+          "sub_assembly": null,
+          "chapter": "PART 800 제어안전계통",
+          "parts": [],
+          "diagram_page_id": 2790
+        },
+        {
+          "page": 454,
+          "file": "ktx1_p454.jpg",
+          "mat_nos": [],
+          "assembly": "Pressure Switch 1 Contact NO+1 Contact NF Type 12-1401(018-PDS-MI) / Micro Circuit Breaker Four Pole 20A",
+          "sub_assembly": null,
+          "chapter": "PART 800 제어안전계통",
+          "parts": [],
+          "diagram_page_id": 2791
+        },
+        {
+          "page": 455,
+          "file": "ktx1_p455.jpg",
+          "mat_nos": [],
+          "assembly": "Micro Circuit Breaker GDB 63 U 18 / Micro Circuit Breaker Specif",
+          "sub_assembly": null,
+          "chapter": "PART 800 제어안전계통",
+          "parts": [],
+          "diagram_page_id": 2792
+        },
+        {
+          "page": 456,
+          "file": "ktx1_p456.jpg",
+          "mat_nos": [],
+          "assembly": "Isolating Switch T2 9020 / SP TECH Battery Voltage Supplying",
+          "sub_assembly": null,
+          "chapter": "PART 800 제어안전계통",
+          "parts": [],
+          "diagram_page_id": 2793
+        },
+        {
+          "page": 457,
+          "file": "ktx1_p457.jpg",
+          "mat_nos": [],
+          "assembly": "Micro Circuit Breaker MTH BP G5354 / Relay Type C.027.11.BS",
+          "sub_assembly": null,
+          "chapter": "PART 800 제어안전계통",
+          "parts": [],
+          "diagram_page_id": 2794
+        },
+        {
+          "page": 458,
+          "file": "ktx1_p458.jpg",
+          "mat_nos": [],
+          "assembly": "Relay Type C.027.69.BS / Relay Type C.054.72.BDS",
+          "sub_assembly": null,
+          "chapter": "PART 800 제어안전계통",
+          "parts": [],
+          "diagram_page_id": 2795
+        },
+        {
+          "page": 459,
+          "file": "ktx1_p459.jpg",
+          "mat_nos": [],
+          "assembly": "Relay Type C.045.72.89.S / Relay 1007.AK.044.S",
+          "sub_assembly": null,
+          "chapter": "PART 800 제어안전계통",
+          "parts": [],
+          "diagram_page_id": 2796
+        },
+        {
+          "page": 460,
+          "file": "ktx1_p460.jpg",
+          "mat_nos": [],
+          "assembly": "Relay 1019 D SERIE D1 / Relay 7022 RC A2 I",
+          "sub_assembly": null,
+          "chapter": "PART 800 제어안전계통",
+          "parts": [],
+          "diagram_page_id": 2797
+        },
+        {
+          "page": 461,
+          "file": "ktx1_p461.jpg",
+          "mat_nos": [],
+          "assembly": "Relay 7012 RE A2 I",
+          "sub_assembly": null,
+          "chapter": "PART 800 제어안전계통",
+          "parts": [],
+          "diagram_page_id": 2798
+        },
+        {
+          "page": 462,
+          "file": "ktx1_p462.jpg",
+          "mat_nos": [],
+          "assembly": "Contactor CMA 8629-04-E-00-0-K03T",
+          "sub_assembly": null,
+          "chapter": "PART 800 제어안전계통",
+          "parts": [],
+          "diagram_page_id": 2799
+        },
+        {
+          "page": 463,
+          "file": "ktx1_p463.jpg",
+          "mat_nos": [],
+          "assembly": "Contactor CMA 8629-03-E-0-0-K03-T",
+          "sub_assembly": null,
+          "chapter": "PART 800 제어안전계통",
+          "parts": [],
+          "diagram_page_id": 2800
+        },
+        {
+          "page": 464,
+          "file": "ktx1_p464.jpg",
+          "mat_nos": [],
+          "assembly": "Contactor 4S RFSA 72T P13 / Voltage Transformer 2 KVA",
+          "sub_assembly": null,
+          "chapter": "PART 800 제어안전계통",
+          "parts": [],
+          "diagram_page_id": 2801
+        },
+        {
+          "page": 465,
+          "file": "ktx1_p465.jpg",
+          "mat_nos": [],
+          "assembly": "ATESS Unit",
+          "sub_assembly": null,
+          "chapter": "PART 800 제어안전계통",
+          "parts": [],
+          "diagram_page_id": 2802
+        },
+        {
+          "page": 466,
+          "file": "ktx1_p466.jpg",
+          "mat_nos": [],
+          "assembly": "APU01 Unit",
+          "sub_assembly": null,
+          "chapter": "PART 800 제어안전계통",
+          "parts": [],
+          "diagram_page_id": 2803
+        },
+        {
+          "page": 467,
+          "file": "ktx1_p467.jpg",
+          "mat_nos": [],
+          "assembly": "MPU01 Unit",
+          "sub_assembly": null,
+          "chapter": "PART 800 제어안전계통",
+          "parts": [],
+          "diagram_page_id": 2804
+        },
+        {
+          "page": 468,
+          "file": "ktx1_p468.jpg",
+          "mat_nos": [],
+          "assembly": "ALVP Power Supply For VME Board / UCVA Plug-In Block : APU01 CPU",
+          "sub_assembly": null,
+          "chapter": "PART 800 제어안전계통",
+          "parts": [],
+          "diagram_page_id": 2805
+        },
+        {
+          "page": 469,
+          "file": "ktx1_p469.jpg",
+          "mat_nos": [],
+          "assembly": "CNVP Plug-In Block : Network Coupler / MESP Plug-In Block : I/O Supervisor Board",
+          "sub_assembly": null,
+          "chapter": "PART 800 제어안전계통",
+          "parts": [],
+          "diagram_page_id": 2806
+        },
+        {
+          "page": 470,
+          "file": "ktx1_p470.jpg",
+          "mat_nos": [],
+          "assembly": "CNVR Plug-In Block : Network Router / KASP CAB Adaptation Board",
+          "sub_assembly": null,
+          "chapter": "PART 800 제어안전계통",
+          "parts": [],
+          "diagram_page_id": 2807
+        },
+        {
+          "page": 471,
+          "file": "ktx1_p471.jpg",
+          "mat_nos": [],
+          "assembly": "MELP Logic Inputs Board / MORA Outputs Relays Board, Open When Off",
+          "sub_assembly": null,
+          "chapter": "PART 800 제어안전계통",
+          "parts": [],
+          "diagram_page_id": 2808
+        },
+        {
+          "page": 472,
+          "file": "ktx1_p472.jpg",
+          "mat_nos": [],
+          "assembly": "MSSP Static Outputs Board / ALMP Power Supply For I/O Board",
+          "sub_assembly": null,
+          "chapter": "PART 800 제어안전계통",
+          "parts": [],
+          "diagram_page_id": 2809
+        },
+        {
+          "page": 473,
+          "file": "ktx1_p473.jpg",
+          "mat_nos": [],
+          "assembly": "UCVM Plug-In Block : MPU01 CPU / MEMP Plug-In Block : Troubleshooting",
+          "sub_assembly": null,
+          "chapter": "PART 800 제어안전계통",
+          "parts": [],
+          "diagram_page_id": 2810
+        },
+        {
+          "page": 474,
+          "file": "ktx1_p474.jpg",
+          "mat_nos": [],
+          "assembly": "MFP Bogie Board / MPU01 Wired Rack",
+          "sub_assembly": null,
+          "chapter": "PART 800 제어안전계통",
+          "parts": [],
+          "diagram_page_id": 2811
+        },
+        {
+          "page": 475,
+          "file": "ktx1_p475.jpg",
+          "mat_nos": [],
+          "assembly": "VIN Board / EMCO ALV14 Board",
+          "sub_assembly": null,
+          "chapter": "PART 800 제어안전계통",
+          "parts": [],
+          "diagram_page_id": 2812
+        },
+        {
+          "page": 476,
+          "file": "ktx1_p476.jpg",
+          "mat_nos": [],
+          "assembly": "CM Board / ATESS AQMV15 Card",
+          "sub_assembly": null,
+          "chapter": "PART 800 제어안전계통",
+          "parts": [],
+          "diagram_page_id": 2813
+        },
+        {
+          "page": 477,
+          "file": "ktx1_p477.jpg",
+          "mat_nos": [],
+          "assembly": "ATESS FDMV Card / ATESS CPMV Card",
+          "sub_assembly": null,
+          "chapter": "PART 800 제어안전계통",
+          "parts": [],
+          "diagram_page_id": 2814
+        },
+        {
+          "page": 478,
+          "file": "ktx1_p478.jpg",
+          "mat_nos": [],
+          "assembly": "ATESS ALMV Card / ATESS SREN Card",
+          "sub_assembly": null,
+          "chapter": "PART 800 제어안전계통",
+          "parts": [],
+          "diagram_page_id": 2815
+        },
+        {
+          "page": 479,
+          "file": "ktx1_p479.jpg",
+          "mat_nos": [],
+          "assembly": "CASSETTE DL7060I / ATESS UCEN Card",
+          "sub_assembly": null,
+          "chapter": "PART 800 제어안전계통",
+          "parts": [],
+          "diagram_page_id": 2816
+        },
+        {
+          "page": 480,
+          "file": "ktx1_p480.jpg",
+          "mat_nos": [],
+          "assembly": "ATESS FOEN Card / ATESS ELEN Card",
+          "sub_assembly": null,
+          "chapter": "PART 800 제어안전계통",
+          "parts": [],
+          "diagram_page_id": 2817
+        }
+      ]
+    },
+    "cat5": {
+      "label": "제동장치",
+      "pages": [
+        {
+          "page": 190,
+          "file": "ktx1_p190.jpg",
+          "mat_nos": [],
+          "assembly": "제동계통",
+          "sub_assembly": null,
+          "chapter": "PART 300",
+          "parts": [],
+          "diagram_page_id": 2527
+        },
+        {
+          "page": 191,
+          "file": "ktx1_p191.jpg",
+          "mat_nos": [],
+          "assembly": "Double Check Valve / Cut Valve",
+          "sub_assembly": null,
+          "chapter": "PART300 제동계통",
+          "parts": [],
+          "diagram_page_id": 2528
+        },
+        {
+          "page": 192,
+          "file": "ktx1_p192.jpg",
+          "mat_nos": [],
+          "assembly": "Pilote Pressure Reducteur / Pressure Switch Type G90-2C-Sh",
+          "sub_assembly": null,
+          "chapter": "PART300",
+          "parts": [],
+          "diagram_page_id": 2529
+        },
+        {
+          "page": 193,
+          "file": "ktx1_p193.jpg",
+          "mat_nos": [],
+          "assembly": "Pressure Switch Type H87-1C-Sh / Linear Exhaust Valve",
+          "sub_assembly": null,
+          "chapter": "PART300 제동계통",
+          "parts": [],
+          "diagram_page_id": 2530
+        },
+        {
+          "page": 194,
+          "file": "ktx1_p194.jpg",
+          "mat_nos": [],
+          "assembly": "Magnet-Valve 57.6V / Magnet Valve 21C",
+          "sub_assembly": null,
+          "chapter": "PART300",
+          "parts": [],
+          "diagram_page_id": 2531
+        },
+        {
+          "page": 195,
+          "file": "ktx1_p195.jpg",
+          "mat_nos": [],
+          "assembly": "Type Dn7 Check Valve / Relay Type 1A",
+          "sub_assembly": null,
+          "chapter": "PART300 제동계통",
+          "parts": [],
+          "diagram_page_id": 2532
+        },
+        {
+          "page": 196,
+          "file": "ktx1_p196.jpg",
+          "mat_nos": [],
+          "assembly": "Pressure Switch EP Type P / Magnet Valve 21C",
+          "sub_assembly": null,
+          "chapter": "PART300",
+          "parts": [],
+          "diagram_page_id": 2533
+        },
+        {
+          "page": 197,
+          "file": "ktx1_p197.jpg",
+          "mat_nos": [],
+          "assembly": "Check Valve Type DN7 / Balancing Relay",
+          "sub_assembly": null,
+          "chapter": "PART300 제동계통",
+          "parts": [],
+          "diagram_page_id": 2534
+        },
+        {
+          "page": 198,
+          "file": "ktx1_p198.jpg",
+          "mat_nos": [],
+          "assembly": "Relay 1P-2E DN19 / Exchange Relay",
+          "sub_assembly": null,
+          "chapter": "PART300 제동계통",
+          "parts": [],
+          "diagram_page_id": 2535
+        },
+        {
+          "page": 199,
+          "file": "ktx1_p199.jpg",
+          "mat_nos": [],
+          "assembly": "제동계통",
+          "sub_assembly": null,
+          "chapter": "PART300",
+          "parts": [],
+          "diagram_page_id": 2536
+        },
+        {
+          "page": 200,
+          "file": "ktx1_p200.jpg",
+          "mat_nos": [],
+          "assembly": "Pressure Switch Type F92 / Pressure Transmitter",
+          "sub_assembly": null,
+          "chapter": "PART300",
+          "parts": [],
+          "diagram_page_id": 2537
+        },
+        {
+          "page": 201,
+          "file": "ktx1_p201.jpg",
+          "mat_nos": [],
+          "assembly": "Check Valve Type DN12 / Bonded Panel",
+          "sub_assembly": null,
+          "chapter": "PART300 제동계통",
+          "parts": [],
+          "diagram_page_id": 2538
+        },
+        {
+          "page": 202,
+          "file": "ktx1_p202.jpg",
+          "mat_nos": [],
+          "assembly": "Magnet Valve 21C / High Output Reducing Valve (5 Bar)",
+          "sub_assembly": null,
+          "chapter": "PART300 제동계통",
+          "parts": [],
+          "diagram_page_id": 2539
+        },
+        {
+          "page": 203,
+          "file": "ktx1_p203.jpg",
+          "mat_nos": [],
+          "assembly": "Trailer Bonded Panel / Magnet Valve 21C",
+          "sub_assembly": null,
+          "chapter": "PART300 제동계통",
+          "parts": [],
+          "diagram_page_id": 2540
+        },
+        {
+          "page": 204,
+          "file": "ktx1_p204.jpg",
+          "mat_nos": [],
+          "assembly": "Magnet Valve 21C",
+          "sub_assembly": null,
+          "chapter": "PART300",
+          "parts": [],
+          "diagram_page_id": 2541
+        },
+        {
+          "page": 205,
+          "file": "ktx1_p205.jpg",
+          "mat_nos": [],
+          "assembly": "Magnet-Valve 57.6V / Motor Bonded Panel",
+          "sub_assembly": null,
+          "chapter": "PART300 제동계통",
+          "parts": [],
+          "diagram_page_id": 2542
+        },
+        {
+          "page": 206,
+          "file": "ktx1_p206.jpg",
+          "mat_nos": [],
+          "assembly": "공기제동계통",
+          "sub_assembly": null,
+          "chapter": "PART 400",
+          "parts": [],
+          "diagram_page_id": 2543
+        },
+        {
+          "page": 207,
+          "file": "ktx1_p207.jpg",
+          "mat_nos": [],
+          "assembly": "Driver Blade Arm",
+          "sub_assembly": null,
+          "chapter": "PART400",
+          "parts": [],
+          "diagram_page_id": 2544
+        },
+        {
+          "page": 208,
+          "file": "ktx1_p208.jpg",
+          "mat_nos": [],
+          "assembly": "공기제동계통",
+          "sub_assembly": null,
+          "chapter": "PART400",
+          "parts": [],
+          "diagram_page_id": 2545
+        },
+        {
+          "page": 209,
+          "file": "ktx1_p209.jpg",
+          "mat_nos": [],
+          "assembly": "Driver's Mate Blade Arm",
+          "sub_assembly": null,
+          "chapter": "PART400",
+          "parts": [],
+          "diagram_page_id": 2546
+        },
+        {
+          "page": 210,
+          "file": "ktx1_p210.jpg",
+          "mat_nos": [],
+          "assembly": "Driver's Mate Blade Arm / Co-Driver's Windscreen Wiper Motor",
+          "sub_assembly": null,
+          "chapter": "PART 400 공기제동계통",
+          "parts": [],
+          "diagram_page_id": 2547
+        },
+        {
+          "page": 211,
+          "file": "ktx1_p211.jpg",
+          "mat_nos": [],
+          "assembly": "Back-Up Driver's Blade Arm",
+          "sub_assembly": null,
+          "chapter": "PART400",
+          "parts": [],
+          "diagram_page_id": 2548
+        },
+        {
+          "page": 212,
+          "file": "ktx1_p212.jpg",
+          "mat_nos": [],
+          "assembly": "공기제동계통",
+          "sub_assembly": null,
+          "chapter": "PART400",
+          "parts": [],
+          "diagram_page_id": 2549
+        },
+        {
+          "page": 213,
+          "file": "ktx1_p213.jpg",
+          "mat_nos": [],
+          "assembly": "Windscreen Wiper And Washer Control Module",
+          "sub_assembly": null,
+          "chapter": "PART400",
+          "parts": [],
+          "diagram_page_id": 2550
+        },
+        {
+          "page": 214,
+          "file": "ktx1_p214.jpg",
+          "mat_nos": [],
+          "assembly": "2 Stages DN4 Distributor / Pump Control Valve",
+          "sub_assembly": null,
+          "chapter": "PART400 공기제동계통",
+          "parts": [],
+          "diagram_page_id": 2551
+        },
+        {
+          "page": 215,
+          "file": "ktx1_p215.jpg",
+          "mat_nos": [],
+          "assembly": "Spray Pump",
+          "sub_assembly": null,
+          "chapter": "PART400",
+          "parts": [],
+          "diagram_page_id": 2552
+        },
+        {
+          "page": 216,
+          "file": "ktx1_p216.jpg",
+          "mat_nos": [],
+          "assembly": "Levelling Valve (Process B) / Limitation Valve",
+          "sub_assembly": null,
+          "chapter": "PART400",
+          "parts": [],
+          "diagram_page_id": 2553
+        },
+        {
+          "page": 217,
+          "file": "ktx1_p217.jpg",
+          "mat_nos": [],
+          "assembly": "Levelling Valve (Process A)",
+          "sub_assembly": null,
+          "chapter": "PART400",
+          "parts": [],
+          "diagram_page_id": 2554
+        },
+        {
+          "page": 218,
+          "file": "ktx1_p218.jpg",
+          "mat_nos": [],
+          "assembly": "공기제동계통",
+          "sub_assembly": null,
+          "chapter": "PART400",
+          "parts": [],
+          "diagram_page_id": 2555
+        },
+        {
+          "page": 219,
+          "file": "ktx1_p219.jpg",
+          "mat_nos": [],
+          "assembly": "공기제동계통",
+          "sub_assembly": null,
+          "chapter": "PART400",
+          "parts": [],
+          "diagram_page_id": 2556
+        },
+        {
+          "page": 220,
+          "file": "ktx1_p220.jpg",
+          "mat_nos": [],
+          "assembly": "Manostat Bow Breakage Detector / Filter Valve Double Isolating Brake And Bogie Panel",
+          "sub_assembly": null,
+          "chapter": "PART400",
+          "parts": [],
+          "diagram_page_id": 2557
+        },
+        {
+          "page": 221,
+          "file": "ktx1_p221.jpg",
+          "mat_nos": [],
+          "assembly": "공기제동계통",
+          "sub_assembly": null,
+          "chapter": "PART400",
+          "parts": [],
+          "diagram_page_id": 2558
+        },
+        {
+          "page": 222,
+          "file": "ktx1_p222.jpg",
+          "mat_nos": [],
+          "assembly": "공기제동계통",
+          "sub_assembly": null,
+          "chapter": "PART400",
+          "parts": [],
+          "diagram_page_id": 2559
+        },
+        {
+          "page": 224,
+          "file": "ktx1_p224.jpg",
+          "mat_nos": [],
+          "assembly": "공기제동계통",
+          "sub_assembly": null,
+          "chapter": "PART400",
+          "parts": [],
+          "diagram_page_id": 2561
+        },
+        {
+          "page": 225,
+          "file": "ktx1_p225.jpg",
+          "mat_nos": [],
+          "assembly": "공기제동계통",
+          "sub_assembly": null,
+          "chapter": "PART400",
+          "parts": [],
+          "diagram_page_id": 2562
+        },
+        {
+          "page": 226,
+          "file": "ktx1_p226.jpg",
+          "mat_nos": [],
+          "assembly": "Double Cut Off Cock And Re-Dp Filters",
+          "sub_assembly": null,
+          "chapter": "PART400",
+          "parts": [],
+          "diagram_page_id": 2563
+        },
+        {
+          "page": 227,
+          "file": "ktx1_p227.jpg",
+          "mat_nos": [],
+          "assembly": "공기제동계통",
+          "sub_assembly": null,
+          "chapter": "PART400",
+          "parts": [],
+          "diagram_page_id": 2564
+        },
+        {
+          "page": 229,
+          "file": "ktx1_p229.jpg",
+          "mat_nos": [],
+          "assembly": "공기제동계통",
+          "sub_assembly": null,
+          "chapter": "PART400",
+          "parts": [],
+          "diagram_page_id": 2566
+        },
+        {
+          "page": 230,
+          "file": "ktx1_p230.jpg",
+          "mat_nos": [],
+          "assembly": "Dual Brake Application / Release Indicator",
+          "sub_assembly": null,
+          "chapter": "PART400",
+          "parts": [],
+          "diagram_page_id": 2567
+        },
+        {
+          "page": 231,
+          "file": "ktx1_p231.jpg",
+          "mat_nos": [],
+          "assembly": "공기제동계통",
+          "sub_assembly": null,
+          "chapter": "PART400",
+          "parts": [],
+          "diagram_page_id": 2568
+        },
+        {
+          "page": 232,
+          "file": "ktx1_p232.jpg",
+          "mat_nos": [],
+          "assembly": "NHS Safety Valve",
+          "sub_assembly": null,
+          "chapter": "PART400 공기제동계통",
+          "parts": [],
+          "diagram_page_id": 2569
+        },
+        {
+          "page": 233,
+          "file": "ktx1_p233.jpg",
+          "mat_nos": [],
+          "assembly": "OEF3 Fine Filter",
+          "sub_assembly": null,
+          "chapter": "PART400",
+          "parts": [],
+          "diagram_page_id": 2570
+        },
+        {
+          "page": 234,
+          "file": "ktx1_p234.jpg",
+          "mat_nos": [],
+          "assembly": "Dryer Cycle Programmer / Pressure Switch XMG B008 (CP75)",
+          "sub_assembly": null,
+          "chapter": "PART400 공기제동계통",
+          "parts": [],
+          "diagram_page_id": 2571
+        },
+        {
+          "page": 235,
+          "file": "ktx1_p235.jpg",
+          "mat_nos": [],
+          "assembly": "공기제동계통",
+          "sub_assembly": null,
+          "chapter": "PART400",
+          "parts": [],
+          "diagram_page_id": 2572
+        },
+        {
+          "page": 236,
+          "file": "ktx1_p236.jpg",
+          "mat_nos": [],
+          "assembly": "Manostat Door Control / Manostat Compressor Regeneration",
+          "sub_assembly": null,
+          "chapter": "PART400",
+          "parts": [],
+          "diagram_page_id": 2573
+        },
+        {
+          "page": 237,
+          "file": "ktx1_p237.jpg",
+          "mat_nos": [],
+          "assembly": "공기제동계통",
+          "sub_assembly": null,
+          "chapter": "PART400",
+          "parts": [],
+          "diagram_page_id": 2574
+        },
+        {
+          "page": 238,
+          "file": "ktx1_p238.jpg",
+          "mat_nos": [],
+          "assembly": "공기제동계통",
+          "sub_assembly": null,
+          "chapter": "PART400",
+          "parts": [],
+          "diagram_page_id": 2575
+        },
+        {
+          "page": 239,
+          "file": "ktx1_p239.jpg",
+          "mat_nos": [],
+          "assembly": "Double-Dia Pressure Gauge 100-10B",
+          "sub_assembly": null,
+          "chapter": "PART400 공기제동계통",
+          "parts": [],
+          "diagram_page_id": 2576
+        },
+        {
+          "page": 240,
+          "file": "ktx1_p240.jpg",
+          "mat_nos": [],
+          "assembly": "Double-Dia Pressure Gauge 100-10B",
+          "sub_assembly": null,
+          "chapter": "PART400",
+          "parts": [],
+          "diagram_page_id": 2577
+        },
+        {
+          "page": 241,
+          "file": "ktx1_p241.jpg",
+          "mat_nos": [],
+          "assembly": "공기제동계통",
+          "sub_assembly": null,
+          "chapter": "PART400",
+          "parts": [],
+          "diagram_page_id": 2578
+        },
+        {
+          "page": 242,
+          "file": "ktx1_p242.jpg",
+          "mat_nos": [],
+          "assembly": "Emergency Stop Button (PC)",
+          "sub_assembly": null,
+          "chapter": "PART400",
+          "parts": [],
+          "diagram_page_id": 2579
+        },
+        {
+          "page": 244,
+          "file": "ktx1_p244.jpg",
+          "mat_nos": [],
+          "assembly": "Flasking Valve DN25",
+          "sub_assembly": null,
+          "chapter": "PART400",
+          "parts": [],
+          "diagram_page_id": 2581
+        },
+        {
+          "page": 246,
+          "file": "ktx1_p246.jpg",
+          "mat_nos": [],
+          "assembly": "공기제동계통",
+          "sub_assembly": null,
+          "chapter": "PART400",
+          "parts": [],
+          "diagram_page_id": 2583
+        },
+        {
+          "page": 247,
+          "file": "ktx1_p247.jpg",
+          "mat_nos": [],
+          "assembly": "공기제동계통",
+          "sub_assembly": null,
+          "chapter": "PART400",
+          "parts": [],
+          "diagram_page_id": 2584
+        },
+        {
+          "page": 248,
+          "file": "ktx1_p248.jpg",
+          "mat_nos": [],
+          "assembly": "공기제동계통",
+          "sub_assembly": null,
+          "chapter": "PART400",
+          "parts": [],
+          "diagram_page_id": 2585
+        },
+        {
+          "page": 249,
+          "file": "ktx1_p249.jpg",
+          "mat_nos": [],
+          "assembly": "공기제동계통",
+          "sub_assembly": null,
+          "chapter": "PART400",
+          "parts": [],
+          "diagram_page_id": 2586
+        },
+        {
+          "page": 250,
+          "file": "ktx1_p250.jpg",
+          "mat_nos": [],
+          "assembly": "Isolating Valve",
+          "sub_assembly": null,
+          "chapter": "PART400",
+          "parts": [],
+          "diagram_page_id": 2587
+        },
+        {
+          "page": 251,
+          "file": "ktx1_p251.jpg",
+          "mat_nos": [],
+          "assembly": "공기제동계통",
+          "sub_assembly": null,
+          "chapter": "PART400",
+          "parts": [],
+          "diagram_page_id": 2588
+        },
+        {
+          "page": 252,
+          "file": "ktx1_p252.jpg",
+          "mat_nos": [],
+          "assembly": "공기제동계통",
+          "sub_assembly": null,
+          "chapter": "PART400",
+          "parts": [],
+          "diagram_page_id": 2589
+        },
+        {
+          "page": 253,
+          "file": "ktx1_p253.jpg",
+          "mat_nos": [],
+          "assembly": "공기제동계통",
+          "sub_assembly": null,
+          "chapter": "PART400",
+          "parts": [],
+          "diagram_page_id": 2590
+        }
+      ]
+    },
+    "cat6": {
+      "label": "주행장치",
+      "pages": [
+        {
+          "page": 110,
+          "file": "ktx1_p110.jpg",
+          "mat_nos": [],
+          "assembly": "기계계통",
+          "sub_assembly": null,
+          "chapter": "PART 200",
+          "parts": [],
+          "diagram_page_id": 2447
+        },
+        {
+          "page": 111,
+          "file": "ktx1_p111.jpg",
+          "mat_nos": [],
+          "assembly": "Traction Hook Eye 1MN 45-273",
+          "sub_assembly": null,
+          "chapter": "PART200",
+          "parts": [],
+          "diagram_page_id": 2448
+        },
+        {
+          "page": 112,
+          "file": "ktx1_p112.jpg",
+          "mat_nos": [],
+          "assembly": "Traction Hook Eye 1MN 45-273",
+          "sub_assembly": null,
+          "chapter": "PART200 기계계통",
+          "parts": [],
+          "diagram_page_id": 2449
+        },
+        {
+          "page": 113,
+          "file": "ktx1_p113.jpg",
+          "mat_nos": [],
+          "assembly": "기계계통",
+          "sub_assembly": null,
+          "chapter": "PART200",
+          "parts": [],
+          "diagram_page_id": 2450
+        },
+        {
+          "page": 114,
+          "file": "ktx1_p114.jpg",
+          "mat_nos": [],
+          "assembly": "기계계통",
+          "sub_assembly": null,
+          "chapter": "PART200",
+          "parts": [],
+          "diagram_page_id": 2451
+        },
+        {
+          "page": 115,
+          "file": "ktx1_p115.jpg",
+          "mat_nos": [],
+          "assembly": "기계계통",
+          "sub_assembly": null,
+          "chapter": "PART200",
+          "parts": [],
+          "diagram_page_id": 2452
+        },
+        {
+          "page": 116,
+          "file": "ktx1_p116.jpg",
+          "mat_nos": [],
+          "assembly": "기계계통",
+          "sub_assembly": null,
+          "chapter": "PART200",
+          "parts": [],
+          "diagram_page_id": 2453
+        },
+        {
+          "page": 117,
+          "file": "ktx1_p117.jpg",
+          "mat_nos": [],
+          "assembly": "Trailer Motor Bogie",
+          "sub_assembly": null,
+          "chapter": "PART200 기계계통",
+          "parts": [],
+          "diagram_page_id": 2454
+        },
+        {
+          "page": 118,
+          "file": "ktx1_p118.jpg",
+          "mat_nos": [],
+          "assembly": "Trailer Motor Bogie",
+          "sub_assembly": null,
+          "chapter": "PART200",
+          "parts": [],
+          "diagram_page_id": 2455
+        },
+        {
+          "page": 119,
+          "file": "ktx1_p119.jpg",
+          "mat_nos": [],
+          "assembly": "Intermediate Carrying Bogie Assembly",
+          "sub_assembly": null,
+          "chapter": "PART200 기계계통",
+          "parts": [],
+          "diagram_page_id": 2456
+        },
+        {
+          "page": 120,
+          "file": "ktx1_p120.jpg",
+          "mat_nos": [],
+          "assembly": "Intermediate Carrying Bogie Assembly",
+          "sub_assembly": null,
+          "chapter": "PART200",
+          "parts": [],
+          "diagram_page_id": 2457
+        },
+        {
+          "page": 121,
+          "file": "ktx1_p121.jpg",
+          "mat_nos": [],
+          "assembly": "Intermediate Carrying Bogie Assembly",
+          "sub_assembly": null,
+          "chapter": "PART200",
+          "parts": [],
+          "diagram_page_id": 2458
+        },
+        {
+          "page": 122,
+          "file": "ktx1_p122.jpg",
+          "mat_nos": [],
+          "assembly": "Intermediate Carrying Bogie Assembly",
+          "sub_assembly": null,
+          "chapter": "PART200 기계계통",
+          "parts": [],
+          "diagram_page_id": 2459
+        },
+        {
+          "page": 123,
+          "file": "ktx1_p123.jpg",
+          "mat_nos": [],
+          "assembly": "Bogie to Body Connection",
+          "sub_assembly": null,
+          "chapter": "PART200",
+          "parts": [],
+          "diagram_page_id": 2460
+        },
+        {
+          "page": 124,
+          "file": "ktx1_p124.jpg",
+          "mat_nos": [],
+          "assembly": "Bogie to Body Connection",
+          "sub_assembly": null,
+          "chapter": "PART200 기계계통",
+          "parts": [],
+          "diagram_page_id": 2461
+        },
+        {
+          "page": 125,
+          "file": "ktx1_p125.jpg",
+          "mat_nos": [],
+          "assembly": "Connection Pin / Double Bearing Ass'y",
+          "sub_assembly": null,
+          "chapter": "PART200",
+          "parts": [],
+          "diagram_page_id": 2462
+        },
+        {
+          "page": 126,
+          "file": "ktx1_p126.jpg",
+          "mat_nos": [],
+          "assembly": "Vertical Damper Equipped (MB) / Transverse Damper Equipped (MB)",
+          "sub_assembly": null,
+          "chapter": "PART200",
+          "parts": [],
+          "diagram_page_id": 2463
+        },
+        {
+          "page": 127,
+          "file": "ktx1_p127.jpg",
+          "mat_nos": [],
+          "assembly": "Anti-Yaw Damper Equipped (MB) / Left-Hand Spiral Spring (SS.MB)",
+          "sub_assembly": null,
+          "chapter": "PART200",
+          "parts": [],
+          "diagram_page_id": 2464
+        },
+        {
+          "page": 128,
+          "file": "ktx1_p128.jpg",
+          "mat_nos": [],
+          "assembly": "Anti-Hunting Damper Equipped (MB)",
+          "sub_assembly": null,
+          "chapter": "PART200",
+          "parts": [],
+          "diagram_page_id": 2465
+        },
+        {
+          "page": 129,
+          "file": "ktx1_p129.jpg",
+          "mat_nos": [],
+          "assembly": "Guide Spring MB.PS / Inner Spring",
+          "sub_assembly": null,
+          "chapter": "PART200 기계계통",
+          "parts": [],
+          "diagram_page_id": 2466
+        },
+        {
+          "page": 130,
+          "file": "ktx1_p130.jpg",
+          "mat_nos": [],
+          "assembly": "Outer Spring / Sliding Glaenzer Seal",
+          "sub_assembly": null,
+          "chapter": "PART200",
+          "parts": [],
+          "diagram_page_id": 2467
+        },
+        {
+          "page": 131,
+          "file": "ktx1_p131.jpg",
+          "mat_nos": [],
+          "assembly": "Fixed Glaenzer Seal",
+          "sub_assembly": null,
+          "chapter": "PART200",
+          "parts": [],
+          "diagram_page_id": 2468
+        },
+        {
+          "page": 132,
+          "file": "ktx1_p132.jpg",
+          "mat_nos": [],
+          "assembly": "Traction Motor Reduction Unit Assembly",
+          "sub_assembly": null,
+          "chapter": "PART200 기계계통",
+          "parts": [],
+          "diagram_page_id": 2469
+        },
+        {
+          "page": 133,
+          "file": "ktx1_p133.jpg",
+          "mat_nos": [],
+          "assembly": "Reaction Link (RL)",
+          "sub_assembly": null,
+          "chapter": "PART200 기계계통",
+          "parts": [],
+          "diagram_page_id": 2470
+        },
+        {
+          "page": 135,
+          "file": "ktx1_p135.jpg",
+          "mat_nos": [],
+          "assembly": "Braking Control Stop / Tapered Roller Bearing",
+          "sub_assembly": null,
+          "chapter": "PART200 기계계통",
+          "parts": [],
+          "diagram_page_id": 2472
+        },
+        {
+          "page": 136,
+          "file": "ktx1_p136.jpg",
+          "mat_nos": [],
+          "assembly": "Tread Brake Unit",
+          "sub_assembly": null,
+          "chapter": "PART200 기계계통",
+          "parts": [],
+          "diagram_page_id": 2473
+        },
+        {
+          "page": 137,
+          "file": "ktx1_p137.jpg",
+          "mat_nos": [],
+          "assembly": "Tread Brake Unit",
+          "sub_assembly": null,
+          "chapter": "PART200",
+          "parts": [],
+          "diagram_page_id": 2474
+        },
+        {
+          "page": 138,
+          "file": "ktx1_p138.jpg",
+          "mat_nos": [],
+          "assembly": "Tread Brake Unit",
+          "sub_assembly": null,
+          "chapter": "PART200",
+          "parts": [],
+          "diagram_page_id": 2475
+        },
+        {
+          "page": 139,
+          "file": "ktx1_p139.jpg",
+          "mat_nos": [],
+          "assembly": "Tread Brake Unit",
+          "sub_assembly": null,
+          "chapter": "PART200 기계계통",
+          "parts": [],
+          "diagram_page_id": 2476
+        },
+        {
+          "page": 140,
+          "file": "ktx1_p140.jpg",
+          "mat_nos": [],
+          "assembly": "Sand Jet Pipe Support (1)",
+          "sub_assembly": null,
+          "chapter": "PART200",
+          "parts": [],
+          "diagram_page_id": 2477
+        },
+        {
+          "page": 141,
+          "file": "ktx1_p141.jpg",
+          "mat_nos": [],
+          "assembly": "Sand Jet Pipe Support (2) / Bogie Instability Monitor (CIB Repere 101)",
+          "sub_assembly": null,
+          "chapter": "PART200",
+          "parts": [],
+          "diagram_page_id": 2478
+        },
+        {
+          "page": 142,
+          "file": "ktx1_p142.jpg",
+          "mat_nos": [],
+          "assembly": "Axle Gear Reduction Unit",
+          "sub_assembly": null,
+          "chapter": "PART200",
+          "parts": [],
+          "diagram_page_id": 2479
+        },
+        {
+          "page": 143,
+          "file": "ktx1_p143.jpg",
+          "mat_nos": [],
+          "assembly": "Monobloc wheel with cap and lock washer (MB) / Motor Bare Axle (ABA)",
+          "sub_assembly": null,
+          "chapter": "PART200",
+          "parts": [],
+          "diagram_page_id": 2480
+        },
+        {
+          "page": 144,
+          "file": "ktx1_p144.jpg",
+          "mat_nos": [],
+          "assembly": "기계계통",
+          "sub_assembly": null,
+          "chapter": "PART200",
+          "parts": [],
+          "diagram_page_id": 2481
+        },
+        {
+          "page": 145,
+          "file": "ktx1_p145.jpg",
+          "mat_nos": [],
+          "assembly": "Equipped Earth Return Current (1)",
+          "sub_assembly": null,
+          "chapter": "PART200 기계계통",
+          "parts": [],
+          "diagram_page_id": 2482
+        },
+        {
+          "page": 146,
+          "file": "ktx1_p146.jpg",
+          "mat_nos": [],
+          "assembly": "Equipped Earth Return Current (2)",
+          "sub_assembly": null,
+          "chapter": "PART200",
+          "parts": [],
+          "diagram_page_id": 2483
+        },
+        {
+          "page": 147,
+          "file": "ktx1_p147.jpg",
+          "mat_nos": [],
+          "assembly": "Motor Reduction Unit",
+          "sub_assembly": null,
+          "chapter": "PART200 기계계통",
+          "parts": [],
+          "diagram_page_id": 2484
+        },
+        {
+          "page": 148,
+          "file": "ktx1_p148.jpg",
+          "mat_nos": [],
+          "assembly": "Vertical Damper Equipped (ECB) / Transverse Damper Equipped (ICB)",
+          "sub_assembly": null,
+          "chapter": "PART200",
+          "parts": [],
+          "diagram_page_id": 2485
+        },
+        {
+          "page": 149,
+          "file": "ktx1_p149.jpg",
+          "mat_nos": [],
+          "assembly": "Anti Roll Bar Equipped",
+          "sub_assembly": null,
+          "chapter": "PART200",
+          "parts": [],
+          "diagram_page_id": 2486
+        },
+        {
+          "page": 150,
+          "file": "ktx1_p150.jpg",
+          "mat_nos": [],
+          "assembly": "Anti Roll Bar Equipped",
+          "sub_assembly": null,
+          "chapter": "PART200 기계계통",
+          "parts": [],
+          "diagram_page_id": 2487
+        },
+        {
+          "page": 151,
+          "file": "ktx1_p151.jpg",
+          "mat_nos": [],
+          "assembly": "기계계통",
+          "sub_assembly": null,
+          "chapter": "PART200",
+          "parts": [],
+          "diagram_page_id": 2488
+        },
+        {
+          "page": 152,
+          "file": "ktx1_p152.jpg",
+          "mat_nos": [],
+          "assembly": "Secondary Suspension ITB (Right)",
+          "sub_assembly": null,
+          "chapter": "PART200 기계계통",
+          "parts": [],
+          "diagram_page_id": 2489
+        },
+        {
+          "page": 153,
+          "file": "ktx1_p153.jpg",
+          "mat_nos": [],
+          "assembly": "Secondary Suspension ITB (left) / Anti-Yaw Damper (ECB)",
+          "sub_assembly": null,
+          "chapter": "PART200",
+          "parts": [],
+          "diagram_page_id": 2490
+        },
+        {
+          "page": 154,
+          "file": "ktx1_p154.jpg",
+          "mat_nos": [],
+          "assembly": "Lateral Damper Equipped / Anti-hunting damper equipped (ICB)",
+          "sub_assembly": null,
+          "chapter": "PART200",
+          "parts": [],
+          "diagram_page_id": 2491
+        },
+        {
+          "page": 155,
+          "file": "ktx1_p155.jpg",
+          "mat_nos": [],
+          "assembly": "Inner Spring / Outer Spring",
+          "sub_assembly": null,
+          "chapter": "PART200 기계계통",
+          "parts": [],
+          "diagram_page_id": 2492
+        },
+        {
+          "page": 156,
+          "file": "ktx1_p156.jpg",
+          "mat_nos": [],
+          "assembly": "Equalizer",
+          "sub_assembly": null,
+          "chapter": "PART200",
+          "parts": [],
+          "diagram_page_id": 2493
+        },
+        {
+          "page": 157,
+          "file": "ktx1_p157.jpg",
+          "mat_nos": [],
+          "assembly": "기계계통",
+          "sub_assembly": null,
+          "chapter": "PART200",
+          "parts": [],
+          "diagram_page_id": 2494
+        },
+        {
+          "page": 158,
+          "file": "ktx1_p158.jpg",
+          "mat_nos": [],
+          "assembly": "Anti Roll Bar Equipped",
+          "sub_assembly": null,
+          "chapter": "PART200",
+          "parts": [],
+          "diagram_page_id": 2495
+        },
+        {
+          "page": 159,
+          "file": "ktx1_p159.jpg",
+          "mat_nos": [],
+          "assembly": "Anti Roll Bar Equipped",
+          "sub_assembly": null,
+          "chapter": "PART200",
+          "parts": [],
+          "diagram_page_id": 2496
+        },
+        {
+          "page": 160,
+          "file": "ktx1_p160.jpg",
+          "mat_nos": [],
+          "assembly": "Brake's Cylinder 9\"\" (ICB)",
+          "sub_assembly": null,
+          "chapter": "PART200",
+          "parts": [],
+          "diagram_page_id": 2497
+        },
+        {
+          "page": 161,
+          "file": "ktx1_p161.jpg",
+          "mat_nos": [],
+          "assembly": "Caliper Assembly Without Cylinder / Bogie Instability Monitor (CIB Repere 102)",
+          "sub_assembly": null,
+          "chapter": "PART200",
+          "parts": [],
+          "diagram_page_id": 2498
+        },
+        {
+          "page": 162,
+          "file": "ktx1_p162.jpg",
+          "mat_nos": [],
+          "assembly": "Twin Brake Disk With Hub / Phonic Wheel",
+          "sub_assembly": null,
+          "chapter": "PART200",
+          "parts": [],
+          "diagram_page_id": 2499
+        },
+        {
+          "page": 163,
+          "file": "ktx1_p163.jpg",
+          "mat_nos": [],
+          "assembly": "Distributor LDV / Ejector LEB",
+          "sub_assembly": null,
+          "chapter": "PART200 기계계통",
+          "parts": [],
+          "diagram_page_id": 2500
+        },
+        {
+          "page": 164,
+          "file": "ktx1_p164.jpg",
+          "mat_nos": [],
+          "assembly": "Complete Pantograph 25 KV",
+          "sub_assembly": null,
+          "chapter": "PART200",
+          "parts": [],
+          "diagram_page_id": 2501
+        },
+        {
+          "page": 166,
+          "file": "ktx1_p166.jpg",
+          "mat_nos": [],
+          "assembly": "Complete Pantograph 25 KV",
+          "sub_assembly": null,
+          "chapter": "PART200",
+          "parts": [],
+          "diagram_page_id": 2503
+        },
+        {
+          "page": 167,
+          "file": "ktx1_p167.jpg",
+          "mat_nos": [],
+          "assembly": "Complete Pantograph 25 KV",
+          "sub_assembly": null,
+          "chapter": "PART200",
+          "parts": [],
+          "diagram_page_id": 2504
+        },
+        {
+          "page": 168,
+          "file": "ktx1_p168.jpg",
+          "mat_nos": [],
+          "assembly": "Insolating Air Pipe",
+          "sub_assembly": null,
+          "chapter": "PART200 기계계통",
+          "parts": [],
+          "diagram_page_id": 2505
+        },
+        {
+          "page": 169,
+          "file": "ktx1_p169.jpg",
+          "mat_nos": [],
+          "assembly": "Bow",
+          "sub_assembly": null,
+          "chapter": "PART200 기계계통",
+          "parts": [],
+          "diagram_page_id": 2506
+        },
+        {
+          "page": 170,
+          "file": "ktx1_p170.jpg",
+          "mat_nos": [],
+          "assembly": "Magnet Valve W3D For Flange Lubricating / Sand Ejector Block",
+          "sub_assembly": null,
+          "chapter": "PART200 기계계통",
+          "parts": [],
+          "diagram_page_id": 2507
+        },
+        {
+          "page": 171,
+          "file": "ktx1_p171.jpg",
+          "mat_nos": [],
+          "assembly": "Sanding Panel",
+          "sub_assembly": null,
+          "chapter": "PART200 기계계통",
+          "parts": [],
+          "diagram_page_id": 2508
+        },
+        {
+          "page": 172,
+          "file": "ktx1_p172.jpg",
+          "mat_nos": [],
+          "assembly": "Unit Sand Ejector / Out Gear - Finish G(51t)",
+          "sub_assembly": null,
+          "chapter": "PART200 기계계통",
+          "parts": [],
+          "diagram_page_id": 2509
+        },
+        {
+          "page": 173,
+          "file": "ktx1_p173.jpg",
+          "mat_nos": [],
+          "assembly": "T/m Gear Wheel (41t, O.d:313.9)",
+          "sub_assembly": null,
+          "chapter": "PART200 기계계통",
+          "parts": [],
+          "diagram_page_id": 2510
+        },
+        {
+          "page": 174,
+          "file": "ktx1_p174.jpg",
+          "mat_nos": [],
+          "assembly": "Anti-Yaw Damper (ECB) / Anti-Yaw Damper (MB/ECB)",
+          "sub_assembly": null,
+          "chapter": "PART200",
+          "parts": [],
+          "diagram_page_id": 2511
+        },
+        {
+          "page": 175,
+          "file": "ktx1_p175.jpg",
+          "mat_nos": [],
+          "assembly": "Base Valve Unit",
+          "sub_assembly": null,
+          "chapter": "PART200 기계계통",
+          "parts": [],
+          "diagram_page_id": 2512
+        },
+        {
+          "page": 176,
+          "file": "ktx1_p176.jpg",
+          "mat_nos": [],
+          "assembly": "Body To Body Damper",
+          "sub_assembly": null,
+          "chapter": "PART200",
+          "parts": [],
+          "diagram_page_id": 2513
+        },
+        {
+          "page": 177,
+          "file": "ktx1_p177.jpg",
+          "mat_nos": [],
+          "assembly": "Box Xap-M1423699001",
+          "sub_assembly": null,
+          "chapter": "PART200",
+          "parts": [],
+          "diagram_page_id": 2514
+        },
+        {
+          "page": 178,
+          "file": "ktx1_p178.jpg",
+          "mat_nos": [],
+          "assembly": "Carbone Strip For Bow / Elastic Knuckle For Anti Yaw Damper",
+          "sub_assembly": null,
+          "chapter": "PART200 기계계통",
+          "parts": [],
+          "diagram_page_id": 2515
+        },
+        {
+          "page": 179,
+          "file": "ktx1_p179.jpg",
+          "mat_nos": [],
+          "assembly": "Emergency Coupling And Accessories",
+          "sub_assembly": null,
+          "chapter": "PART200",
+          "parts": [],
+          "diagram_page_id": 2516
+        },
+        {
+          "page": 180,
+          "file": "ktx1_p180.jpg",
+          "mat_nos": [],
+          "assembly": "Lateral Damper (ICB 10000N) / Lateral Damper (ICB 3000N)",
+          "sub_assembly": null,
+          "chapter": "PART200 기계계통",
+          "parts": [],
+          "diagram_page_id": 2517
+        },
+        {
+          "page": 181,
+          "file": "ktx1_p181.jpg",
+          "mat_nos": [],
+          "assembly": "Motor Bogie",
+          "sub_assembly": null,
+          "chapter": "PART200",
+          "parts": [],
+          "diagram_page_id": 2518
+        },
+        {
+          "page": 182,
+          "file": "ktx1_p182.jpg",
+          "mat_nos": [],
+          "assembly": "Piston Unit",
+          "sub_assembly": null,
+          "chapter": "PART200 기계계통",
+          "parts": [],
+          "diagram_page_id": 2519
+        },
+        {
+          "page": 183,
+          "file": "ktx1_p183.jpg",
+          "mat_nos": [],
+          "assembly": "Secondary Suspension MTB",
+          "sub_assembly": null,
+          "chapter": "PART200 기계계통",
+          "parts": [],
+          "diagram_page_id": 2520
+        },
+        {
+          "page": 184,
+          "file": "ktx1_p184.jpg",
+          "mat_nos": [],
+          "assembly": "Tapered Roller Bearing / Throttle Valve With Panto Contol",
+          "sub_assembly": null,
+          "chapter": "PART200",
+          "parts": [],
+          "diagram_page_id": 2521
+        },
+        {
+          "page": 185,
+          "file": "ktx1_p185.jpg",
+          "mat_nos": [],
+          "assembly": "Trailer Bare Axle / Trailer Wheelset With Fitted Brake Disk",
+          "sub_assembly": null,
+          "chapter": "PART200",
+          "parts": [],
+          "diagram_page_id": 2522
+        },
+        {
+          "page": 186,
+          "file": "ktx1_p186.jpg",
+          "mat_nos": [],
+          "assembly": "Vertical Damper (ICB 3000N) / Vertical Damper (ICB)",
+          "sub_assembly": null,
+          "chapter": "PART200",
+          "parts": [],
+          "diagram_page_id": 2523
+        },
+        {
+          "page": 187,
+          "file": "ktx1_p187.jpg",
+          "mat_nos": [],
+          "assembly": "Vertical Damper (MB)",
+          "sub_assembly": null,
+          "chapter": "PART200",
+          "parts": [],
+          "diagram_page_id": 2524
+        },
+        {
+          "page": 188,
+          "file": "ktx1_p188.jpg",
+          "mat_nos": [],
+          "assembly": "Trailer Bogie Lateral Damper (3000N) / Brake Shoe KRCS B346 4249-10010",
+          "sub_assembly": null,
+          "chapter": "PART200",
+          "parts": [],
+          "diagram_page_id": 2525
+        },
+        {
+          "page": 189,
+          "file": "ktx1_p189.jpg",
+          "mat_nos": [],
+          "assembly": "KTX Sealed Knuckel KRCS B347 01 4423-10010",
+          "sub_assembly": null,
+          "chapter": "PART200",
+          "parts": [],
+          "diagram_page_id": 2526
+        }
+      ]
+    },
+    "cat7": {
+      "label": "차상신호장치",
+      "pages": []
+    },
+    "cat8": {
+      "label": "차체·설비",
+      "pages": [
+        {
+          "page": 13,
+          "file": "ktx1_p13.jpg",
+          "mat_nos": [],
+          "assembly": "차량일반",
+          "sub_assembly": null,
+          "chapter": "",
+          "parts": [],
+          "diagram_page_id": 2350
+        },
+        {
+          "page": 14,
+          "file": "ktx1_p14.jpg",
+          "mat_nos": [],
+          "assembly": "차량일반 - Train Consist Unit",
+          "sub_assembly": null,
+          "chapter": "",
+          "parts": [],
+          "diagram_page_id": 2351
+        },
+        {
+          "page": 15,
+          "file": "ktx1_p15.jpg",
+          "mat_nos": [],
+          "assembly": "Train Consist Unit",
+          "sub_assembly": null,
+          "chapter": "차량일반",
+          "parts": [],
+          "diagram_page_id": 2352
+        },
+        {
+          "page": 16,
+          "file": "ktx1_p16.jpg",
+          "mat_nos": [],
+          "assembly": "동력차 (PC1/PC2)",
+          "sub_assembly": null,
+          "chapter": "",
+          "parts": [],
+          "diagram_page_id": 2353
+        },
+        {
+          "page": 17,
+          "file": "ktx1_p17.jpg",
+          "mat_nos": [],
+          "assembly": "동력객차 (TR1)",
+          "sub_assembly": null,
+          "chapter": "차량일반",
+          "parts": [],
+          "diagram_page_id": 2354
+        },
+        {
+          "page": 18,
+          "file": "ktx1_p18.jpg",
+          "mat_nos": [],
+          "assembly": "특실 (TR2)",
+          "sub_assembly": null,
+          "chapter": "",
+          "parts": [],
+          "diagram_page_id": 2355
+        },
+        {
+          "page": 19,
+          "file": "ktx1_p19.jpg",
+          "mat_nos": [],
+          "assembly": "Train Consist Unit (TR3 특실)",
+          "sub_assembly": null,
+          "chapter": "차량일반",
+          "parts": [],
+          "diagram_page_id": 2356
+        },
+        {
+          "page": 20,
+          "file": "ktx1_p20.jpg",
+          "mat_nos": [],
+          "assembly": "TR4 특실",
+          "sub_assembly": null,
+          "chapter": "",
+          "parts": [],
+          "diagram_page_id": 2357
+        },
+        {
+          "page": 21,
+          "file": "ktx1_p21.jpg",
+          "mat_nos": [],
+          "assembly": "Train Consist Unit (TR5 특실)",
+          "sub_assembly": null,
+          "chapter": "차량일반",
+          "parts": [],
+          "diagram_page_id": 2358
+        },
+        {
+          "page": 22,
+          "file": "ktx1_p22.jpg",
+          "mat_nos": [],
+          "assembly": "객차편성장치",
+          "sub_assembly": null,
+          "chapter": "차량일반",
+          "parts": [],
+          "diagram_page_id": 2359
+        },
+        {
+          "page": 23,
+          "file": "ktx1_p23.jpg",
+          "mat_nos": [],
+          "assembly": "객차 (TR7)",
+          "sub_assembly": null,
+          "chapter": "차량일반",
+          "parts": [],
+          "diagram_page_id": 2360
+        },
+        {
+          "page": 24,
+          "file": "ktx1_p24.jpg",
+          "mat_nos": [],
+          "assembly": "Train Consist Unit (TR8)",
+          "sub_assembly": null,
+          "chapter": "차량일반",
+          "parts": [],
+          "diagram_page_id": 2361
+        },
+        {
+          "page": 25,
+          "file": "ktx1_p25.jpg",
+          "mat_nos": [],
+          "assembly": "Train Consist Unit (TR9)",
+          "sub_assembly": null,
+          "chapter": "차량일반",
+          "parts": [],
+          "diagram_page_id": 2362
+        },
+        {
+          "page": 26,
+          "file": "ktx1_p26.jpg",
+          "mat_nos": [],
+          "assembly": "객차 구성 (TR10)",
+          "sub_assembly": null,
+          "chapter": "차량일반",
+          "parts": [],
+          "diagram_page_id": 2363
+        },
+        {
+          "page": 27,
+          "file": "ktx1_p27.jpg",
+          "mat_nos": [],
+          "assembly": "객차 (TR11)",
+          "sub_assembly": null,
+          "chapter": "",
+          "parts": [],
+          "diagram_page_id": 2364
+        },
+        {
+          "page": 28,
+          "file": "ktx1_p28.jpg",
+          "mat_nos": [],
+          "assembly": "객차 (TR12)",
+          "sub_assembly": null,
+          "chapter": "",
+          "parts": [],
+          "diagram_page_id": 2365
+        },
+        {
+          "page": 29,
+          "file": "ktx1_p29.jpg",
+          "mat_nos": [],
+          "assembly": "Train Consist Unit (TR13)",
+          "sub_assembly": null,
+          "chapter": "차량일반",
+          "parts": [],
+          "diagram_page_id": 2366
+        },
+        {
+          "page": 30,
+          "file": "ktx1_p30.jpg",
+          "mat_nos": [],
+          "assembly": "객차 (TR14)",
+          "sub_assembly": null,
+          "chapter": "차량일반",
+          "parts": [],
+          "diagram_page_id": 2367
+        },
+        {
+          "page": 31,
+          "file": "ktx1_p31.jpg",
+          "mat_nos": [],
+          "assembly": "Train Consist Unit (TR15)",
+          "sub_assembly": null,
+          "chapter": "차량일반",
+          "parts": [],
+          "diagram_page_id": 2368
+        },
+        {
+          "page": 32,
+          "file": "ktx1_p32.jpg",
+          "mat_nos": [],
+          "assembly": "객차 (TR16)",
+          "sub_assembly": null,
+          "chapter": "차량일반",
+          "parts": [],
+          "diagram_page_id": 2369
+        },
+        {
+          "page": 33,
+          "file": "ktx1_p33.jpg",
+          "mat_nos": [],
+          "assembly": "객차 (TR17)",
+          "sub_assembly": null,
+          "chapter": "차량일반",
+          "parts": [],
+          "diagram_page_id": 2370
+        },
+        {
+          "page": 34,
+          "file": "ktx1_p34.jpg",
+          "mat_nos": [],
+          "assembly": "동력객차 (TR18)",
+          "sub_assembly": null,
+          "chapter": "",
+          "parts": [],
+          "diagram_page_id": 2371
+        },
+        {
+          "page": 36,
+          "file": "ktx1_p36.jpg",
+          "mat_nos": [],
+          "assembly": "하부설비 (TR2) / 하부설비 (TR3)",
+          "sub_assembly": null,
+          "chapter": "",
+          "parts": [],
+          "diagram_page_id": 2373
+        },
+        {
+          "page": 37,
+          "file": "ktx1_p37.jpg",
+          "mat_nos": [],
+          "assembly": "하부설비 (TR4) / 하부설비 (TR5)",
+          "sub_assembly": null,
+          "chapter": "",
+          "parts": [],
+          "diagram_page_id": 2374
+        },
+        {
+          "page": 38,
+          "file": "ktx1_p38.jpg",
+          "mat_nos": [],
+          "assembly": "하부설비 (TR6) / 하부설비 (TR7)",
+          "sub_assembly": null,
+          "chapter": "",
+          "parts": [],
+          "diagram_page_id": 2375
+        },
+        {
+          "page": 39,
+          "file": "ktx1_p39.jpg",
+          "mat_nos": [],
+          "assembly": "하부설비 (TR8), 하부설비 (TR9)",
+          "sub_assembly": null,
+          "chapter": "차량일반",
+          "parts": [],
+          "diagram_page_id": 2376
+        },
+        {
+          "page": 40,
+          "file": "ktx1_p40.jpg",
+          "mat_nos": [],
+          "assembly": "하부설비 (TR10) / 하부설비 (TR11)",
+          "sub_assembly": null,
+          "chapter": "차량일반",
+          "parts": [],
+          "diagram_page_id": 2377
+        },
+        {
+          "page": 41,
+          "file": "ktx1_p41.jpg",
+          "mat_nos": [],
+          "assembly": "하부설비 (TR12) / 하부설비 (TR13)",
+          "sub_assembly": null,
+          "chapter": "차량일반",
+          "parts": [],
+          "diagram_page_id": 2378
+        },
+        {
+          "page": 42,
+          "file": "ktx1_p42.jpg",
+          "mat_nos": [],
+          "assembly": "하부설비 (TR14), 하부설비 (TR15)",
+          "sub_assembly": null,
+          "chapter": "차량일반",
+          "parts": [],
+          "diagram_page_id": 2379
+        },
+        {
+          "page": 43,
+          "file": "ktx1_p43.jpg",
+          "mat_nos": [],
+          "assembly": "하부설비 (TR16) / 하부설비 (TR17)",
+          "sub_assembly": null,
+          "chapter": "차량일반",
+          "parts": [],
+          "diagram_page_id": 2380
+        },
+        {
+          "page": 45,
+          "file": "ktx1_p45.jpg",
+          "mat_nos": [],
+          "assembly": "차량일반",
+          "sub_assembly": null,
+          "chapter": "차량일반",
+          "parts": [],
+          "diagram_page_id": 2382
+        },
+        {
+          "page": 46,
+          "file": "ktx1_p46.jpg",
+          "mat_nos": [],
+          "assembly": "차체계통",
+          "sub_assembly": null,
+          "chapter": "PART 100",
+          "parts": [],
+          "diagram_page_id": 2383
+        },
+        {
+          "page": 47,
+          "file": "ktx1_p47.jpg",
+          "mat_nos": [],
+          "assembly": "Hatch Framework",
+          "sub_assembly": null,
+          "chapter": "PART100",
+          "parts": [],
+          "diagram_page_id": 2384
+        },
+        {
+          "page": 48,
+          "file": "ktx1_p48.jpg",
+          "mat_nos": [],
+          "assembly": "Hatch Framework",
+          "sub_assembly": null,
+          "chapter": "PART100",
+          "parts": [],
+          "diagram_page_id": 2385
+        },
+        {
+          "page": 49,
+          "file": "ktx1_p49.jpg",
+          "mat_nos": [],
+          "assembly": "Right Hatch Framework / Left Hatch Framework",
+          "sub_assembly": null,
+          "chapter": "PART100",
+          "parts": [],
+          "diagram_page_id": 2386
+        },
+        {
+          "page": 50,
+          "file": "ktx1_p50.jpg",
+          "mat_nos": [],
+          "assembly": "Horn",
+          "sub_assembly": null,
+          "chapter": "PART100 차체계통",
+          "parts": [],
+          "diagram_page_id": 2387
+        },
+        {
+          "page": 51,
+          "file": "ktx1_p51.jpg",
+          "mat_nos": [],
+          "assembly": "차체계통",
+          "sub_assembly": null,
+          "chapter": "PART100",
+          "parts": [],
+          "diagram_page_id": 2388
+        },
+        {
+          "page": 52,
+          "file": "ktx1_p52.jpg",
+          "mat_nos": [],
+          "assembly": "Auxiliary Driver's Desk Block Unit",
+          "sub_assembly": null,
+          "chapter": "PART100",
+          "parts": [],
+          "diagram_page_id": 2389
+        },
+        {
+          "page": 53,
+          "file": "ktx1_p53.jpg",
+          "mat_nos": [],
+          "assembly": "운전자 좌석",
+          "sub_assembly": null,
+          "chapter": "PART100",
+          "parts": [],
+          "diagram_page_id": 2390
+        },
+        {
+          "page": 54,
+          "file": "ktx1_p54.jpg",
+          "mat_nos": [],
+          "assembly": "Front Stem",
+          "sub_assembly": null,
+          "chapter": "PART100 차체계통",
+          "parts": [],
+          "diagram_page_id": 2391
+        },
+        {
+          "page": 55,
+          "file": "ktx1_p55.jpg",
+          "mat_nos": [],
+          "assembly": "차체계통",
+          "sub_assembly": null,
+          "chapter": "PART100",
+          "parts": [],
+          "diagram_page_id": 2392
+        },
+        {
+          "page": 56,
+          "file": "ktx1_p56.jpg",
+          "mat_nos": [],
+          "assembly": "Equiped Door Leaf Access Doors",
+          "sub_assembly": null,
+          "chapter": "PART100",
+          "parts": [],
+          "diagram_page_id": 2393
+        },
+        {
+          "page": 57,
+          "file": "ktx1_p57.jpg",
+          "mat_nos": [],
+          "assembly": "Stabilizer",
+          "sub_assembly": null,
+          "chapter": "PART100 차체계통",
+          "parts": [],
+          "diagram_page_id": 2394
+        },
+        {
+          "page": 58,
+          "file": "ktx1_p58.jpg",
+          "mat_nos": [],
+          "assembly": "Obstacle Detection Cancellation Contact / Contact Z (DPO)",
+          "sub_assembly": null,
+          "chapter": "PART100",
+          "parts": [],
+          "diagram_page_id": 2395
+        },
+        {
+          "page": 59,
+          "file": "ktx1_p59.jpg",
+          "mat_nos": [],
+          "assembly": "차체계통",
+          "sub_assembly": null,
+          "chapter": "PART100",
+          "parts": [],
+          "diagram_page_id": 2396
+        },
+        {
+          "page": 60,
+          "file": "ktx1_p60.jpg",
+          "mat_nos": [],
+          "assembly": "Lock On Carbody",
+          "sub_assembly": null,
+          "chapter": "PART100",
+          "parts": [],
+          "diagram_page_id": 2397
+        },
+        {
+          "page": 61,
+          "file": "ktx1_p61.jpg",
+          "mat_nos": [],
+          "assembly": "차체계통",
+          "sub_assembly": null,
+          "chapter": "PART100",
+          "parts": [],
+          "diagram_page_id": 2398
+        },
+        {
+          "page": 62,
+          "file": "ktx1_p62.jpg",
+          "mat_nos": [],
+          "assembly": "차체계통",
+          "sub_assembly": null,
+          "chapter": "PART100",
+          "parts": [],
+          "diagram_page_id": 2399
+        },
+        {
+          "page": 63,
+          "file": "ktx1_p63.jpg",
+          "mat_nos": [],
+          "assembly": "Pressure Controller Control Unit / Rotating Motor",
+          "sub_assembly": null,
+          "chapter": "PART100",
+          "parts": [],
+          "diagram_page_id": 2400
+        },
+        {
+          "page": 64,
+          "file": "ktx1_p64.jpg",
+          "mat_nos": [],
+          "assembly": "Rotating Motor / Contact For Lock On Carbody",
+          "sub_assembly": null,
+          "chapter": "PART100",
+          "parts": [],
+          "diagram_page_id": 2401
+        },
+        {
+          "page": 65,
+          "file": "ktx1_p65.jpg",
+          "mat_nos": [],
+          "assembly": "차체계통",
+          "sub_assembly": null,
+          "chapter": "PART100",
+          "parts": [],
+          "diagram_page_id": 2402
+        },
+        {
+          "page": 66,
+          "file": "ktx1_p66.jpg",
+          "mat_nos": [],
+          "assembly": "차체계통",
+          "sub_assembly": null,
+          "chapter": "PART100",
+          "parts": [],
+          "diagram_page_id": 2403
+        },
+        {
+          "page": 67,
+          "file": "ktx1_p67.jpg",
+          "mat_nos": [],
+          "assembly": "Access Door Closure Switch / Access Door Opening Switch",
+          "sub_assembly": null,
+          "chapter": "PART100 차체계통",
+          "parts": [],
+          "diagram_page_id": 2404
+        },
+        {
+          "page": 68,
+          "file": "ktx1_p68.jpg",
+          "mat_nos": [],
+          "assembly": "Hanger Device Tr01, Tr02~Tr18 (화장실반대측) 출입문",
+          "sub_assembly": null,
+          "chapter": "PART100",
+          "parts": [],
+          "diagram_page_id": 2405
+        },
+        {
+          "page": 69,
+          "file": "ktx1_p69.jpg",
+          "mat_nos": [],
+          "assembly": "Equipped Door Leaf (T1, 6, 18)",
+          "sub_assembly": null,
+          "chapter": "PART100",
+          "parts": [],
+          "diagram_page_id": 2406
+        },
+        {
+          "page": 70,
+          "file": "ktx1_p70.jpg",
+          "mat_nos": [],
+          "assembly": "Equipped Door Leaf (T1, 6, 18)",
+          "sub_assembly": null,
+          "chapter": "PART100",
+          "parts": [],
+          "diagram_page_id": 2407
+        },
+        {
+          "page": 71,
+          "file": "ktx1_p71.jpg",
+          "mat_nos": [],
+          "assembly": "차체계통",
+          "sub_assembly": null,
+          "chapter": "PART100",
+          "parts": [],
+          "diagram_page_id": 2408
+        },
+        {
+          "page": 72,
+          "file": "ktx1_p72.jpg",
+          "mat_nos": [],
+          "assembly": "Air Cylinder / Hanger Device Tr02(장애인화장실측)",
+          "sub_assembly": null,
+          "chapter": "PART100 차체계통",
+          "parts": [],
+          "diagram_page_id": 2409
+        },
+        {
+          "page": 73,
+          "file": "ktx1_p73.jpg",
+          "mat_nos": [],
+          "assembly": "Equipped Door Leaf (T3, 4, 5)",
+          "sub_assembly": null,
+          "chapter": "PART100",
+          "parts": [],
+          "diagram_page_id": 2410
+        },
+        {
+          "page": 74,
+          "file": "ktx1_p74.jpg",
+          "mat_nos": [],
+          "assembly": "Equipped Door Leaf (T3, 4, 5)",
+          "sub_assembly": null,
+          "chapter": "PART100",
+          "parts": [],
+          "diagram_page_id": 2411
+        },
+        {
+          "page": 75,
+          "file": "ktx1_p75.jpg",
+          "mat_nos": [],
+          "assembly": "Valve Complete / Diaphragm Pump",
+          "sub_assembly": null,
+          "chapter": "PART100 차체계통",
+          "parts": [],
+          "diagram_page_id": 2412
+        },
+        {
+          "page": 76,
+          "file": "ktx1_p76.jpg",
+          "mat_nos": [],
+          "assembly": "Diaphragm Pump / Membrane Valve",
+          "sub_assembly": null,
+          "chapter": "PART100",
+          "parts": [],
+          "diagram_page_id": 2413
+        },
+        {
+          "page": 77,
+          "file": "ktx1_p77.jpg",
+          "mat_nos": [],
+          "assembly": "Single Retention Tank",
+          "sub_assembly": null,
+          "chapter": "PART100 차체계통",
+          "parts": [],
+          "diagram_page_id": 2414
+        },
+        {
+          "page": 78,
+          "file": "ktx1_p78.jpg",
+          "mat_nos": [],
+          "assembly": "Single Retention Tank",
+          "sub_assembly": null,
+          "chapter": "PART 100 차체계통",
+          "parts": [],
+          "diagram_page_id": 2415
+        },
+        {
+          "page": 79,
+          "file": "ktx1_p79.jpg",
+          "mat_nos": [],
+          "assembly": "WC Flush Pump",
+          "sub_assembly": null,
+          "chapter": "PART100",
+          "parts": [],
+          "diagram_page_id": 2416
+        },
+        {
+          "page": 80,
+          "file": "ktx1_p80.jpg",
+          "mat_nos": [],
+          "assembly": "Double Retention Tank",
+          "sub_assembly": null,
+          "chapter": "PART100",
+          "parts": [],
+          "diagram_page_id": 2417
+        },
+        {
+          "page": 81,
+          "file": "ktx1_p81.jpg",
+          "mat_nos": [],
+          "assembly": "Double Retention Tank",
+          "sub_assembly": null,
+          "chapter": "PART100 차체계통",
+          "parts": [],
+          "diagram_page_id": 2418
+        },
+        {
+          "page": 82,
+          "file": "ktx1_p82.jpg",
+          "mat_nos": [],
+          "assembly": "Double Retention Tank",
+          "sub_assembly": null,
+          "chapter": "PART100",
+          "parts": [],
+          "diagram_page_id": 2419
+        },
+        {
+          "page": 83,
+          "file": "ktx1_p83.jpg",
+          "mat_nos": [],
+          "assembly": "차체계통",
+          "sub_assembly": null,
+          "chapter": "PART100",
+          "parts": [],
+          "diagram_page_id": 2420
+        },
+        {
+          "page": 84,
+          "file": "ktx1_p84.jpg",
+          "mat_nos": [],
+          "assembly": "Air Switch Position PXC-K22101 / Distributor 4/2",
+          "sub_assembly": null,
+          "chapter": "PART100",
+          "parts": [],
+          "diagram_page_id": 2421
+        },
+        {
+          "page": 85,
+          "file": "ktx1_p85.jpg",
+          "mat_nos": [],
+          "assembly": "Class Double Seat - Unequipped Seat Bak (Type B2.3)",
+          "sub_assembly": null,
+          "chapter": "PART100",
+          "parts": [],
+          "diagram_page_id": 2422
+        },
+        {
+          "page": 86,
+          "file": "ktx1_p86.jpg",
+          "mat_nos": [],
+          "assembly": "Class Double Seat - Unequipped Seat Bak Sym. (Type B2.4)",
+          "sub_assembly": null,
+          "chapter": "PART100",
+          "parts": [],
+          "diagram_page_id": 2423
+        },
+        {
+          "page": 87,
+          "file": "ktx1_p87.jpg",
+          "mat_nos": [],
+          "assembly": "Class Double Seat - Fully Equipped Seat Bak (Type B2.1)",
+          "sub_assembly": null,
+          "chapter": "PART100",
+          "parts": [],
+          "diagram_page_id": 2424
+        },
+        {
+          "page": 88,
+          "file": "ktx1_p88.jpg",
+          "mat_nos": [],
+          "assembly": "Class Double Seat - Fully Equipped Seat Bak Sym. (Type B2.2)",
+          "sub_assembly": null,
+          "chapter": "PART100",
+          "parts": [],
+          "diagram_page_id": 2425
+        },
+        {
+          "page": 89,
+          "file": "ktx1_p89.jpg",
+          "mat_nos": [],
+          "assembly": "Class Double Seat - Unequipped Seat Bak (Type B2.5)",
+          "sub_assembly": null,
+          "chapter": "PART100",
+          "parts": [],
+          "diagram_page_id": 2426
+        },
+        {
+          "page": 90,
+          "file": "ktx1_p90.jpg",
+          "mat_nos": [],
+          "assembly": "Class Double Seat - Unequipped Seat Bak Sym (Type B2.6)",
+          "sub_assembly": null,
+          "chapter": "PART100",
+          "parts": [],
+          "diagram_page_id": 2427
+        },
+        {
+          "page": 91,
+          "file": "ktx1_p91.jpg",
+          "mat_nos": [],
+          "assembly": "Class Double Seat - Unequipped Seat Bak (Type B2.7)",
+          "sub_assembly": null,
+          "chapter": "PART100",
+          "parts": [],
+          "diagram_page_id": 2428
+        },
+        {
+          "page": 92,
+          "file": "ktx1_p92.jpg",
+          "mat_nos": [],
+          "assembly": "Class Double Seat - Unequipped Seat Bak Sym (Type B2.8)",
+          "sub_assembly": null,
+          "chapter": "PART100",
+          "parts": [],
+          "diagram_page_id": 2429
+        },
+        {
+          "page": 93,
+          "file": "ktx1_p93.jpg",
+          "mat_nos": [],
+          "assembly": "Class Single Seat (Type A1)",
+          "sub_assembly": null,
+          "chapter": "PART100",
+          "parts": [],
+          "diagram_page_id": 2430
+        },
+        {
+          "page": 94,
+          "file": "ktx1_p94.jpg",
+          "mat_nos": [],
+          "assembly": "Class Double Seat (Type A2)",
+          "sub_assembly": null,
+          "chapter": "PART100",
+          "parts": [],
+          "diagram_page_id": 2431
+        },
+        {
+          "page": 95,
+          "file": "ktx1_p95.jpg",
+          "mat_nos": [],
+          "assembly": "Class Single Seat (Type A1.1)",
+          "sub_assembly": null,
+          "chapter": "PART100",
+          "parts": [],
+          "diagram_page_id": 2432
+        },
+        {
+          "page": 96,
+          "file": "ktx1_p96.jpg",
+          "mat_nos": [],
+          "assembly": "Roller Shutter (Assembly)",
+          "sub_assembly": null,
+          "chapter": "PART100",
+          "parts": [],
+          "diagram_page_id": 2433
+        },
+        {
+          "page": 97,
+          "file": "ktx1_p97.jpg",
+          "mat_nos": [],
+          "assembly": "Window Blind",
+          "sub_assembly": null,
+          "chapter": "PART100",
+          "parts": [],
+          "diagram_page_id": 2434
+        },
+        {
+          "page": 98,
+          "file": "ktx1_p98.jpg",
+          "mat_nos": [],
+          "assembly": "차체계통",
+          "sub_assembly": null,
+          "chapter": "PART100",
+          "parts": [],
+          "diagram_page_id": 2435
+        },
+        {
+          "page": 99,
+          "file": "ktx1_p99.jpg",
+          "mat_nos": [],
+          "assembly": "차체계통",
+          "sub_assembly": null,
+          "chapter": "PART100",
+          "parts": [],
+          "diagram_page_id": 2436
+        },
+        {
+          "page": 100,
+          "file": "ktx1_p100.jpg",
+          "mat_nos": [],
+          "assembly": "Time Delay Control Unit Access Door",
+          "sub_assembly": null,
+          "chapter": "PART100",
+          "parts": [],
+          "diagram_page_id": 2437
+        },
+        {
+          "page": 101,
+          "file": "ktx1_p101.jpg",
+          "mat_nos": [],
+          "assembly": "Roller Shutter (Assembly)",
+          "sub_assembly": null,
+          "chapter": "PART100",
+          "parts": [],
+          "diagram_page_id": 2438
+        },
+        {
+          "page": 102,
+          "file": "ktx1_p102.jpg",
+          "mat_nos": [],
+          "assembly": "Roller Shutter (Assembly)",
+          "sub_assembly": null,
+          "chapter": "PART100 차체계통",
+          "parts": [],
+          "diagram_page_id": 2439
+        },
+        {
+          "page": 103,
+          "file": "ktx1_p103.jpg",
+          "mat_nos": [],
+          "assembly": "Single Retention Tank",
+          "sub_assembly": null,
+          "chapter": "PART100",
+          "parts": [],
+          "diagram_page_id": 2440
+        },
+        {
+          "page": 104,
+          "file": "ktx1_p104.jpg",
+          "mat_nos": [],
+          "assembly": "Single Retention Tank",
+          "sub_assembly": null,
+          "chapter": "PART 100 차체계통",
+          "parts": [],
+          "diagram_page_id": 2441
+        },
+        {
+          "page": 105,
+          "file": "ktx1_p105.jpg",
+          "mat_nos": [],
+          "assembly": "Access Door Control Unit",
+          "sub_assembly": null,
+          "chapter": "PART100",
+          "parts": [],
+          "diagram_page_id": 2442
+        },
+        {
+          "page": 106,
+          "file": "ktx1_p106.jpg",
+          "mat_nos": [],
+          "assembly": "Symmetrical Access Door Control Unit",
+          "sub_assembly": null,
+          "chapter": "PART100",
+          "parts": [],
+          "diagram_page_id": 2443
+        },
+        {
+          "page": 107,
+          "file": "ktx1_p107.jpg",
+          "mat_nos": [],
+          "assembly": "Magnet Valve Complete For Access Door Control Unit / Distributor Miscellaneous Parts",
+          "sub_assembly": null,
+          "chapter": "PART100",
+          "parts": [],
+          "diagram_page_id": 2444
+        },
+        {
+          "page": 108,
+          "file": "ktx1_p108.jpg",
+          "mat_nos": [],
+          "assembly": "차체계통",
+          "sub_assembly": null,
+          "chapter": "PART100",
+          "parts": [],
+          "diagram_page_id": 2445
+        },
+        {
+          "page": 109,
+          "file": "ktx1_p109.jpg",
+          "mat_nos": [],
+          "assembly": "Air Cylinder",
+          "sub_assembly": null,
+          "chapter": "PART100",
+          "parts": [],
+          "diagram_page_id": 2446
+        },
+        {
+          "page": 134,
+          "file": "ktx1_p134.jpg",
+          "mat_nos": [],
+          "assembly": "Reaction Link (RL)",
+          "sub_assembly": null,
+          "chapter": "",
+          "parts": [],
+          "diagram_page_id": 2471
+        },
+        {
+          "page": 165,
+          "file": "ktx1_p165.jpg",
+          "mat_nos": [],
+          "assembly": "Complete Pantograph 25 KV",
+          "sub_assembly": null,
+          "chapter": "",
+          "parts": [],
+          "diagram_page_id": 2502
+        },
+        {
+          "page": 223,
+          "file": "ktx1_p223.jpg",
+          "mat_nos": [],
+          "assembly": "Brake, Bogie And Motor Control Panel",
+          "sub_assembly": null,
+          "chapter": "",
+          "parts": [],
+          "diagram_page_id": 2560
+        },
+        {
+          "page": 228,
+          "file": "ktx1_p228.jpg",
+          "mat_nos": [],
+          "assembly": "Brake Panel For Common Bogie",
+          "sub_assembly": null,
+          "chapter": "",
+          "parts": [],
+          "diagram_page_id": 2565
+        },
+        {
+          "page": 243,
+          "file": "ktx1_p243.jpg",
+          "mat_nos": [],
+          "assembly": "Emergency Stop Button (PC)",
+          "sub_assembly": null,
+          "chapter": "",
+          "parts": [],
+          "diagram_page_id": 2580
+        },
+        {
+          "page": 245,
+          "file": "ktx1_p245.jpg",
+          "mat_nos": [],
+          "assembly": "Flushing Valve DN25",
+          "sub_assembly": null,
+          "chapter": "",
+          "parts": [],
+          "diagram_page_id": 2582
+        },
+        {
+          "page": 356,
+          "file": "ktx1_p356.jpg",
+          "mat_nos": [],
+          "assembly": "PART 700 보조 및 공기초화계통",
+          "sub_assembly": null,
+          "chapter": "",
+          "parts": [],
+          "diagram_page_id": 2693
+        },
+        {
+          "page": 436,
+          "file": "ktx1_p436.jpg",
+          "mat_nos": [],
+          "assembly": "PART 800 제어안전계통",
+          "sub_assembly": null,
+          "chapter": "",
+          "parts": [],
+          "diagram_page_id": 2773
+        },
+        {
+          "page": 481,
+          "file": "ktx1_p481.jpg",
+          "mat_nos": [],
+          "assembly": "ATESS ALEN Card / ATESS TSL Card",
+          "sub_assembly": null,
+          "chapter": "",
+          "parts": [],
+          "diagram_page_id": 2818
+        },
+        {
+          "page": 482,
+          "file": "ktx1_p482.jpg",
+          "mat_nos": [],
+          "assembly": "PA-SON Board / PA-3L-AL Alarm Call Supply Board",
+          "sub_assembly": null,
+          "chapter": "",
+          "parts": [],
+          "diagram_page_id": 2819
+        },
+        {
+          "page": 483,
+          "file": "ktx1_p483.jpg",
+          "mat_nos": [],
+          "assembly": "Power Car Alarm Card ABSI / Contactor 4D IRS 72T P13",
+          "sub_assembly": null,
+          "chapter": "",
+          "parts": [],
+          "diagram_page_id": 2820
+        },
+        {
+          "page": 484,
+          "file": "ktx1_p484.jpg",
+          "mat_nos": [],
+          "assembly": "Contactor LP1-D0913 SW / Relay Agastat 7022 RH A2",
+          "sub_assembly": null,
+          "chapter": "",
+          "parts": [],
+          "diagram_page_id": 2821
+        },
+        {
+          "page": 485,
+          "file": "ktx1_p485.jpg",
+          "mat_nos": [],
+          "assembly": "Relay 2T 440V 60Hz / Air Conditioning Speed Control",
+          "sub_assembly": null,
+          "chapter": "",
+          "parts": [],
+          "diagram_page_id": 2822
+        },
+        {
+          "page": 486,
+          "file": "ktx1_p486.jpg",
+          "mat_nos": [],
+          "assembly": "Support + Handset Trailer",
+          "sub_assembly": null,
+          "chapter": "",
+          "parts": [],
+          "diagram_page_id": 2823
+        },
+        {
+          "page": 487,
+          "file": "ktx1_p487.jpg",
+          "mat_nos": [],
+          "assembly": "TPU01 Unit",
+          "sub_assembly": null,
+          "chapter": "",
+          "parts": [],
+          "diagram_page_id": 2824
+        },
+        {
+          "page": 488,
+          "file": "ktx1_p488.jpg",
+          "mat_nos": [],
+          "assembly": "TPU02 Unit",
+          "sub_assembly": null,
+          "chapter": "",
+          "parts": [],
+          "diagram_page_id": 2825
+        },
+        {
+          "page": 489,
+          "file": "ktx1_p489.jpg",
+          "mat_nos": [],
+          "assembly": "PA-GOA1 Bell Board / UCDT Plug-In Block TPU01/02 CPU",
+          "sub_assembly": null,
+          "chapter": "",
+          "parts": [],
+          "diagram_page_id": 2826
+        },
+        {
+          "page": 490,
+          "file": "ktx1_p490.jpg",
+          "mat_nos": [],
+          "assembly": "KADT Trailer Adaptation Board / MSRB Outputs Relays Board",
+          "sub_assembly": null,
+          "chapter": "",
+          "parts": [],
+          "diagram_page_id": 2827
+        },
+        {
+          "page": 491,
+          "file": "ktx1_p491.jpg",
+          "mat_nos": [],
+          "assembly": "Automatic Standby Pedal / Fluorescent Pushbutton 3NO+1NC",
+          "sub_assembly": null,
+          "chapter": "",
+          "parts": [],
+          "diagram_page_id": 2828
+        },
+        {
+          "page": 492,
+          "file": "ktx1_p492.jpg",
+          "mat_nos": [],
+          "assembly": "Pushbutton 2NO-2NC / Fluorescent Pushbutton 3NO+2NC",
+          "sub_assembly": null,
+          "chapter": "",
+          "parts": [],
+          "diagram_page_id": 2829
+        },
+        {
+          "page": 493,
+          "file": "ktx1_p493.jpg",
+          "mat_nos": [],
+          "assembly": "Fluorescent Pushbutton 1NO+1NC / Handset Mechanic's Intercom System",
+          "sub_assembly": null,
+          "chapter": "",
+          "parts": [],
+          "diagram_page_id": 2830
+        },
+        {
+          "page": 494,
+          "file": "ktx1_p494.jpg",
+          "mat_nos": [],
+          "assembly": "Pantograph Selector Switch TZ9510",
+          "sub_assembly": null,
+          "chapter": "",
+          "parts": [],
+          "diagram_page_id": 2831
+        },
+        {
+          "page": 495,
+          "file": "ktx1_p495.jpg",
+          "mat_nos": [],
+          "assembly": "Fluorescent Pushbutton 2ND / Indicator Box",
+          "sub_assembly": null,
+          "chapter": "",
+          "parts": [],
+          "diagram_page_id": 2832
+        },
+        {
+          "page": 496,
+          "file": "ktx1_p496.jpg",
+          "mat_nos": [],
+          "assembly": "Real Speed Indicator",
+          "sub_assembly": null,
+          "chapter": "",
+          "parts": [],
+          "diagram_page_id": 2833
+        },
+        {
+          "page": 497,
+          "file": "ktx1_p497.jpg",
+          "mat_nos": [],
+          "assembly": "Real Speed Indicator (부품 목록)",
+          "sub_assembly": null,
+          "chapter": "",
+          "parts": [],
+          "diagram_page_id": 2834
+        },
+        {
+          "page": 498,
+          "file": "ktx1_p498.jpg",
+          "mat_nos": [],
+          "assembly": "Cab Signal Box 27 Stacker",
+          "sub_assembly": null,
+          "chapter": "",
+          "parts": [],
+          "diagram_page_id": 2835
+        },
+        {
+          "page": 499,
+          "file": "ktx1_p499.jpg",
+          "mat_nos": [],
+          "assembly": "Set Speed Indicator",
+          "sub_assembly": null,
+          "chapter": "",
+          "parts": [],
+          "diagram_page_id": 2836
+        },
+        {
+          "page": 500,
+          "file": "ktx1_p500.jpg",
+          "mat_nos": [],
+          "assembly": "Set Speed Indicator (부품 목록)",
+          "sub_assembly": null,
+          "chapter": "",
+          "parts": [],
+          "diagram_page_id": 2837
+        },
+        {
+          "page": 501,
+          "file": "ktx1_p501.jpg",
+          "mat_nos": [],
+          "assembly": "0 to 30 KV Single-Phase Line Voltmeter / 0.6 KA 1.5 KA Motor Ammeter",
+          "sub_assembly": null,
+          "chapter": "",
+          "parts": [],
+          "diagram_page_id": 2838
+        },
+        {
+          "page": 502,
+          "file": "ktx1_p502.jpg",
+          "mat_nos": [],
+          "assembly": "Loudspeaker Intercom System Alarm (도해)",
+          "sub_assembly": null,
+          "chapter": "",
+          "parts": [],
+          "diagram_page_id": 2839
+        },
+        {
+          "page": 503,
+          "file": "ktx1_p503.jpg",
+          "mat_nos": [],
+          "assembly": "Loudspeaker Intercom System Alarm",
+          "sub_assembly": null,
+          "chapter": "",
+          "parts": [],
+          "diagram_page_id": 2840
+        },
+        {
+          "page": 504,
+          "file": "ktx1_p504.jpg",
+          "mat_nos": [],
+          "assembly": "Automatic Standby Hooter / ATS Control Panel",
+          "sub_assembly": null,
+          "chapter": "",
+          "parts": [],
+          "diagram_page_id": 2841
+        },
+        {
+          "page": 505,
+          "file": "ktx1_p505.jpg",
+          "mat_nos": [],
+          "assembly": "Circuit Breaker 1 Pole 16A / Circuit Breaker 3 VU 1300-1ML00",
+          "sub_assembly": null,
+          "chapter": "",
+          "parts": [],
+          "diagram_page_id": 2842
+        },
+        {
+          "page": 506,
+          "file": "ktx1_p506.jpg",
+          "mat_nos": [],
+          "assembly": "Cut-Off Detection Relay / DTC401-Driver Terminal Display",
+          "sub_assembly": null,
+          "chapter": "",
+          "parts": [],
+          "diagram_page_id": 2843
+        },
+        {
+          "page": 507,
+          "file": "ktx1_p507.jpg",
+          "mat_nos": [],
+          "assembly": "KBCA01-Driver Terminal Display / Light Converter Equipment CVSM",
+          "sub_assembly": null,
+          "chapter": "",
+          "parts": [],
+          "diagram_page_id": 2844
+        },
+        {
+          "page": 508,
+          "file": "ktx1_p508.jpg",
+          "mat_nos": [],
+          "assembly": "Light Converter / Master Controller",
+          "sub_assembly": null,
+          "chapter": "",
+          "parts": [],
+          "diagram_page_id": 2845
+        },
+        {
+          "page": 509,
+          "file": "ktx1_p509.jpg",
+          "mat_nos": [],
+          "assembly": "Micro Circuit Breaker",
+          "sub_assembly": null,
+          "chapter": "",
+          "parts": [],
+          "diagram_page_id": 2846
+        },
+        {
+          "page": 510,
+          "file": "ktx1_p510.jpg",
+          "mat_nos": [],
+          "assembly": "Micro Circuit Breaker",
+          "sub_assembly": null,
+          "chapter": "",
+          "parts": [],
+          "diagram_page_id": 2847
+        },
+        {
+          "page": 511,
+          "file": "ktx1_p511.jpg",
+          "mat_nos": [],
+          "assembly": "Circuit Breaker",
+          "sub_assembly": null,
+          "chapter": "",
+          "parts": [],
+          "diagram_page_id": 2848
+        },
+        {
+          "page": 512,
+          "file": "ktx1_p512.jpg",
+          "mat_nos": [],
+          "assembly": "Circuit Breaker",
+          "sub_assembly": null,
+          "chapter": "",
+          "parts": [],
+          "diagram_page_id": 2849
+        },
+        {
+          "page": 513,
+          "file": "ktx1_p513.jpg",
+          "mat_nos": [],
+          "assembly": "Circuit Breaker",
+          "sub_assembly": null,
+          "chapter": "",
+          "parts": [],
+          "diagram_page_id": 2850
+        },
+        {
+          "page": 514,
+          "file": "ktx1_p514.jpg",
+          "mat_nos": [],
+          "assembly": "Circuit Breaker",
+          "sub_assembly": null,
+          "chapter": "",
+          "parts": [],
+          "diagram_page_id": 2851
+        },
+        {
+          "page": 515,
+          "file": "ktx1_p515.jpg",
+          "mat_nos": [],
+          "assembly": "Circuit Breaker",
+          "sub_assembly": null,
+          "chapter": "",
+          "parts": [],
+          "diagram_page_id": 2852
+        },
+        {
+          "page": 516,
+          "file": "ktx1_p516.jpg",
+          "mat_nos": [],
+          "assembly": "Circuit Breaker",
+          "sub_assembly": null,
+          "chapter": "",
+          "parts": [],
+          "diagram_page_id": 2853
+        },
+        {
+          "page": 517,
+          "file": "ktx1_p517.jpg",
+          "mat_nos": [],
+          "assembly": "Circuit Breaker",
+          "sub_assembly": null,
+          "chapter": "",
+          "parts": [],
+          "diagram_page_id": 2854
+        },
+        {
+          "page": 518,
+          "file": "ktx1_p518.jpg",
+          "mat_nos": [],
+          "assembly": "Circuit Breaker",
+          "sub_assembly": null,
+          "chapter": "",
+          "parts": [],
+          "diagram_page_id": 2855
+        },
+        {
+          "page": 519,
+          "file": "ktx1_p519.jpg",
+          "mat_nos": [],
+          "assembly": "Circuit Breaker",
+          "sub_assembly": null,
+          "chapter": "",
+          "parts": [],
+          "diagram_page_id": 2856
+        },
+        {
+          "page": 520,
+          "file": "ktx1_p520.jpg",
+          "mat_nos": [],
+          "assembly": "Circuit Breaker",
+          "sub_assembly": null,
+          "chapter": "",
+          "parts": [],
+          "diagram_page_id": 2857
+        },
+        {
+          "page": 521,
+          "file": "ktx1_p521.jpg",
+          "mat_nos": [],
+          "assembly": "Circuit Breaker",
+          "sub_assembly": null,
+          "chapter": "",
+          "parts": [],
+          "diagram_page_id": 2858
+        },
+        {
+          "page": 522,
+          "file": "ktx1_p522.jpg",
+          "mat_nos": [],
+          "assembly": "Circuit Breaker",
+          "sub_assembly": null,
+          "chapter": "",
+          "parts": [],
+          "diagram_page_id": 2859
+        },
+        {
+          "page": 523,
+          "file": "ktx1_p523.jpg",
+          "mat_nos": [],
+          "assembly": "Power",
+          "sub_assembly": null,
+          "chapter": "",
+          "parts": [],
+          "diagram_page_id": 2860
+        },
+        {
+          "page": 524,
+          "file": "ktx1_p524.jpg",
+          "mat_nos": [],
+          "assembly": "부품 목록",
+          "sub_assembly": null,
+          "chapter": "",
+          "parts": [],
+          "diagram_page_id": 2861
+        },
+        {
+          "page": 525,
+          "file": "ktx1_p525.jpg",
+          "mat_nos": [],
+          "assembly": "TVM/Antenna",
+          "sub_assembly": null,
+          "chapter": "",
+          "parts": [],
+          "diagram_page_id": 2862
+        },
+        {
+          "page": 526,
+          "file": "ktx1_p526.jpg",
+          "mat_nos": [],
+          "assembly": "Ventilation",
+          "sub_assembly": null,
+          "chapter": "",
+          "parts": [],
+          "diagram_page_id": 2863
+        }
+      ]
+    }
+  }
+}
