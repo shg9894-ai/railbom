@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useCallback, useRef, useMemo, useSyncExternalStore } from 'react'
 import {
   Breadcrumb, Card, Row, Col, Spin, Empty, Tag, Button, Typography,
-  Space, Input, Image, message, Upload, Modal, Tooltip, Popover, List, theme,
+  Space, Input, Image, message, Upload, Modal, Tooltip, Popover, List, theme, Popconfirm,
 } from 'antd'
 import {
   LeftOutlined, RightOutlined, HomeOutlined, FileOutlined, AppstoreOutlined,
   ToolOutlined, GoldOutlined, SearchOutlined, CopyOutlined,
   PictureOutlined, CameraOutlined, UploadOutlined, DeleteOutlined, LinkOutlined,
 } from '@ant-design/icons'
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query'
 import { bomApi } from '../../api/bom'
 import { compatApi } from '../../api/compatibility'
 import { diagramPagesApi } from '../../api/diagramPages'
