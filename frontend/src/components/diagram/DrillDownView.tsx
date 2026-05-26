@@ -678,7 +678,20 @@ function LeafDetail({
     enabled: !drawingNo && !!vehicleCode,
     staleTime: 300_000,
   })
-  const dbDiagramPages = byDrawingPages.length > 0 ? byDrawingPages : byAssemblyPages
+  const { data: linkedDiagrams = [] } = useQuery({
+    queryKey: ['node-diagrams', node.id],
+    queryFn: () => bomApi.getDiagrams(node.id),
+    staleTime: 60_000,
+  })
+  const linkedPages: any[] = linkedDiagrams.map((d: any) => ({
+    id: d.id, file_no: d.file_no, vehicle: d.vehicle,
+    assembly: d.assembly, chapter: d.chapter, book_page: d.book_page, parts: [] as any[],
+  }))
+  const basePages = byDrawingPages.length > 0 ? byDrawingPages : byAssemblyPages
+  const dbDiagramPages = [
+    ...basePages,
+    ...linkedPages.filter((lp: any) => !basePages.some((bp: any) => bp.file_no === lp.file_no)),
+  ]
 
   const compatCodes = node.compat_codes ?? []
 
@@ -867,7 +880,7 @@ function LeafDetail({
                   <div style={{ fontSize: 11, opacity: 0.55, marginBottom: 4 }}>{dp.assembly}</div>
                 )}
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4 }}>
-                  {dp.parts.map((pt, i) => (
+                  {dp.parts.map((pt: any, i: number) => (
                     <PartBomLink key={i} partName={pt.part_name} vehicleTypeId={vehicleTypeId} onSelectNode={onSelectNode} />
                   ))}
                 </div>
@@ -878,9 +891,6 @@ function LeafDetail({
 
         {/* 고장 사례 */}
         <FailureCaseSection nodeId={node.id} />
-
-        {/* 명칭도감 연결 페이지 */}
-        <NodeDiagramSection nodeId={node.id} />
 
         {/* 수리키트 구성 부품 목록 (repair_kit 노드일 때만) */}
         {node.node_type === 'repair_kit' && (
@@ -930,16 +940,19 @@ export default function DrillDownView({ vehicleTypeId, categoryCode, onBack, onC
     enabled:  currentNodeId !== null,
   })
 
-  // 루트가 category 노드 1개뿐이면 자동으로 그 안으로 진입 (전력추진→전력추진장치 한 단계 제거)
-  useEffect(() => {
-    if (roots?.length === 1 && roots[0].node_type === 'category' && currentNodeId === null) {
-      setCurrentNodeId(roots[0].id)
-      setStack([{ id: roots[0].id, name: roots[0].name, material_no: roots[0].material_no, drawing_no: roots[0].drawing_no }])
-    }
-  }, [roots, currentNodeId])
+  // 루트가 자식 있는 노드 1개뿐이면 그 자식을 카테고리 직속 자식처럼 표시 (전력추진=전력추진장치 동일시)
+  // currentNodeId === null 인 상태에서도 single root의 자식들과 명칭도감을 미리 로드 → 화면 깜빡임 없음
+  const singleRootNode = roots?.length === 1 && roots[0].has_children ? roots[0] : null
+  const { data: singleRootChildren = [] } = useQuery({
+    queryKey: ['bom-children', singleRootNode?.id],
+    queryFn:  () => bomApi.getChildrenLazy(singleRootNode!.id),
+    enabled:  currentNodeId === null && !!singleRootNode,
+  })
 
   const isLoading    = rootsLoading || childLoading
-  const rawNodes     = currentNodeId === null ? (roots ?? []) : (children ?? [])
+  const rawNodes     = currentNodeId === null
+    ? (singleRootNode ? singleRootChildren : (roots ?? []))
+    : (children ?? [])
   const displayNodes = search.trim()
     ? rawNodes.filter(n =>
         n.name.includes(search) ||
@@ -1017,12 +1030,24 @@ export default function DrillDownView({ vehicleTypeId, categoryCode, onBack, onC
   // 현재 드릴다운 노드의 도면번호로 DB 기반 명칭도감 페이지 조회
   const curNode = stack.length > 0 ? stack[stack.length - 1] : null
   const curDrawingNo = curNode?.drawing_no ?? null
-  const { data: curDbPages = [] } = useQuery({
+  const { data: curDbPagesByDrawing = [] } = useQuery({
     queryKey: ['diagram-pages', 'by-drawing', curDrawingNo, vehicleCode],
     queryFn: () => diagramPagesApi.byDrawingNo(curDrawingNo!, vehicleCode),
     enabled: !!curDrawingNo && !!currentNodeId,
     staleTime: 300_000,
   })
+  // 현재 노드(currentNodeId 또는 자동인식된 singleRootNode)에 bom_node_diagrams로 직접 연결된 페이지
+  const effectiveNodeId = currentNodeId ?? singleRootNode?.id ?? null
+  const { data: curLinkedDiagrams = [] } = useQuery({
+    queryKey: ['node-diagrams', effectiveNodeId],
+    queryFn: () => bomApi.getDiagrams(effectiveNodeId!),
+    enabled: !!effectiveNodeId,
+    staleTime: 60_000,
+  })
+  const curDbPages = [
+    ...curDbPagesByDrawing,
+    ...curLinkedDiagrams.filter((ld: any) => !curDbPagesByDrawing.some((bp: any) => bp.file_no === ld.file_no)),
+  ]
 
   // node_id → 사진 목록
   const getPhotos = (nodeId: number) => photoIndex[String(nodeId)] ?? []
