@@ -552,6 +552,55 @@ function PartBomLink({
   )
 }
 
+/* ─── 명칭도감 연결 페이지 ────────────────────────────────────── */
+function NodeDiagramSection({ nodeId }: { nodeId: number }) {
+  const qc = useQueryClient()
+  const { data: linked = [], isLoading } = useQuery({
+    queryKey: ['node-diagrams', nodeId],
+    queryFn: () => bomApi.getDiagrams(nodeId),
+    staleTime: 60_000,
+  })
+  const unlinkMutation = useMutation({
+    mutationFn: (linkId: number) => bomApi.unlinkDiagram(nodeId, linkId),
+    onSuccess: () => { message.success('연결 해제됨'); qc.invalidateQueries({ queryKey: ['node-diagrams', nodeId] }) },
+  })
+  const { token: t } = theme.useToken()
+
+  return (
+    <div style={{ marginTop: 16 }}>
+      <div style={{ fontWeight: 600, fontSize: 13, color: t.colorTextSecondary, marginBottom: 8, display: 'flex', alignItems: 'center', gap: 6 }}>
+        📖 명칭도감
+      </div>
+      {isLoading ? (
+        <div style={{ color: '#aaa', fontSize: 12 }}>로딩 중...</div>
+      ) : linked.length === 0 ? (
+        <div style={{ color: '#bbb', fontSize: 12 }}>연결된 명칭도감 페이지 없음</div>
+      ) : (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+          {linked.map((p: any) => (
+            <div key={p.link_id} style={{ border: '1px solid rgba(128,128,128,0.2)', borderRadius: 6, overflow: 'hidden' }}>
+              <div style={{ padding: '4px 8px', background: 'rgba(128,128,128,0.08)', fontSize: 11, color: '#aaa', display: 'flex', alignItems: 'center', gap: 6 }}>
+                {p.chapter && <Tag style={{ margin: 0, fontSize: 10 }}>{p.chapter}</Tag>}
+                {p.assembly && <span style={{ color: t.colorText, fontWeight: 500 }}>{p.assembly}</span>}
+                <span style={{ marginLeft: 'auto' }}>p.{p.book_page ?? p.file_no}</span>
+                <Popconfirm title="연결을 해제하시겠습니까?" onConfirm={() => unlinkMutation.mutate(p.link_id)}>
+                  <Button size="small" type="text" danger icon={<DeleteOutlined />} />
+                </Popconfirm>
+              </div>
+              <Image
+                src={diagramPagesApi.imageUrl(p.file_no, p.vehicle)}
+                alt={`명칭도감 p${p.file_no}`}
+                style={{ width: '100%', display: 'block' }}
+                preview={{ src: diagramPagesApi.imageUrl(p.file_no, p.vehicle) }}
+              />
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
+
 /* ─── 수리키트 구성 부품 목록 ────────────────────────────────── */
 function RepairKitItemList({ kitId }: { kitId: number }) {
   const { token: t } = theme.useToken()
@@ -829,6 +878,9 @@ function LeafDetail({
 
         {/* 고장 사례 */}
         <FailureCaseSection nodeId={node.id} />
+
+        {/* 명칭도감 연결 페이지 */}
+        <NodeDiagramSection nodeId={node.id} />
 
         {/* 수리키트 구성 부품 목록 (repair_kit 노드일 때만) */}
         {node.node_type === 'repair_kit' && (
