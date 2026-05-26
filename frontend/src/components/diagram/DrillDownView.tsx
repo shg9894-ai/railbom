@@ -666,23 +666,24 @@ function LeafDetail({
   const drawingNo = node.drawing_no || node.manufacturer_pn
 
   const vehicleCode = VEHICLE_DB_CODE[vehicleTypeId]
-  const { data: byDrawingPages = [] } = useQuery({
+  const { data: byDrawingPages = [], isLoading: drawingLoading } = useQuery({
     queryKey: ['diagram-pages', 'drawing', drawingNo, vehicleCode],
     queryFn: () => diagramPagesApi.byDrawingNo(drawingNo!, vehicleCode),
     enabled: !!drawingNo,
     staleTime: 300_000,
   })
-  const { data: byAssemblyPages = [] } = useQuery({
+  const { data: byAssemblyPages = [], isLoading: assemblyLoading } = useQuery({
     queryKey: ['diagram-pages', 'assembly', node.name, vehicleCode],
     queryFn: () => diagramPagesApi.byAssembly(node.name, vehicleCode!),
     enabled: !drawingNo && !!vehicleCode,
     staleTime: 300_000,
   })
-  const { data: linkedDiagrams = [] } = useQuery({
+  const { data: linkedDiagrams = [], isLoading: linkedLoading } = useQuery({
     queryKey: ['node-diagrams', node.id],
     queryFn: () => bomApi.getDiagrams(node.id),
     staleTime: 60_000,
   })
+  const diagramsLoading = drawingLoading || assemblyLoading || linkedLoading
   const linkedPages: any[] = linkedDiagrams.map((d: any) => ({
     id: d.id, file_no: d.file_no, vehicle: d.vehicle,
     assembly: d.assembly, chapter: d.chapter, book_page: d.book_page, parts: [] as any[],
@@ -829,11 +830,18 @@ function LeafDetail({
           </div>
 
           {photoFilenames.length === 0 && dbDiagramPages.length === 0 ? (
-            <div style={{ textAlign: 'center', padding: '20px 0', color: '#bbb',
-              border: '1px dashed #ddd', borderRadius: 6, fontSize: 12, marginRight: 30 }}>
-              <CameraOutlined style={{ fontSize: 24, display: 'block', marginBottom: 4 }} />
-              사진 없음
-            </div>
+            diagramsLoading ? (
+              <div style={{ textAlign: 'center', padding: '20px 0', color: '#bbb',
+                border: '1px dashed #ddd', borderRadius: 6, fontSize: 12, marginRight: 30 }}>
+                <Spin size="small" />
+              </div>
+            ) : (
+              <div style={{ textAlign: 'center', padding: '20px 0', color: '#bbb',
+                border: '1px dashed #ddd', borderRadius: 6, fontSize: 12, marginRight: 30 }}>
+                <CameraOutlined style={{ fontSize: 24, display: 'block', marginBottom: 4 }} />
+                사진 없음
+              </div>
+            )
           ) : (
             <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
               <Image.PreviewGroup>
