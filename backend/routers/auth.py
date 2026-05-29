@@ -14,7 +14,13 @@ TOKEN_EXPIRE_HOURS  = 12
 ADMIN_ID            = os.environ.get("ADMIN_ID",      "0417")
 ADMIN_PW            = os.environ.get("ADMIN_PW",      "asdf12345!@")
 STAFF_PW            = os.environ.get("STAFF_PW",      "korail7788")
-ALLOWED_PLANT_CODES = set(os.environ.get("ALLOWED_PLANT_CODES", "1000,5100,5200,5300,5400,5500").split(","))
+DEFAULT_PLANT_CODES = (
+    "1000,1200,1300,1400,1500,1600,1700,1800,1900,2000,"
+    "2100,2200,2300,2700,2900,3000,3100,3200,3300,3500,"
+    "3600,3700,4100,4200,5100,5200,5300,5400,5500,6100,"
+    "6200,6400,6500"
+)
+ALLOWED_PLANT_CODES = set(os.environ.get("ALLOWED_PLANT_CODES", DEFAULT_PLANT_CODES).split(","))
 
 
 class LoginRequest(BaseModel):

@@ -6,6 +6,7 @@ import {
   BulbOutlined, BulbFilled, DatabaseOutlined, MenuFoldOutlined, MenuUnfoldOutlined,
 } from '@ant-design/icons'
 import { useNavigate, useLocation } from 'react-router-dom'
+import { PLANT_NAMES } from '../../types'
 
 const { Content, Header } = Layout
 
@@ -87,7 +88,7 @@ export default function AppShell({ children, role, onLogout, darkMode, onToggleD
         </Space>
         <Space>
           <span style={{ fontSize: 12, color: '#888', whiteSpace: 'nowrap' }}>
-            {userId}{role === 'admin' ? ' (관리자)' : ''}
+            {userId}{role === 'admin' ? ' (관리자)' : PLANT_NAMES[userId] ? ` (${PLANT_NAMES[userId]})` : ''}
           </span>
           <Button
             size="small"
