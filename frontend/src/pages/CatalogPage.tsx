@@ -1,11 +1,15 @@
 import { useState, useEffect } from 'react'
-import { Select, Card, Spin, Empty, Image, theme, Typography, Button, Modal, Form, Input, Select as AntSelect, message, Tooltip, Tag } from 'antd'
-import { EditOutlined, LinkOutlined, DisconnectOutlined } from '@ant-design/icons'
-import { useQuery, useMutation } from '@tanstack/react-query'
+import { Select, Card, Spin, Empty, Image, theme, Typography, Button, Modal, Form, Input, Select as AntSelect, message, Tooltip, Tag, List } from 'antd'
+import { EditOutlined, LinkOutlined, DisconnectOutlined, PlusOutlined } from '@ant-design/icons'
+import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query'
 import { vehicleApi } from '../api/vehicles'
 import { diagramPagesApi } from '../api/diagramPages'
 import { diagramPageRequestsApi } from '../api/diagramPageRequests'
+import { bomApi } from '../api/bom'
+import { changeRequestsApi } from '../api/changeRequests'
 import type { DiagramPage } from '../api/diagramPages'
+import { CATEGORIES, CATEGORY_COLORS } from '../types'
+import type { BomNode } from '../types'
 
 const { Text } = Typography
 const { TextArea } = Input
@@ -119,10 +123,259 @@ function RequestModal({
   )
 }
 
+/* ─── 페이지 → BOM 노드 연결 모달 (드릴다운 + 검색) ─── */
+type BreadcrumbItem = { id: number | null; name: string; categoryCode?: string }
+
+function LinkBomModal({
+  page, defaultVehicleId, vehicles, vehicleCode, open, onClose,
+}: {
+  page: DiagramPage | null
+  defaultVehicleId: number | null
+  vehicles: { id: number; code: string; name: string }[]
+  vehicleCode: string
+  open: boolean
+  onClose: () => void
+}) {
+  const [selectedVehicleId, setSelectedVehicleId] = useState<number | null>(defaultVehicleId)
+  const vehicleId = selectedVehicleId
+  const [q, setQ] = useState('')
+  const [categoryCode, setCategoryCode] = useState<string | null>(null)
+  const [currentNodeId, setCurrentNodeId] = useState<number | null>(null)
+  const [stack, setStack] = useState<BreadcrumbItem[]>([])
+
+  const qc = useQueryClient()
+  const role = localStorage.getItem('role') ?? ''
+  const userId = localStorage.getItem('user_id') ?? ''
+  const isAdmin = role === 'admin'
+
+  // 모달 닫힐 때 / 페이지 변경 시 / 차종 변경 시 상태 초기화
+  useEffect(() => {
+    if (open) {
+      setQ('')
+      setCategoryCode(null)
+      setCurrentNodeId(null)
+      setStack([])
+      setSelectedVehicleId(defaultVehicleId)
+    }
+  }, [open, page?.id, defaultVehicleId])
+
+  // 차종이 바뀌면 드릴다운/카테고리 상태 초기화
+  useEffect(() => {
+    setCategoryCode(null)
+    setCurrentNodeId(null)
+    setStack([])
+    setQ('')
+  }, [selectedVehicleId])
+
+  // 카테고리 + 드릴다운 모드용 트리
+  const { data: roots = [], isLoading: rootsLoading } = useQuery({
+    queryKey: ['link-bom-roots', vehicleId, categoryCode],
+    queryFn: () => bomApi.getRoots(vehicleId!, categoryCode!),
+    enabled: open && !!vehicleId && !!categoryCode && currentNodeId === null && !q.trim(),
+  })
+
+  const { data: children = [], isLoading: childLoading } = useQuery({
+    queryKey: ['link-bom-children', currentNodeId],
+    queryFn: () => bomApi.getChildrenLazy(currentNodeId!),
+    enabled: open && currentNodeId !== null && !q.trim(),
+  })
+
+  // 검색 모드용
+  const { data: searchResults = [], isLoading: searchLoading } = useQuery({
+    queryKey: ['link-bom-search', vehicleId, q],
+    queryFn: () => bomApi.search(vehicleId!, q),
+    enabled: open && !!vehicleId && q.trim().length > 0,
+    staleTime: 30_000,
+  })
+
+  // 단일 루트 자동 진입 (전력추진 = 전력추진장치)
+  useEffect(() => {
+    if (!q.trim() && categoryCode && currentNodeId === null && roots.length === 1 && roots[0].has_children) {
+      setCurrentNodeId(roots[0].id)
+    }
+  }, [roots, categoryCode, currentNodeId, q])
+
+  const linkedSet = new Set((page?.linked_bom ?? []).map(b => b.material_no).filter(Boolean) as string[])
+
+  const linkMutation = useMutation({
+    mutationFn: (nodeId: number) => bomApi.linkDiagram(nodeId, { diagram_page_id: page!.id, match_type: 'manual' }),
+    onSuccess: () => {
+      message.success('BOM 연결됨')
+      qc.invalidateQueries({ queryKey: ['catalog-pages', vehicleCode] })
+    },
+    onError: (e: any) => message.error(`연결 실패: ${e.message}`),
+  })
+
+  const linkRequestMutation = useMutation({
+    mutationFn: (nodeId: number) => changeRequestsApi.create({
+      node_id: nodeId,
+      request_type: 'diagram_link_add',
+      requested_value: String(page!.id),
+      requester_name: userId || null,
+    }),
+    onSuccess: () => message.success('BOM 연결 요청이 제출되었습니다'),
+    onError: (e: any) => message.error(`요청 제출 실패: ${e.message}`),
+  })
+
+  const handleNodeClick = (n: BomNode) => {
+    const linked = n.material_no ? linkedSet.has(n.material_no) : false
+    if (linked) return
+    if (isAdmin) linkMutation.mutate(n.id)
+    else linkRequestMutation.mutate(n.id)
+  }
+
+  const drillDown = (n: BomNode) => {
+    setCurrentNodeId(n.id)
+    setStack(prev => [...prev, { id: n.id, name: n.name }])
+  }
+
+  const goBack = (idx: number) => {
+    if (idx < -1) {
+      // 카테고리 선택으로 돌아가기
+      setCategoryCode(null); setCurrentNodeId(null); setStack([])
+    } else if (idx === -1) {
+      // 카테고리 최상위로 (자동진입 있으면 다시 발동)
+      setCurrentNodeId(null); setStack([])
+    } else {
+      setCurrentNodeId(stack[idx].id)
+      setStack(prev => prev.slice(0, idx + 1))
+    }
+  }
+
+  const inSearch = q.trim().length > 0
+  const displayNodes: BomNode[] = inSearch
+    ? searchResults
+    : (currentNodeId === null ? roots : children)
+  const isLoading = inSearch ? searchLoading : (currentNodeId === null ? rootsLoading : childLoading)
+
+  return (
+    <Modal
+      open={open}
+      onCancel={() => { setQ(''); onClose() }}
+      title={page ? `BOM 노드 연결 — ${page.assembly || page.chapter || ''} (p.${page.book_page ?? page.file_no})` : 'BOM 연결'}
+      footer={null}
+      width={720}
+    >
+      {!isAdmin && (
+        <div style={{ marginBottom: 8, padding: '6px 10px', borderRadius: 4,
+          background: 'rgba(250, 173, 20, 0.12)', fontSize: 12, color: '#d48806' }}>
+          ⚠️ 일반 사용자: 노드 선택 시 연결 <b>요청</b>이 제출되며, 관리자 승인 후 적용됩니다.
+        </div>
+      )}
+
+      <div style={{ display: 'flex', gap: 8, marginBottom: 12, alignItems: 'center' }}>
+        <span style={{ fontSize: 12, color: '#888', whiteSpace: 'nowrap' }}>차종</span>
+        <Select
+          style={{ width: 200 }}
+          value={selectedVehicleId}
+          onChange={setSelectedVehicleId}
+          placeholder="차종 선택"
+          options={vehicles.map(v => ({ value: v.id, label: `${v.name} (${v.code})` }))}
+        />
+        <Input.Search
+          placeholder="자재명 / BOM 코드 / 도면번호로 검색"
+          value={q}
+          onChange={e => setQ(e.target.value)}
+          allowClear
+          style={{ flex: 1 }}
+          disabled={!vehicleId}
+        />
+      </div>
+
+      {!vehicleId && (
+        <Empty description="차종을 선택하세요" style={{ padding: 30 }} />
+      )}
+
+      {!!vehicleId && !inSearch && (
+        <>
+          {/* 카테고리 미선택 → 카테고리 그리드 */}
+          {!categoryCode ? (
+            <>
+              <div style={{ fontSize: 12, color: '#999', marginBottom: 8 }}>카테고리를 선택하세요</div>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 8 }}>
+                {CATEGORIES.map(c => {
+                  const color = CATEGORY_COLORS[c.code] ?? '#999'
+                  return (
+                    <Button key={c.code} onClick={() => setCategoryCode(c.code)}
+                      style={{ height: 56, borderLeft: `4px solid ${color}`, textAlign: 'left' }}>
+                      <div style={{ fontSize: 11, color: '#999' }}>{c.code}</div>
+                      <div style={{ fontWeight: 600 }}>{c.name}</div>
+                    </Button>
+                  )
+                })}
+              </div>
+            </>
+          ) : (
+            <>
+              {/* breadcrumb */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: 4, marginBottom: 10, flexWrap: 'wrap', fontSize: 12 }}>
+                <a onClick={() => goBack(-2)}>{CATEGORIES.find(c => c.code === categoryCode)?.name}</a>
+                {stack.map((s, i) => (
+                  <span key={s.id ?? i}>
+                    <span style={{ margin: '0 4px', color: '#bbb' }}>/</span>
+                    {i === stack.length - 1
+                      ? <b>{s.name}</b>
+                      : <a onClick={() => goBack(i)}>{s.name}</a>}
+                  </span>
+                ))}
+              </div>
+            </>
+          )}
+        </>
+      )}
+
+      {!!vehicleId && (inSearch || categoryCode) && (
+        <div style={{ maxHeight: 420, overflow: 'auto', border: '1px solid rgba(128,128,128,0.15)', borderRadius: 4 }}>
+          {isLoading ? (
+            <div style={{ textAlign: 'center', padding: 30 }}><Spin /></div>
+          ) : displayNodes.length === 0 ? (
+            <Empty description={inSearch ? '검색 결과 없음' : '하위 항목 없음'} style={{ padding: 30 }} />
+          ) : (
+            <List size="small" dataSource={displayNodes.slice(0, 100)} renderItem={(n) => {
+              const linked = n.material_no ? linkedSet.has(n.material_no) : false
+              const canDrill = !!n.has_children
+              return (
+                <List.Item
+                  style={{ padding: '8px 12px', opacity: linked ? 0.6 : 1 }}
+                  actions={[
+                    linked
+                      ? <Tag color="success" style={{ fontSize: 10 }}>연결됨</Tag>
+                      : <Button size="small" type="primary" icon={<PlusOutlined />}
+                          onClick={() => handleNodeClick(n)}>연결</Button>,
+                    canDrill
+                      ? <Button size="small" onClick={() => drillDown(n)}>하위 ▸</Button>
+                      : null,
+                  ].filter(Boolean)}
+                >
+                  <List.Item.Meta
+                    title={<span style={{ fontSize: 13 }}>{n.name}</span>}
+                    description={
+                      <span style={{ fontSize: 11 }}>
+                        <Typography.Text code>{n.material_no || '-'}</Typography.Text>
+                        {n.drawing_no && <span style={{ marginLeft: 8 }}>도면 {n.drawing_no}</span>}
+                      </span>
+                    }
+                  />
+                </List.Item>
+              )
+            }} />
+          )}
+          {displayNodes.length > 100 && (
+            <div style={{ textAlign: 'center', padding: 8, color: '#999', fontSize: 12 }}>
+              상위 100개만 표시 — 검색어를 좁혀주세요
+            </div>
+          )}
+        </div>
+      )}
+    </Modal>
+  )
+}
+
 export default function CatalogPage() {
   const { token: tk } = theme.useToken()
   const [vehicleCode, setVehicleCode] = useState<string | null>(null)
   const [requestPage, setRequestPage] = useState<DiagramPage | null>(null)
+  const [linkPage, setLinkPage] = useState<DiagramPage | null>(null)
 
   const { data: vehicles = [] } = useQuery({
     queryKey: ['vehicles'],
@@ -139,6 +392,13 @@ export default function CatalogPage() {
   const vehicleOptions = vehicles
     .filter(v => VEHICLE_CODE_MAP[v.code])
     .map(v => ({ value: VEHICLE_CODE_MAP[v.code], label: `${v.name} (${v.code})` }))
+
+  // vehicleCode → vehicleId 매핑 (BOM 검색용)
+  const currentVehicleId = (() => {
+    if (!vehicleCode) return null
+    const found = vehicles.find(v => VEHICLE_CODE_MAP[v.code] === vehicleCode)
+    return found?.id ?? null
+  })()
 
   return (
     <div style={{ height: 'calc(100vh - 112px)', display: 'flex', flexDirection: 'column', gap: 8 }}>
@@ -224,15 +484,26 @@ export default function CatalogPage() {
                       <span style={{ fontSize: 10, color: tk.colorTextSecondary }}>
                         {p.chapter && p.assembly ? p.chapter : ''} · {p.file_no}p
                       </span>
-                      <Button
-                        size="small"
-                        type="text"
-                        icon={<EditOutlined />}
-                        style={{ fontSize: 10, height: 20, padding: '0 4px', color: tk.colorTextSecondary }}
-                        onClick={() => setRequestPage(p)}
-                      >
-                        수정요청
-                      </Button>
+                      <div style={{ display: 'flex', gap: 2 }}>
+                        <Button
+                          size="small"
+                          type="text"
+                          icon={<LinkOutlined />}
+                          style={{ fontSize: 10, height: 20, padding: '0 4px', color: tk.colorPrimary }}
+                          onClick={() => setLinkPage(p)}
+                        >
+                          BOM연결
+                        </Button>
+                        <Button
+                          size="small"
+                          type="text"
+                          icon={<EditOutlined />}
+                          style={{ fontSize: 10, height: 20, padding: '0 4px', color: tk.colorTextSecondary }}
+                          onClick={() => setRequestPage(p)}
+                        >
+                          수정요청
+                        </Button>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -247,6 +518,15 @@ export default function CatalogPage() {
         vehicle={vehicleCode ?? ''}
         open={requestPage !== null}
         onClose={() => setRequestPage(null)}
+      />
+
+      <LinkBomModal
+        page={linkPage}
+        defaultVehicleId={currentVehicleId}
+        vehicles={vehicles}
+        vehicleCode={vehicleCode ?? ''}
+        open={linkPage !== null}
+        onClose={() => setLinkPage(null)}
       />
     </div>
   )

@@ -12,6 +12,7 @@ import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query'
 import { bomApi } from '../../api/bom'
 import { compatApi } from '../../api/compatibility'
 import { diagramPagesApi } from '../../api/diagramPages'
+import { changeRequestsApi } from '../../api/changeRequests'
 import { BomRequestButton, CorpMatRequestButton, PhotoRequestButton } from './ChangeRequestForm'
 import FailureCaseSection, { FailureCaseSectionButton } from './FailureCaseSection'
 import { repairKitApi } from '../../api/repairKits'
@@ -684,6 +685,37 @@ function LeafDetail({
     staleTime: 60_000,
   })
   const diagramsLoading = drawingLoading || assemblyLoading || linkedLoading
+
+  // bom_node_diagrams로 직접 연결된 페이지의 link_id 맵 (해제 시 사용)
+  const linkIdByFileNo: Record<number, number> = {}
+  linkedDiagrams.forEach((d: any) => { linkIdByFileNo[d.file_no] = d.link_id })
+
+  const role = localStorage.getItem('role') ?? ''
+  const userId = localStorage.getItem('user_id') ?? ''
+  const isAdmin = role === 'admin'
+
+  const qcLeaf = useQueryClient()
+  const unlinkMutation = useMutation({
+    mutationFn: (linkId: number) => bomApi.unlinkDiagram(node.id, linkId),
+    onSuccess: () => {
+      message.success('명칭도감 연결 해제됨')
+      qcLeaf.invalidateQueries({ queryKey: ['node-diagrams', node.id] })
+    },
+    onError: () => message.error('연결 해제 실패'),
+  })
+
+  const unlinkRequestMutation = useMutation({
+    mutationFn: (linkId: number) => changeRequestsApi.create({
+      node_id: node.id,
+      request_type: 'diagram_link_delete',
+      requested_value: String(linkId),
+      requester_name: userId || null,
+    }),
+    onSuccess: () => message.success('연결 해제 요청이 제출되었습니다'),
+    onError: () => message.error('요청 제출 실패'),
+  })
+
+  const [linkModalOpen, setLinkModalOpen] = useState(false)
   const linkedPages: any[] = linkedDiagrams.map((d: any) => ({
     id: d.id, file_no: d.file_no, vehicle: d.vehicle,
     assembly: d.assembly, chapter: d.chapter, book_page: d.book_page, parts: [] as any[],
@@ -826,7 +858,12 @@ function LeafDetail({
               <CameraOutlined style={{ marginRight: 4 }} />
               사진{photoFilenames.length + dbDiagramPages.length > 0 ? ` (${photoFilenames.length + dbDiagramPages.length}장)` : ''}
             </Text>
-            <PhotoRequestButton node={node} vehicleTypeId={vehicleTypeId} onUpload={handleUpload} uploading={uploading} />
+            <Space size={4}>
+              <Button size="small" type="dashed" icon={<LinkOutlined />} onClick={() => setLinkModalOpen(true)}>
+                명칭도감 연결
+              </Button>
+              <PhotoRequestButton node={node} vehicleTypeId={vehicleTypeId} onUpload={handleUpload} uploading={uploading} />
+            </Space>
           </div>
 
           {photoFilenames.length === 0 && dbDiagramPages.length === 0 ? (
@@ -859,18 +896,30 @@ function LeafDetail({
                 ))}
               </Image.PreviewGroup>
               <Image.PreviewGroup>
-                {dbDiagramPages.map(dp => (
-                  <div key={dp.id} style={{ position: 'relative', width: 130,
-                    borderRadius: 6, overflow: 'hidden', border: '1px solid #91caff' }}>
-                    <Image src={diagramPagesApi.imageUrl(dp.file_no, vehicleCode)}
-                      style={{ width: 130, height: 98, objectFit: 'cover', objectPosition: 'top' }}
-                      preview={{ mask: `${dp.book_page ?? dp.file_no}p 확대` }} />
-                    <div style={{ padding: '2px 5px', background: tok2.colorPrimaryBg, fontSize: 10, color: tok2.colorPrimary,
-                      textAlign: 'center', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                      📖 {dp.book_page ?? dp.file_no}p
+                {dbDiagramPages.map(dp => {
+                  const linkId = linkIdByFileNo[dp.file_no]
+                  return (
+                    <div key={dp.id} style={{ position: 'relative', width: 130,
+                      borderRadius: 6, overflow: 'hidden', border: '1px solid #91caff' }}>
+                      <Image src={diagramPagesApi.imageUrl(dp.file_no, vehicleCode)}
+                        style={{ width: 130, height: 98, objectFit: 'cover', objectPosition: 'top' }}
+                        preview={{ mask: `${dp.book_page ?? dp.file_no}p 확대` }} />
+                      <div style={{ padding: '2px 5px', background: tok2.colorPrimaryBg, fontSize: 10, color: tok2.colorPrimary,
+                        textAlign: 'center', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                        📖 {dp.book_page ?? dp.file_no}p
+                      </div>
+                      {linkId && (
+                        <Popconfirm
+                          title={isAdmin ? "명칭도감 연결을 해제하시겠습니까?" : "연결 해제 요청을 제출하시겠습니까?"}
+                          onConfirm={() => isAdmin ? unlinkMutation.mutate(linkId) : unlinkRequestMutation.mutate(linkId)}>
+                          <Button danger size="small" icon={<DeleteOutlined />}
+                            style={{ position: 'absolute', top: 3, right: 3, opacity: 0.85,
+                              background: 'rgba(255,255,255,0.9)', padding: '0 3px' }} />
+                        </Popconfirm>
+                      )}
                     </div>
-                  </div>
-                ))}
+                  )
+                })}
               </Image.PreviewGroup>
             </div>
           )}
@@ -906,7 +955,150 @@ function LeafDetail({
         )}
 
       </div>
+
+      <LinkDiagramModal
+        open={linkModalOpen}
+        onClose={() => setLinkModalOpen(false)}
+        nodeId={node.id}
+        nodeName={node.name}
+        vehicleCode={vehicleCode}
+        alreadyLinkedFileNos={Object.keys(linkIdByFileNo).map(Number)}
+        isAdmin={isAdmin}
+        userId={userId}
+      />
     </Card>
+  )
+}
+
+/* ─── 명칭도감 페이지 연결 모달 ────────────────────────────── */
+function LinkDiagramModal({
+  open, onClose, nodeId, nodeName, vehicleCode, alreadyLinkedFileNos, isAdmin, userId,
+}: {
+  open: boolean
+  onClose: () => void
+  nodeId: number
+  nodeName: string
+  vehicleCode: string
+  alreadyLinkedFileNos: number[]
+  isAdmin: boolean
+  userId: string
+}) {
+  const { token: tok } = theme.useToken()
+  const [search, setSearch] = useState('')
+  const qc = useQueryClient()
+
+  const { data: pages = [], isLoading } = useQuery({
+    queryKey: ['all-diagram-pages', vehicleCode],
+    queryFn: () => diagramPagesApi.allPages(vehicleCode),
+    enabled: open && !!vehicleCode,
+    staleTime: 5 * 60_000,
+  })
+
+  const linkMutation = useMutation({
+    mutationFn: (pageId: number) => bomApi.linkDiagram(nodeId, { diagram_page_id: pageId, match_type: 'manual' }),
+    onSuccess: () => {
+      message.success('명칭도감 연결됨')
+      qc.invalidateQueries({ queryKey: ['node-diagrams', nodeId] })
+    },
+    onError: (e: any) => message.error(`연결 실패: ${e.message}`),
+  })
+
+  const linkRequestMutation = useMutation({
+    mutationFn: (pageId: number) => changeRequestsApi.create({
+      node_id: nodeId,
+      request_type: 'diagram_link_add',
+      requested_value: String(pageId),
+      requester_name: userId || null,
+    }),
+    onSuccess: () => message.success('명칭도감 연결 요청이 제출되었습니다'),
+    onError: (e: any) => message.error(`요청 제출 실패: ${e.message}`),
+  })
+
+  // 기본 검색어를 노드 이름으로 세팅
+  useEffect(() => {
+    if (open) setSearch(nodeName)
+  }, [open, nodeName])
+
+  const linkedSet = new Set(alreadyLinkedFileNos)
+
+  const filtered = pages.filter(p => {
+    if (!search.trim()) return true
+    const q = search.trim().toLowerCase()
+    return (
+      (p.assembly ?? '').toLowerCase().includes(q) ||
+      (p.chapter ?? '').toLowerCase().includes(q) ||
+      String(p.file_no).includes(q) ||
+      String(p.book_page ?? '').includes(q) ||
+      (p.drawing_no ?? '').toLowerCase().includes(q)
+    )
+  })
+
+  return (
+    <Modal
+      open={open}
+      onCancel={() => { setSearch(''); onClose() }}
+      title={`명칭도감 페이지 연결 — ${nodeName}`}
+      footer={null}
+      width={720}
+    >
+      {!isAdmin && (
+        <div style={{ marginBottom: 8, padding: '6px 10px', borderRadius: 4,
+          background: 'rgba(250, 173, 20, 0.12)', fontSize: 12, color: '#d48806' }}>
+          ⚠️ 일반 사용자: 페이지 선택 시 연결 <b>요청</b>이 제출되며, 관리자 승인 후 적용됩니다.
+        </div>
+      )}
+      <Input.Search
+        placeholder="페이지 번호 / 챕터 / assembly / 도면번호로 검색"
+        value={search}
+        onChange={e => setSearch(e.target.value)}
+        allowClear
+        style={{ marginBottom: 12 }}
+      />
+      <div style={{ maxHeight: 480, overflow: 'auto', paddingRight: 4 }}>
+        {isLoading ? (
+          <div style={{ textAlign: 'center', padding: 40 }}><Spin /></div>
+        ) : filtered.length === 0 ? (
+          <Empty description="검색 결과 없음" />
+        ) : (
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))', gap: 10 }}>
+            {filtered.slice(0, 100).map(p => {
+              const linked = linkedSet.has(p.file_no)
+              return (
+                <div key={p.id} style={{
+                  border: `1px solid ${linked ? '#52c41a' : tok.colorBorder}`,
+                  borderRadius: 6, overflow: 'hidden',
+                  background: tok.colorBgContainer,
+                  cursor: linked ? 'default' : 'pointer',
+                  opacity: linked ? 0.7 : 1,
+                }}
+                  onClick={() => !linked && (isAdmin ? linkMutation.mutate(p.id) : linkRequestMutation.mutate(p.id))}
+                >
+                  <Image
+                    src={diagramPagesApi.imageUrl(p.file_no, vehicleCode)}
+                    style={{ width: '100%', height: 100, objectFit: 'cover', objectPosition: 'top' }}
+                    preview={false}
+                  />
+                  <div style={{ padding: '4px 6px' }}>
+                    <div style={{ fontSize: 10, color: tok.colorTextSecondary, lineHeight: 1.3, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                      {p.assembly || p.chapter || '-'}
+                    </div>
+                    <div style={{ fontSize: 10, marginTop: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <span style={{ color: tok.colorPrimary, fontWeight: 600 }}>p.{p.book_page ?? p.file_no}</span>
+                      {linked && <Tag color="success" style={{ fontSize: 9, margin: 0 }}>연결됨</Tag>}
+                    </div>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        )}
+        {filtered.length > 100 && (
+          <div style={{ textAlign: 'center', padding: 12, color: tok.colorTextSecondary, fontSize: 12 }}>
+            상위 100개만 표시됩니다. 검색어를 좁혀주세요.
+          </div>
+        )}
+      </div>
+    </Modal>
   )
 }
 

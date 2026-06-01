@@ -12,6 +12,7 @@ VALID_TYPES = {
     'corp_material_no_add', 'corp_material_no_edit', 'corp_material_no_delete',
     'bom_node_add', 'bom_node_edit', 'bom_node_delete', 'bom_node_revision',
     'photo_add', 'photo_delete',
+    'diagram_link_add', 'diagram_link_delete',
 }
 
 
@@ -254,6 +255,33 @@ def approve_request(rid: int, body: ReviewBody = ReviewBody(), _=Depends(require
                              (*vals, node_id))
         elif rtype == 'bom_node_delete':
             conn.execute("DELETE FROM bom_nodes WHERE id=?", (node_id,))
+        elif rtype == 'diagram_link_add':
+            # requested_value = diagram_page_id (문자열)
+            try:
+                page_id = int(val) if val else None
+            except (TypeError, ValueError):
+                page_id = None
+            if not page_id:
+                raise HTTPException(400, "diagram_page_id missing")
+            # 중복 방지: 이미 있으면 무시
+            existing = conn.execute(
+                "SELECT id FROM bom_node_diagrams WHERE bom_node_id=? AND diagram_page_id=?",
+                (node_id, page_id)
+            ).fetchone()
+            if not existing:
+                conn.execute(
+                    "INSERT INTO bom_node_diagrams (bom_node_id, diagram_page_id, match_type) VALUES (?,?,?)",
+                    (node_id, page_id, 'manual')
+                )
+        elif rtype == 'diagram_link_delete':
+            # requested_value = link_id (bom_node_diagrams.id)
+            try:
+                link_id = int(val) if val else None
+            except (TypeError, ValueError):
+                link_id = None
+            if not link_id:
+                raise HTTPException(400, "link_id missing")
+            conn.execute("DELETE FROM bom_node_diagrams WHERE id=?", (link_id,))
         elif rtype == 'photo_add':
             # photo_data already stored; copy to assembly_photos
             photo_data = req.get('photo_data')

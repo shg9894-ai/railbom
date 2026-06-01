@@ -19,6 +19,8 @@ const TYPE_LABELS: Record<string, string> = {
   bom_code_delete: 'BOM 코드 삭제',
   photo_add: '사진 추가',
   photo_delete: '사진 삭제',
+  diagram_link_add: '명칭도감 연결 추가',
+  diagram_link_delete: '명칭도감 연결 해제',
 }
 
 const STATUS_TAG: Record<string, { color: string; text: string }> = {
@@ -82,11 +84,14 @@ function RequestTable({ statusFilter }: { statusFilter?: string }) {
   const qc = useQueryClient()
   const [modal, setModal] = useState<{ action: 'approve' | 'reject'; request: ChangeRequest } | null>(null)
 
-  const { data = [], isLoading } = useQuery({
+  // statusFilter === 'completed' 인 경우엔 백엔드 필터 없이 전체 받아서 approved+rejected만 표시
+  const isCompleted = statusFilter === 'completed'
+  const { data: raw = [], isLoading } = useQuery({
     queryKey: ['change-requests', statusFilter],
-    queryFn: () => changeRequestsApi.list(statusFilter),
+    queryFn: () => changeRequestsApi.list(isCompleted ? undefined : statusFilter),
     staleTime: 10_000,
   })
+  const data = isCompleted ? raw.filter(r => r.status !== 'pending') : raw
 
   const approveMut = useMutation({
     mutationFn: ({ id, note }: { id: number; note: string }) =>
@@ -237,11 +242,13 @@ function DiagramRequestTable({ statusFilter }: { statusFilter?: string }) {
   const [modal, setModal] = useState<{ action: 'approve' | 'reject'; request: DiagramPageRequest } | null>(null)
   const [note, setNote] = useState('')
 
-  const { data = [], isLoading } = useQuery({
+  const isCompleted = statusFilter === 'completed'
+  const { data: raw = [], isLoading } = useQuery({
     queryKey: ['diagram-page-requests', statusFilter],
-    queryFn: () => diagramPageRequestsApi.list(statusFilter),
+    queryFn: () => diagramPageRequestsApi.list(isCompleted ? undefined : statusFilter),
     staleTime: 10_000,
   })
+  const data = isCompleted ? raw.filter(r => r.status !== 'pending') : raw
 
   const approveMut = useMutation({
     mutationFn: ({ id, n }: { id: number; n: string }) => diagramPageRequestsApi.approve(id, n),
@@ -344,6 +351,11 @@ export default function RequestsPage() {
             children: <RequestTable statusFilter="pending" />,
           },
           {
+            key: 'completed',
+            label: 'BOM 완료됨',
+            children: <RequestTable statusFilter="completed" />,
+          },
+          {
             key: 'diagram-pending',
             label: (
               <span>
@@ -354,24 +366,9 @@ export default function RequestsPage() {
             children: <DiagramRequestTable statusFilter="pending" />,
           },
           {
-            key: 'diagram-approved',
-            label: '명칭도감 승인됨',
-            children: <DiagramRequestTable statusFilter="approved" />,
-          },
-          {
-            key: 'diagram-rejected',
-            label: '명칭도감 반려됨',
-            children: <DiagramRequestTable statusFilter="rejected" />,
-          },
-          {
-            key: 'approved',
-            label: 'BOM 승인됨',
-            children: <RequestTable statusFilter="approved" />,
-          },
-          {
-            key: 'rejected',
-            label: 'BOM 반려됨',
-            children: <RequestTable statusFilter="rejected" />,
+            key: 'diagram-completed',
+            label: '명칭도감 완료됨',
+            children: <DiagramRequestTable statusFilter="completed" />,
           },
         ]}
       />
