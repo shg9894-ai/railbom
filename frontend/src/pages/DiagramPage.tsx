@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Select, Card, Empty, Typography, Image } from 'antd'
 import { useQuery } from '@tanstack/react-query'
+import { useSearchParams } from 'react-router-dom'
 import { vehicleApi } from '../api/vehicles'
 import { diagramPagesApi } from '../api/diagramPages'
 import TrainDiagramSVG from '../components/diagram/TrainDiagramSVG'
@@ -32,9 +33,29 @@ const CAR_COUNT_LABEL: Record<string, string> = {
 }
 
 export default function DiagramPage() {
-  const [selectedVehicleId, setSelectedVehicleId] = useState<number | null>(null)
+  const [searchParams, setSearchParams] = useSearchParams()
+  const initialVehicleId = (() => {
+    const raw = searchParams.get('vehicleId')
+    const n = raw ? Number(raw) : NaN
+    return Number.isFinite(n) ? n : null
+  })()
+  const [selectedVehicleId, setSelectedVehicleId] = useState<number | null>(initialVehicleId)
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
   const [jumpSearch, setJumpSearch] = useState<string | undefined>()
+
+  // URL 쿼리가 늦게 들어오는 경우 대비
+  useEffect(() => {
+    const raw = searchParams.get('vehicleId')
+    if (!raw) return
+    const n = Number(raw)
+    if (Number.isFinite(n) && n !== selectedVehicleId) {
+      setSelectedVehicleId(n)
+    }
+    // 한 번 적용하면 쿼리 제거 (뒤로가기/공유 시 잔존 방지)
+    searchParams.delete('vehicleId')
+    setSearchParams(searchParams, { replace: true })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const { data: vehicles = [] } = useQuery({
     queryKey: ['vehicles'],

@@ -124,6 +124,7 @@ export default function VehiclesPage() {
     {
       title: '제원 (길이 × 폭 × 높이)',
       key: 'dims',
+      width: 240,
       render: (_: unknown, v: Vehicle) => {
         const dims = parseDimensions(v.dimensions)
         if (!dims) return <Text type="secondary">-</Text>
@@ -149,6 +150,7 @@ export default function VehiclesPage() {
       title: '설명',
       dataIndex: 'description',
       key: 'description',
+      width: 200,
       render: (d?: string) => d ? <Text type="secondary">{d}</Text> : <Text type="secondary">-</Text>,
     },
     {
@@ -201,6 +203,7 @@ export default function VehiclesPage() {
           loading={isLoading}
           pagination={false}
           size="middle"
+          scroll={{ x: 900 }}
           expandable={{
             expandedRowRender: (v: Vehicle) => (
               <Descriptions size="small" column={3} bordered style={{ background: '#fafafa' }}>
