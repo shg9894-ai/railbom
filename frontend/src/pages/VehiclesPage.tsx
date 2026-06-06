@@ -124,7 +124,7 @@ export default function VehiclesPage() {
     {
       title: '제원 (길이 × 폭 × 높이)',
       key: 'dims',
-      width: 240,
+      width: 320,
       render: (_: unknown, v: Vehicle) => {
         const dims = parseDimensions(v.dimensions)
         if (!dims) return <Text type="secondary">-</Text>
@@ -150,8 +150,8 @@ export default function VehiclesPage() {
       title: '설명',
       dataIndex: 'description',
       key: 'description',
-      width: 200,
-      render: (d?: string) => d ? <Text type="secondary">{d}</Text> : <Text type="secondary">-</Text>,
+      width: 280,
+      render: (d?: string) => d ? <Text type="secondary" style={{ fontSize: 12 }}>{d}</Text> : <Text type="secondary">-</Text>,
     },
     {
       title: '작업',
@@ -206,8 +206,8 @@ export default function VehiclesPage() {
           scroll={{ x: 900 }}
           expandable={{
             expandedRowRender: (v: Vehicle) => (
-              <Descriptions size="small" column={3} bordered style={{ background: '#fafafa' }}>
-                <Descriptions.Item label="SAP 자재번호">{v.sap_code ?? '-'}</Descriptions.Item>
+              <Descriptions size="small" column={3} bordered>
+                <Descriptions.Item label="SAP 설비번호">{v.sap_code ?? '-'}</Descriptions.Item>
                 <Descriptions.Item label="제조사">{v.manufacturer ?? '-'}</Descriptions.Item>
                 <Descriptions.Item label="도입연도">{v.acquisition_years ?? '-'}</Descriptions.Item>
                 <Descriptions.Item label="총 량수">{v.total_cars != null ? `${v.total_cars}량` : '-'}</Descriptions.Item>

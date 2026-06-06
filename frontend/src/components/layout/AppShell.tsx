@@ -4,6 +4,7 @@ import {
   NodeIndexOutlined, OrderedListOutlined, PictureOutlined,
   SearchOutlined, CheckSquareOutlined, LogoutOutlined, HistoryOutlined,
   BulbOutlined, BulbFilled, DatabaseOutlined, MenuFoldOutlined, MenuUnfoldOutlined,
+  ToolOutlined,
 } from '@ant-design/icons'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { PLANT_NAMES } from '../../types'
@@ -48,6 +49,7 @@ export default function AppShell({ children, role, onLogout, darkMode, onToggleD
     { key: '/diagram',     icon: <PictureOutlined />,      label: '부품 탐색' },
     { key: '/bom',         icon: <DatabaseOutlined />,     label: 'BOM 원데이터' },
     { key: '/catalog',     icon: <SearchOutlined />,       label: '차종별 명칭도감' },
+    { key: '/maintenance', icon: <ToolOutlined />,         label: '유지보수 기준' },
     { key: '/vehicles',    icon: <NodeIndexOutlined />,    label: '차종 관리' },
     { key: '/formations',  icon: <OrderedListOutlined />,  label: '편성 관리' },
     ...(role === 'admin' ? [

@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import { vehicleApi } from '../api/vehicles'
+import { vehicleUnitsApi } from '../api/vehicleUnits'
 
 const QUICK_LINKS = [
   { label: '부품 탐색',    path: '/diagram',       desc: '차종별 부품 드릴다운' },
@@ -40,7 +41,17 @@ export default function HomePage() {
     queryKey: ['diagram-page-count'],
     queryFn: vehicleApi.diagramPageCount,
   })
+  const { data: unitSummary } = useQuery({
+    queryKey: ['vehicle-units-summary'],
+    queryFn: vehicleUnitsApi.countsSummary,
+  })
   const totalNodes = Object.values(counts).reduce((a, b) => a + b, 0)
+
+  // vehicle_type_id → 활성 량수 매핑
+  const unitsByVtId: Record<number, { active: number; total: number }> = {}
+  unitSummary?.by_vehicle_type.forEach(v => {
+    unitsByVtId[v.vehicle_type_id] = { active: v.active_units, total: v.total_units }
+  })
 
   return (
     <div style={{ minHeight: '100%', background: 'linear-gradient(135deg, #0a0e1a 0%, #0d1b2e 50%, #0a1628 100%)', padding: 0, margin: -16 }}>
@@ -112,6 +123,7 @@ export default function HomePage() {
           {VEHICLES.map(v => {
             const count = counts[v.id] ?? 0
             const pct = Math.round(count / 9000 * 100)
+            const units = unitsByVtId[v.id]
             return (
               <div
                 key={v.id}
@@ -133,8 +145,15 @@ export default function HomePage() {
                       fontSize: 10, padding: '1px 7px', borderRadius: 4, fontWeight: 500,
                     }}>{v.source}</div>
                   </div>
-                  <div style={{ color: '#1677ff', fontSize: 18, fontWeight: 700, fontFamily: 'monospace' }}>
-                    {count.toLocaleString()}
+                  <div style={{ textAlign: 'right' }}>
+                    {units && units.active > 0 && (
+                      <div style={{ color: '#52c41a', fontSize: 20, fontWeight: 700, fontFamily: 'monospace', lineHeight: 1.1 }}>
+                        {units.active.toLocaleString()}<span style={{ fontSize: 11, marginLeft: 2, opacity: 0.7 }}>량</span>
+                      </div>
+                    )}
+                    <div style={{ color: '#1677ff', fontSize: units?.active ? 12 : 18, fontWeight: 700, fontFamily: 'monospace', marginTop: units?.active ? 2 : 0 }}>
+                      {count.toLocaleString()}<span style={{ fontSize: 10, marginLeft: 2, opacity: 0.7 }}>노드</span>
+                    </div>
                   </div>
                 </div>
                 <div style={{ background: 'rgba(255,255,255,0.07)', borderRadius: 4, height: 4 }}>
@@ -144,7 +163,9 @@ export default function HomePage() {
                   }} />
                 </div>
                 <div style={{ color: 'rgba(255,255,255,0.2)', fontSize: 10, marginTop: 6, textAlign: 'right' }}>
-                  BOM 노드 {count.toLocaleString()}개 등록
+                  {units && units.total > 0
+                    ? `활성 ${units.active}/${units.total}량 · BOM ${count.toLocaleString()}개`
+                    : `BOM 노드 ${count.toLocaleString()}개 등록`}
                 </div>
               </div>
             )

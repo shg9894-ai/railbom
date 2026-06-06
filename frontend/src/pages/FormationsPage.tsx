@@ -92,7 +92,7 @@ export default function FormationsPage() {
       ),
     },
     {
-      title: 'SAP 코드',
+      title: '편성코드',
       dataIndex: 'formation_code',
       key: 'formation_code',
       width: 110,
@@ -123,11 +123,13 @@ export default function FormationsPage() {
         ) : <Text type="secondary">-</Text>,
     },
     {
-      title: 'SAP 편성명',
+      title: '편성명',
       dataIndex: 'sap_description',
       key: 'sap_description',
+      width: 220,
+      ellipsis: true,
       render: (d?: string) =>
-        d ? <Text type="secondary" style={{ fontSize: 12 }}>{d}</Text>
+        d ? <Text style={{ fontSize: 12, whiteSpace: 'nowrap' }}>{d}</Text>
           : <Text type="secondary">-</Text>,
     },
     {
@@ -145,7 +147,7 @@ export default function FormationsPage() {
         />
       ),
     },
-    { title: '비고', dataIndex: 'notes', key: 'notes', render: (n?: string) => n ?? '' },
+    { title: '비고', dataIndex: 'notes', key: 'notes', width: 160, ellipsis: true, render: (n?: string) => n ?? '' },
     {
       title: '',
       key: 'del',
@@ -238,7 +240,7 @@ export default function FormationsPage() {
             loading={isLoading}
             pagination={false}
             size="small"
-            scroll={{ y: 520 }}
+            scroll={{ x: 900, y: 520 }}
             summary={() => (
               <Table.Summary fixed>
                 <Table.Summary.Row>
