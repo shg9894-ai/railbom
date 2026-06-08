@@ -13,7 +13,7 @@ import { bomApi } from '../../api/bom'
 import { compatApi } from '../../api/compatibility'
 import { diagramPagesApi } from '../../api/diagramPages'
 import { changeRequestsApi } from '../../api/changeRequests'
-import { ecatApi } from '../../api/materialMaster'
+import { ecatApi, ecatImageUrl } from '../../api/materialMaster'
 import { BomRequestButton, CorpMatRequestButton, PhotoRequestButton } from './ChangeRequestForm'
 import FailureCaseSection, { FailureCaseSectionButton } from './FailureCaseSection'
 import { repairKitApi } from '../../api/repairKits'
@@ -963,9 +963,9 @@ function LeafDetail({
                   {ecatImages.map((img: any, i: number) => (
                     <div key={`ecat-${i}`} style={{ position: 'relative', width: 130,
                       borderRadius: 6, overflow: 'hidden', border: '1px solid #ffd591' }}>
-                      <Image src={img.url}
+                      <Image src={ecatImageUrl(img.url)}
                         style={{ width: 130, height: 98, objectFit: 'cover' }}
-                        preview={{ mask: 'ecat 사진' }} />
+                        preview={{ src: ecatImageUrl(img.url), mask: 'ecat 사진' }} />
                       <div style={{ padding: '2px 5px', background: '#fff7e6', fontSize: 10, color: '#d46b08',
                         textAlign: 'center', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                         🛒 ecat

@@ -66,6 +66,16 @@ export interface MaterialDetail extends MaterialMasterItem {
 
 export interface EcatAttribute { name: string; value: string; unit: string; desc: string }
 export interface EcatImage { filename: string; url: string }
+
+// 백엔드가 내려주는 ecat 이미지 url은 "/api/ecat/image?..." 상대경로다.
+// 프로덕션에선 프론트(Vercel/Netlify 등)와 백엔드(Railway) 도메인이 달라
+// 그대로 쓰면 SPA로 폴백되어 사진이 안 뜬다. VITE_API_URL을 앞에 붙여 절대 URL로 변환.
+export function ecatImageUrl(u: string): string {
+  if (!u) return u
+  if (/^https?:\/\//i.test(u)) return u
+  const base = (import.meta as any).env?.VITE_API_URL
+  return base ? `${base}${u}` : u
+}
 export interface EcatMaterial {
   material_no: string
   material_desc_full: string

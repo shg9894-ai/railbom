@@ -4,7 +4,7 @@ import { DatabaseOutlined, SearchOutlined, LinkOutlined, CloudDownloadOutlined, 
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useState as useStateLocal } from 'react'
-import { materialMasterApi, ecatApi, PRODUCT_GROUP_PREFIX_LABEL, type MaterialMasterItem } from '../api/materialMaster'
+import { materialMasterApi, ecatApi, ecatImageUrl, PRODUCT_GROUP_PREFIX_LABEL, type MaterialMasterItem } from '../api/materialMaster'
 
 const { Title, Text } = Typography
 
@@ -465,12 +465,12 @@ export default function MaterialMasterPage() {
                     {ecat.images.map((img, i) => (
                       <Image
                         key={i}
-                        src={img.url}
+                        src={ecatImageUrl(img.url)}
                         alt={img.filename}
                         width={140}
                         height={100}
                         style={{ objectFit: 'cover', borderRadius: 4, border: '1px solid #d9d9d9' }}
-                        preview={{ src: img.url, mask: '확대' }}
+                        preview={{ src: ecatImageUrl(img.url), mask: '확대' }}
                       />
                     ))}
                   </Space>
