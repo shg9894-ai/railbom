@@ -69,14 +69,20 @@ export default function AppShell({ children, role, onLogout, darkMode, onToggleD
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-      {/* 헤더 */}
+      {/* 헤더 — PWA standalone 모드에서 status bar(notch) 영역 회피 */}
       <Header style={{
         background: darkMode ? '#141414' : '#fff',
         padding: '0 16px',
+        // iOS notch / Android status bar 회피
+        paddingTop: 'env(safe-area-inset-top, 0px)',
+        paddingLeft: 'max(16px, env(safe-area-inset-left, 0px))',
+        paddingRight: 'max(16px, env(safe-area-inset-right, 0px))',
         borderBottom: `1px solid ${darkMode ? '#303030' : '#f0f0f0'}`,
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         position: 'sticky', top: 0, zIndex: 100, flexShrink: 0,
-        height: 56,
+        // safe-area-inset-top 만큼 추가 높이 확보
+        height: 'calc(56px + env(safe-area-inset-top, 0px))',
+        boxSizing: 'border-box',
       }}>
         <Space size={8} style={{ flexShrink: 0, minWidth: 0 }}>
           <Button

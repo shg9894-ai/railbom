@@ -66,6 +66,15 @@ body {
   margin: 0;
 }
 
+/* PWA standalone 모드(홈화면 앱)에서 status bar 영역과 안전 영역 처리.
+   헤더 자체에서 safe-area-inset-top padding을 적용하므로 body는 배경만 깔아준다. */
+@media (display-mode: standalone), (display-mode: minimal-ui) {
+  html, body {
+    background: #141414;
+    overscroll-behavior-y: none;
+  }
+}
+
 * {
   -webkit-user-select: none;
   user-select: none;
