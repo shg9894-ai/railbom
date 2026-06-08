@@ -49,13 +49,26 @@ export default defineConfig({
             },
           },
           {
-            // ecat 자재 사진 (백엔드 프록시)
+            // ecat 자재 사진 (백엔드 프록시) — 네트워크 우선, 실패 시 캐시
             urlPattern: /\/api\/ecat\/image\?/,
-            handler: 'CacheFirst',
+            handler: 'NetworkFirst',
             options: {
               cacheName: 'ecat-images',
+              networkTimeoutSeconds: 6,
               expiration: { maxEntries: 10000, maxAgeSeconds: 60 * 60 * 24 * 30 },
-              cacheableResponse: { statuses: [0, 200] },
+              // status 200만 캐시 (실패 응답 캐시 안 함)
+              cacheableResponse: { statuses: [200] },
+            },
+          },
+          {
+            // ecat 자재 정보 API (메타데이터)
+            urlPattern: /\/api\/ecat\/material\/.+/,
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'ecat-meta',
+              networkTimeoutSeconds: 4,
+              expiration: { maxEntries: 500, maxAgeSeconds: 60 * 60 * 24 * 7 },
+              cacheableResponse: { statuses: [200] },
             },
           },
           {

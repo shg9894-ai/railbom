@@ -795,7 +795,18 @@ function LeafDetail({
               <a
                 href={`http://ecat.korail.com/nsl/nomalSearchMatnrView.do?matnr=${encodeURIComponent(node.corp_material_no)}`}
                 target="_blank"
-                rel="noopener noreferrer"
+                rel="external noopener noreferrer"
+                onClick={(e) => {
+                  // PWA standalone 모드에서 HTTP 링크 차단 회피: window.open 명시 호출
+                  e.preventDefault()
+                  const url = `http://ecat.korail.com/nsl/nomalSearchMatnrView.do?matnr=${encodeURIComponent(node.corp_material_no!)}`
+                  const w = window.open(url, '_blank', 'noopener,noreferrer')
+                  if (!w) {
+                    // 차단된 경우 안내 + 클립보드 복사
+                    navigator.clipboard?.writeText(url)
+                    message.warning('새 창이 차단되었습니다. URL이 복사되었으니 브라우저 주소창에 붙여넣으세요.')
+                  }
+                }}
                 style={{
                   fontSize: 10, fontWeight: 600, color: '#d46b08',
                   background: '#fff7e6', border: '1px solid #ffd591',

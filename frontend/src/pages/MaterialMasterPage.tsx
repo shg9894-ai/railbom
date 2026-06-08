@@ -124,6 +124,15 @@ function SyncModal({ open, onClose }: { open: boolean; onClose: () => void }) {
   )
 }
 
+// PWA standalone 모드에서 HTTP 외부 링크 차단 우회
+function openEcat(url: string) {
+  const w = window.open(url, '_blank', 'noopener,noreferrer')
+  if (!w) {
+    try { navigator.clipboard?.writeText(url) } catch {}
+    message.warning('새 창이 차단되었습니다. URL이 복사되었으니 브라우저 주소창에 붙여넣으세요.')
+  }
+}
+
 export default function MaterialMasterPage() {
   const navigate = useNavigate()
   const [searchParams, setSearchParams] = useSearchParams()
@@ -218,18 +227,18 @@ export default function MaterialMasterPage() {
       {/* 통계 */}
       {stats && (
         <Card size="small" style={{ marginTop: 12 }}>
-          <Row gutter={16}>
-            <Col span={6}>
-              <Statistic title="전체 자재" value={stats.total} suffix="건" valueStyle={{ color: '#1677ff' }} />
+          <Row gutter={[16, 16]}>
+            <Col xs={12} sm={6}>
+              <Statistic title="전체 자재" value={stats.total} suffix="건" valueStyle={{ color: '#1677ff', whiteSpace: 'nowrap' }} />
             </Col>
-            <Col span={6}>
-              <Statistic title="사용중 자재" value={stats.active_count} suffix="건" valueStyle={{ color: '#52c41a' }} />
+            <Col xs={12} sm={6}>
+              <Statistic title="사용중 자재" value={stats.active_count} suffix="건" valueStyle={{ color: '#52c41a', whiteSpace: 'nowrap' }} />
             </Col>
-            <Col span={6}>
-              <Statistic title="미사용 자재" value={stats.unused_count} suffix="건" valueStyle={{ color: '#999' }} />
+            <Col xs={12} sm={6}>
+              <Statistic title="미사용 자재" value={stats.unused_count} suffix="건" valueStyle={{ color: '#999', whiteSpace: 'nowrap' }} />
             </Col>
-            <Col span={6}>
-              <Statistic title="보수품(ERSA)" value={stats.ersa_count} suffix="건" valueStyle={{ color: '#fa8c16' }} />
+            <Col xs={12} sm={6}>
+              <Statistic title="보수품(ERSA)" value={stats.ersa_count} suffix="건" valueStyle={{ color: '#fa8c16', whiteSpace: 'nowrap' }} />
             </Col>
           </Row>
         </Card>
@@ -388,9 +397,10 @@ export default function MaterialMasterPage() {
                   size="small"
                   type="link"
                   icon={<ExportOutlined />}
-                  href={`http://ecat.korail.com/nsl/nomalSearchMatnrView.do?matnr=${r.material_no}`}
-                  target="_blank"
-                  onClick={e => e.stopPropagation()}
+                  onClick={e => {
+                    e.stopPropagation()
+                    openEcat(`http://ecat.korail.com/nsl/nomalSearchMatnrView.do?matnr=${r.material_no}`)
+                  }}
                   style={{ fontSize: 11, padding: 0 }}
                 >이동</Button>
               ) },
@@ -415,8 +425,7 @@ export default function MaterialMasterPage() {
                 size="small"
                 type="link"
                 icon={<ExportOutlined />}
-                href={ecat.source_url}
-                target="_blank"
+                onClick={() => openEcat(ecat.source_url)}
                 style={{ marginLeft: 8 }}
               >
                 ecat에서 보기
