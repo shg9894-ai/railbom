@@ -127,6 +127,28 @@ function SyncModal({ open, onClose }: { open: boolean; onClose: () => void }) {
 // 모바일(아이폰/안드) 감지 — ecat 서버가 모바일 UA 차단해서 외부 링크 막아둠
 const isMobileUA = typeof navigator !== 'undefined' && /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
 
+// Select 드롭다운 열릴 때 body 스크롤 잠금 (iOS Safari에서 드롭다운 스크롤이
+// body로 전파되어 전체 페이지가 움직이는 문제 방지)
+function lockBodyScroll(locked: boolean) {
+  const body = document.body
+  if (locked) {
+    body.dataset.scrollY = String(window.scrollY)
+    body.style.position = 'fixed'
+    body.style.top = `-${window.scrollY}px`
+    body.style.left = '0'
+    body.style.right = '0'
+    body.style.width = '100%'
+  } else {
+    const y = parseInt(body.dataset.scrollY ?? '0', 10)
+    body.style.position = ''
+    body.style.top = ''
+    body.style.left = ''
+    body.style.right = ''
+    body.style.width = ''
+    window.scrollTo(0, y)
+  }
+}
+
 // PWA standalone 모드에서 HTTP 외부 링크 차단 우회
 function openEcat(url: string) {
   const w = window.open(url, '_blank', 'noopener,noreferrer')
@@ -265,6 +287,7 @@ export default function MaterialMasterPage() {
             allowClear
             showSearch
             optionFilterProp="searchText"
+            onDropdownVisibleChange={isMobileUA ? lockBodyScroll : undefined}
             style={{ width: 280 }}
             options={groups?.product_group_prefixes.map(g => {
               const label = PRODUCT_GROUP_PREFIX_LABEL[g.prefix]
@@ -286,6 +309,7 @@ export default function MaterialMasterPage() {
             value={materialType}
             onChange={v => { setMaterialType(v); setPage(1) }}
             allowClear
+            onDropdownVisibleChange={isMobileUA ? lockBodyScroll : undefined}
             style={{ width: 180 }}
             options={groups?.material_types.map(g => ({
               value: g.code,
@@ -387,7 +411,7 @@ export default function MaterialMasterPage() {
                   <Space size={2} wrap>
                     {links.slice(0, 3).map((l, i) => (
                       <Tag key={i} color="blue" style={{ fontSize: 9, padding: '0 4px' }}>
-                        {l.vehicle_code} {l.bom_code}
+                        {l.bom_code ? l.bom_code : l.vehicle_code}
                       </Tag>
                     ))}
                     {links.length > 3 && <Text type="secondary" style={{ fontSize: 10 }}>+{links.length - 3}</Text>}

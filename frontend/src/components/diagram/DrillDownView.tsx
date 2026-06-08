@@ -1232,7 +1232,7 @@ export default function DrillDownView({ vehicleTypeId, categoryCode, onBack, onC
   const rawNodes     = currentNodeId === null
     ? (singleRootNode ? singleRootChildren : (roots ?? []))
     : (children ?? [])
-  const displayNodes = search.trim()
+  const filteredNodes = search.trim()
     ? rawNodes.filter(n =>
         n.name.includes(search) ||
         (n.material_no ?? '').includes(search) ||
@@ -1240,6 +1240,12 @@ export default function DrillDownView({ vehicleTypeId, categoryCode, onBack, onC
         (n.drawing_no ?? '').includes(search) ||
         (n.manufacturer_pn ?? '').includes(search))
     : rawNodes
+  // drawing_no(HR-710-1-7-12) 자연 정렬: 숫자 부분을 숫자로 비교해서 1,2,...,12 순으로
+  const displayNodes = [...filteredNodes].sort((a, b) => {
+    const ka = a.drawing_no ?? a.name ?? ''
+    const kb = b.drawing_no ?? b.name ?? ''
+    return ka.localeCompare(kb, 'en', { numeric: true, sensitivity: 'base' })
+  })
 
   // 현재 노드 목록의 drawing_no / 이름 → DB에서 명칭도감 있는 것 일괄 조회
   // drawing_no가 없는 노드만 이름으로 assembly 매칭 (호남처럼 drawing_no가 null인 차종)
