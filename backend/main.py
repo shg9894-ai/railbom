@@ -5,7 +5,7 @@ import sys
 
 from config.settings import CORS_ORIGINS, LOG_LEVEL, DATABASE_URL
 from database.connection import initialize_db
-from routers import vehicles, formations, bom, compatibility, excel, photos, diagram_pages, change_requests, diagram_page_requests, auth, failure_cases, repair_kits, vehicle_units
+from routers import vehicles, formations, bom, compatibility, excel, photos, diagram_pages, change_requests, diagram_page_requests, auth, failure_cases, repair_kits, vehicle_units, material_master, ecat
 
 # ── 로깅 설정 ──────────────────────────────────────────────────────────────────
 logger.remove()
@@ -50,8 +50,28 @@ app.include_router(auth.router)
 app.include_router(failure_cases.router)
 app.include_router(repair_kits.router)
 app.include_router(vehicle_units.router)
+app.include_router(material_master.router)
+app.include_router(ecat.router)
 
 
 @app.get("/api/health")
 def health():
     return {"status": "ok"}
+
+
+# ── 스케줄러: 매일 ecat 자재 자동 동기화 ───────────────────────────────
+from apscheduler.schedulers.background import BackgroundScheduler
+from jobs.ecat_sync import schedule_jobs as _schedule_ecat_jobs
+
+@app.on_event("startup")
+def _start_scheduler():
+    sched = BackgroundScheduler(timezone='Asia/Seoul')
+    _schedule_ecat_jobs(sched)
+    sched.start()
+    app.state.scheduler = sched
+
+@app.on_event("shutdown")
+def _stop_scheduler():
+    sched = getattr(app.state, 'scheduler', None)
+    if sched:
+        sched.shutdown(wait=False)

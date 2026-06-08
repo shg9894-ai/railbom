@@ -13,6 +13,7 @@ import { bomApi } from '../../api/bom'
 import { compatApi } from '../../api/compatibility'
 import { diagramPagesApi } from '../../api/diagramPages'
 import { changeRequestsApi } from '../../api/changeRequests'
+import { ecatApi } from '../../api/materialMaster'
 import { BomRequestButton, CorpMatRequestButton, PhotoRequestButton } from './ChangeRequestForm'
 import FailureCaseSection, { FailureCaseSectionButton } from './FailureCaseSection'
 import { repairKitApi } from '../../api/repairKits'
@@ -684,6 +685,17 @@ function LeafDetail({
     queryFn: () => bomApi.getDiagrams(node.id),
     staleTime: 60_000,
   })
+
+  // ecat 자재 사진 (corp_material_no가 있으면 ecat에서 사진 가져옴)
+  const { data: ecatData } = useQuery({
+    queryKey: ['ecat', node.corp_material_no],
+    queryFn: () => ecatApi.material(node.corp_material_no!),
+    enabled: !!node.corp_material_no,
+    staleTime: 5 * 60_000,
+    retry: 0,
+  })
+  const ecatImages = ecatData?.images ?? []
+
   const diagramsLoading = drawingLoading || assemblyLoading || linkedLoading
 
   // bom_node_diagrams로 직접 연결된 페이지의 link_id 맵 (해제 시 사용)
@@ -775,9 +787,26 @@ function LeafDetail({
       style={{ borderTop: '2px solid #1677ff', flex: 1 }}
       styles={{ body: { padding: '10px 14px' } }}
       title={
-        <Space>
+        <Space size={6}>
           <span style={{ fontWeight: 700, fontSize: 14 }}>{node.name}</span>
-          {!!node.has_children && <Tag color="blue" style={{ fontSize: 10 }}>조립체</Tag>}
+          {!!node.has_children && <Tag color="blue" style={{ fontSize: 10, margin: 0 }}>조립체</Tag>}
+          {node.corp_material_no && (
+            <Tooltip title={`ecat에서 ${node.corp_material_no} 보기 (새 창)`}>
+              <a
+                href={`http://ecat.korail.com/nsl/nomalSearchMatnrView.do?matnr=${encodeURIComponent(node.corp_material_no)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  fontSize: 10, fontWeight: 600, color: '#d46b08',
+                  background: '#fff7e6', border: '1px solid #ffd591',
+                  borderRadius: 4, padding: '1px 6px',
+                  textDecoration: 'none', lineHeight: '16px',
+                }}
+              >
+                ecat ↗
+              </a>
+            </Tooltip>
+          )}
         </Space>
       }
       extra={
@@ -805,8 +834,28 @@ function LeafDetail({
                 opacity: (r as any).dim ? 0.4 : undefined,
                 marginTop: 3,
                 wordBreak: 'break-all',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 6,
               }}>
-                {r.value}
+                {r.label === '공사 자재번호' && node.corp_material_no ? (
+                  <Tooltip title="자재 마스터에서 검색 (새 창)">
+                    <a
+                      href={`/material-master?q=${encodeURIComponent(node.corp_material_no)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        color: r.color,
+                        fontFamily: 'monospace',
+                        fontWeight: 700,
+                        textDecoration: 'none',
+                        borderBottom: `1px dashed ${r.color}`,
+                      }}
+                    >
+                      {r.value}
+                    </a>
+                  </Tooltip>
+                ) : r.value}
               </div>
             </div>
           ))}
@@ -856,7 +905,8 @@ function LeafDetail({
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
             <Text type="secondary" style={{ fontSize: 11 }}>
               <CameraOutlined style={{ marginRight: 4 }} />
-              사진{photoFilenames.length + dbDiagramPages.length > 0 ? ` (${photoFilenames.length + dbDiagramPages.length}장)` : ''}
+              사진{photoFilenames.length + dbDiagramPages.length + ecatImages.length > 0
+                ? ` (${photoFilenames.length + dbDiagramPages.length + ecatImages.length}장)` : ''}
             </Text>
             <Space size={4}>
               <Button size="small" type="dashed" icon={<LinkOutlined />} onClick={() => setLinkModalOpen(true)}>
@@ -866,7 +916,7 @@ function LeafDetail({
             </Space>
           </div>
 
-          {photoFilenames.length === 0 && dbDiagramPages.length === 0 ? (
+          {photoFilenames.length === 0 && dbDiagramPages.length === 0 && ecatImages.length === 0 ? (
             diagramsLoading ? (
               <div style={{ textAlign: 'center', padding: '20px 0', color: '#bbb',
                 border: '1px dashed #ddd', borderRadius: 6, fontSize: 12, marginRight: 30 }}>
@@ -895,6 +945,25 @@ function LeafDetail({
                   </div>
                 ))}
               </Image.PreviewGroup>
+
+              {/* ecat 자재 사진 (corp_material_no로 연계) */}
+              {ecatImages.length > 0 && (
+                <Image.PreviewGroup>
+                  {ecatImages.map((img: any, i: number) => (
+                    <div key={`ecat-${i}`} style={{ position: 'relative', width: 130,
+                      borderRadius: 6, overflow: 'hidden', border: '1px solid #ffd591' }}>
+                      <Image src={img.url}
+                        style={{ width: 130, height: 98, objectFit: 'cover' }}
+                        preview={{ mask: 'ecat 사진' }} />
+                      <div style={{ padding: '2px 5px', background: '#fff7e6', fontSize: 10, color: '#d46b08',
+                        textAlign: 'center', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                        🛒 ecat
+                      </div>
+                    </div>
+                  ))}
+                </Image.PreviewGroup>
+              )}
+
               <Image.PreviewGroup>
                 {dbDiagramPages.map(dp => {
                   const linkId = linkIdByFileNo[dp.file_no]
