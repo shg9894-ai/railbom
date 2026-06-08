@@ -124,6 +124,9 @@ function SyncModal({ open, onClose }: { open: boolean; onClose: () => void }) {
   )
 }
 
+// 모바일(아이폰/안드) 감지 — ecat 서버가 모바일 UA 차단해서 외부 링크 막아둠
+const isMobileUA = typeof navigator !== 'undefined' && /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
+
 // PWA standalone 모드에서 HTTP 외부 링크 차단 우회
 function openEcat(url: string) {
   const w = window.open(url, '_blank', 'noopener,noreferrer')
@@ -391,7 +394,8 @@ export default function MaterialMasterPage() {
                   </Space>
                 )
               } },
-            { title: 'ecat', key: 'ecat', width: 70, align: 'center' as const, fixed: 'right' as const,
+            // 모바일에선 ecat 서버가 차단하므로 컬럼 자체를 숨김
+            ...(isMobileUA ? [] : [{ title: 'ecat', key: 'ecat', width: 70, align: 'center' as const, fixed: 'right' as const,
               render: (_: any, r: MaterialMasterItem) => (
                 <Button
                   size="small"
@@ -403,7 +407,7 @@ export default function MaterialMasterPage() {
                   }}
                   style={{ fontSize: 11, padding: 0 }}
                 >이동</Button>
-              ) },
+              ) }]),
             { title: '생성일', dataIndex: 'created_date', width: 100,
               render: (v: string | null) => v ? <Text style={{ fontSize: 11 }}>{v}</Text> : <Text type="secondary">-</Text> },
             { title: '기존자재번호', dataIndex: 'legacy_material_no', width: 120,
@@ -420,7 +424,7 @@ export default function MaterialMasterPage() {
           <span>
             자재 상세 — {selected}
             {ecat?.is_unused && <Tag color="default" style={{ marginLeft: 8 }}>미사용</Tag>}
-            {ecat && (
+            {ecat && !isMobileUA && (
               <Button
                 size="small"
                 type="link"

@@ -790,19 +790,18 @@ function LeafDetail({
         <Space size={6}>
           <span style={{ fontWeight: 700, fontSize: 14 }}>{node.name}</span>
           {!!node.has_children && <Tag color="blue" style={{ fontSize: 10, margin: 0 }}>조립체</Tag>}
-          {node.corp_material_no && (
+          {/* ecat 서버가 모바일 UA 차단 → 모바일에선 외부 링크 숨김 */}
+          {node.corp_material_no && !/iPhone|iPad|iPod|Android/i.test(navigator.userAgent) && (
             <Tooltip title={`ecat에서 ${node.corp_material_no} 보기 (새 창)`}>
               <a
                 href={`http://ecat.korail.com/nsl/nomalSearchMatnrView.do?matnr=${encodeURIComponent(node.corp_material_no)}`}
                 target="_blank"
                 rel="external noopener noreferrer"
                 onClick={(e) => {
-                  // PWA standalone 모드에서 HTTP 링크 차단 회피: window.open 명시 호출
                   e.preventDefault()
                   const url = `http://ecat.korail.com/nsl/nomalSearchMatnrView.do?matnr=${encodeURIComponent(node.corp_material_no!)}`
                   const w = window.open(url, '_blank', 'noopener,noreferrer')
                   if (!w) {
-                    // 차단된 경우 안내 + 클립보드 복사
                     navigator.clipboard?.writeText(url)
                     message.warning('새 창이 차단되었습니다. URL이 복사되었으니 브라우저 주소창에 붙여넣으세요.')
                   }
