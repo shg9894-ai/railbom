@@ -8,6 +8,32 @@ import { materialMasterApi, ecatApi, ecatImageUrl, PRODUCT_GROUP_PREFIX_LABEL, t
 
 const { Title, Text } = Typography
 
+// 자재마스터 상단에 표시: 마지막 자동 동기화 시각
+function LastSyncLine() {
+  const { data } = useQuery({
+    queryKey: ['ecat-last-sync'],
+    queryFn: ecatApi.lastSync,
+    staleTime: 5 * 60_000,
+  })
+  if (!data) return null
+  const ts = data.finished_at || data.started_at
+  if (!ts) return null
+  const date = new Date(ts)
+  const fmt = date.toLocaleString('ko-KR', { month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' })
+  const diffMin = Math.round((Date.now() - date.getTime()) / 60_000)
+  const ago = diffMin < 60 ? `${diffMin}분 전` : diffMin < 60 * 24 ? `${Math.round(diffMin / 60)}시간 전` : `${Math.round(diffMin / 60 / 24)}일 전`
+  return (
+    <div style={{ marginTop: 10, paddingTop: 10, borderTop: '1px solid rgba(128,128,128,0.15)', display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+      <SyncOutlined style={{ fontSize: 11, color: '#888' }} />
+      <Text type="secondary" style={{ fontSize: 11 }}>
+        최근 동기화: {fmt} ({ago})
+        {data.duration_seconds != null && ` · ${Math.floor(data.duration_seconds / 60)}분 ${data.duration_seconds % 60}초`}
+        {data.source === 'fallback' && ' · 추정값(로그 미기록)'}
+      </Text>
+    </div>
+  )
+}
+
 function SyncModal({ open, onClose }: { open: boolean; onClose: () => void }) {
   const qc = useQueryClient()
   const [start, setStart] = useStateLocal<number>(0)
@@ -267,6 +293,7 @@ export default function MaterialMasterPage() {
               <Statistic title="보수품(ERSA)" value={stats.ersa_count} suffix="건" valueStyle={{ color: '#fa8c16', whiteSpace: 'nowrap' }} />
             </Col>
           </Row>
+          <LastSyncLine />
         </Card>
       )}
 

@@ -19,6 +19,7 @@ import MaintenancePage from './pages/MaintenancePage'
 import MaterialMasterPage from './pages/MaterialMasterPage'
 import OfflineDownloadPage from './pages/OfflineDownloadPage'
 import HelpPage from './pages/HelpPage'
+import MaterialActivityPage from './pages/MaterialActivityPage'
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { retry: 1, staleTime: 30_000 } },
@@ -82,6 +83,7 @@ export default function App() {
               <Route path="/help" element={<HelpPage role={role} />} />
               {role === 'admin' && <Route path="/requests" element={<RequestsPage />} />}
               {role === 'admin' && <Route path="/login-logs" element={<LoginLogsPage />} />}
+              {role === 'admin' && <Route path="/material-activity" element={<MaterialActivityPage />} />}
               <Route path="*" element={<Navigate to="/diagram" replace />} />
             </Routes>
           </AppShell>

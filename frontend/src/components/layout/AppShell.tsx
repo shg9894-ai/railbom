@@ -56,8 +56,9 @@ export default function AppShell({ children, role, onLogout, darkMode, onToggleD
     { key: '/vehicles',    icon: <NodeIndexOutlined />,    label: '차종 관리' },
     { key: '/formations',  icon: <OrderedListOutlined />,  label: '편성 관리' },
     ...(role === 'admin' ? [
-      { key: '/requests',   icon: <CheckSquareOutlined />, label: '데이터 수정 승인' },
-      { key: '/login-logs', icon: <HistoryOutlined />,     label: '로그인 기록' },
+      { key: '/requests',         icon: <CheckSquareOutlined />, label: '데이터 수정 승인' },
+      { key: '/login-logs',       icon: <HistoryOutlined />,     label: '로그인 기록' },
+      { key: '/material-activity', icon: <DatabaseOutlined />,    label: '자재마스터 변경 로그' },
     ] : []),
   ]
 

@@ -128,6 +128,34 @@ export const ecatApi = {
 
   syncStatus: (): Promise<{ total: number; max_no: number; recent_updated: number }> =>
     client.get('/ecat/sync-status').then(r => r.data),
+
+  // 마지막 동기화 시각 (모든 사용자)
+  lastSync: (): Promise<{
+    source: 'log' | 'fallback'
+    started_at: string | null
+    finished_at: string | null
+    duration_seconds: number | null
+  }> =>
+    client.get('/ecat/last-sync').then(r => r.data),
+
+  // 일별 변경 활동 (관리자 전용)
+  activity: (days = 7): Promise<Array<{
+    day: string
+    new_count: number
+    updated_count: number
+    unused_updated_count: number
+  }>> =>
+    client.get('/ecat/activity', { params: { days } }).then(r => r.data),
+
+  // 자동 동기화 실행 이력 (관리자 전용)
+  syncLogs: (limit = 20): Promise<Array<{
+    id: number
+    started_at: string
+    finished_at: string | null
+    duration_seconds: number | null
+    detail: string | null
+  }>> =>
+    client.get('/ecat/sync-logs', { params: { limit } }).then(r => r.data),
 }
 
 export const materialMasterApi = {

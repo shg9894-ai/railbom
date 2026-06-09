@@ -297,6 +297,98 @@ def sync_status(_=Depends(require_admin)):
         conn.close()
 
 
+@router.get("/last-sync")
+def last_sync():
+    """마지막 자동 동기화 시각 (모든 사용자 조회 가능).
+       로그 테이블이 비어있으면 material_master.updated_at 최신값으로 추정."""
+    conn = get_connection()
+    try:
+        # 1) 정식 로그 우선
+        try:
+            row = conn.execute("""
+                SELECT started_at, finished_at, duration_seconds
+                FROM ecat_sync_logs
+                ORDER BY started_at DESC LIMIT 1
+            """).fetchone()
+            if row:
+                return {
+                    'source': 'log',
+                    'started_at': row['started_at'].isoformat() if row['started_at'] else None,
+                    'finished_at': row['finished_at'].isoformat() if row['finished_at'] else None,
+                    'duration_seconds': row['duration_seconds'],
+                }
+        except Exception:
+            pass
+        # 2) fallback: material_master 최신 updated_at
+        row = conn.execute("""
+            SELECT MAX(updated_at) AS last_updated FROM material_master
+        """).fetchone()
+        return {
+            'source': 'fallback',
+            'started_at': None,
+            'finished_at': row['last_updated'].isoformat() if row and row['last_updated'] else None,
+            'duration_seconds': None,
+        }
+    finally:
+        conn.close()
+
+
+@router.get("/activity")
+def activity(days: int = 7, _=Depends(require_admin)):
+    """자재마스터 변경 활동 일별 집계 (관리자 전용).
+       지난 N일간 (신규 추가 / 갱신 / 미사용 전환) 건수."""
+    conn = get_connection()
+    try:
+        # 일별 created_date 기준 신규
+        new_rows = conn.execute("""
+            SELECT created_date::date AS day, COUNT(*) AS n
+            FROM material_master
+            WHERE created_date >= CURRENT_DATE - INTERVAL '%s days' AND created_date IS NOT NULL
+            GROUP BY day ORDER BY day DESC
+        """ % int(days)).fetchall()
+
+        # 일별 updated_at(KST) 기준 갱신
+        upd_rows = conn.execute("""
+            SELECT (updated_at AT TIME ZONE 'Asia/Seoul')::date AS day, COUNT(*) AS n
+            FROM material_master
+            WHERE updated_at >= NOW() - INTERVAL '%s days'
+            GROUP BY day ORDER BY day DESC
+        """ % int(days)).fetchall()
+
+        # 일별 is_unused=true 갱신 (정확한 '전환'은 추적 안 되니 unused 갱신 건수로 근사)
+        unused_rows = conn.execute("""
+            SELECT (updated_at AT TIME ZONE 'Asia/Seoul')::date AS day, COUNT(*) AS n
+            FROM material_master
+            WHERE updated_at >= NOW() - INTERVAL '%s days' AND is_unused = true
+            GROUP BY day ORDER BY day DESC
+        """ % int(days)).fetchall()
+
+        def to_map(rows):
+            m = {}
+            for r in rows:
+                d = r['day']
+                m[d.isoformat() if d else None] = r['n']
+            return m
+
+        new_m = to_map(new_rows)
+        upd_m = to_map(upd_rows)
+        unused_m = to_map(unused_rows)
+        all_days = sorted(set(new_m) | set(upd_m) | set(unused_m), reverse=True)
+
+        result = []
+        for d in all_days:
+            if d is None: continue
+            result.append({
+                'day': d,
+                'new_count': new_m.get(d, 0),
+                'updated_count': upd_m.get(d, 0),
+                'unused_updated_count': unused_m.get(d, 0),
+            })
+        return result
+    finally:
+        conn.close()
+
+
 @router.get("/sync-logs")
 def sync_logs(limit: int = 20, _=Depends(require_admin)):
     """ecat 자동 동기화 실행 이력."""
