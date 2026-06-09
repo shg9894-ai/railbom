@@ -112,7 +112,7 @@ export default function HelpPage({ role }: Props) {
           <li><Mono>HR-750</Mono> KTX-원강 (산천4)</li>
           <li><Mono>HR-760</Mono> KTX-이음 (EMU-260)</li>
           <li><Mono>HR-770</Mono> KTX-청룡 (EMU-320)</li>
-          <li><Mono>DW-860</Mono> ITX-마음 — <Text type="secondary">제작사가 다원시스라 prefix가 DW이고 카테고리 순서도 다름</Text></li>
+          <li><Mono>DW-860</Mono> ITX-마음</li>
         </ul>
       </Card>
 
@@ -131,7 +131,7 @@ export default function HelpPage({ role }: Props) {
         <Tag color="#fadb14" style={{ color: '#000' }}>7 차상신호</Tag>
         <Tag color="#f5222d">8 차체 및 차내외 설비</Tag>
       </Space>
-      <Text strong style={{ display: 'block', marginBottom: 6 }}>ITX-마음 (DW-860) — 순서가 다름</Text>
+      <Text strong style={{ display: 'block', marginBottom: 6 }}>ITX-마음 (DW-860) — 간선형 전기동차라 순서가 다름</Text>
       <Space wrap size={[8, 8]} style={{ marginBottom: 16 }}>
         <Tag color="#1677ff">1 추진</Tag>
         <Tag color="#fa8c16">2 보조전원</Tag>
