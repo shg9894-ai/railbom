@@ -1240,12 +1240,11 @@ export default function DrillDownView({ vehicleTypeId, categoryCode, onBack, onC
         (n.drawing_no ?? '').includes(search) ||
         (n.manufacturer_pn ?? '').includes(search))
     : rawNodes
-  // 화면에 표시되는 도면번호(drawing_no가 없으면 manufacturer_pn로 fallback)를
-  // 기준으로 자연 정렬해서 HR-770-1-1, -2, -3, ..., -14, -15 순서로 보이게 함.
-  // 둘 다 없으면 name으로 보조 정렬.
+  // 화면 카드에 표시되는 BOM 코드(material_no, 예: HR-770-1-2)를 키로 자연 정렬.
+  // material_no가 없는 노드는 drawing_no/manufacturer_pn/name 순으로 fallback.
   const displayNodes = [...filteredNodes].sort((a, b) => {
-    const ka = a.drawing_no || a.manufacturer_pn || a.name || ''
-    const kb = b.drawing_no || b.manufacturer_pn || b.name || ''
+    const ka = a.material_no || a.drawing_no || a.manufacturer_pn || a.name || ''
+    const kb = b.material_no || b.drawing_no || b.manufacturer_pn || b.name || ''
     return ka.localeCompare(kb, 'en', { numeric: true, sensitivity: 'base' })
   })
 
