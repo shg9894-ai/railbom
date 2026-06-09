@@ -100,7 +100,7 @@ export default function HelpPage({ role }: Props) {
       <Paragraph>
         <Mono>HR-770-1-15-9</Mono> 같은 형태로 표시됩니다. 각 자리 의미:
         <ul>
-          <li><Mono>HR</Mono> / <Mono>DW</Mono> — 차량 식별자 (HR=고속·전동차 계열, DW=ITX-마음)</li>
+          <li><Mono>HR</Mono> / <Mono>DW</Mono> — <b>제작사 약어</b>. HR=<b>현대로템</b>, DW=<b>다원시스</b>. (차량 식별자가 아니라 BOM을 제공한 제작사)</li>
           <li><Mono>770</Mono> — 차종 코드 (아래 표 참고)</li>
           <li><Mono>1</Mono> — 카테고리(대분류). 1=전력추진, 2=연결, … (다음 절 참고)</li>
           <li><Mono>15-9-…</Mono> — 차종/카테고리 안에서의 위치(조립체→부품→하위부품)</li>
@@ -116,7 +116,7 @@ export default function HelpPage({ role }: Props) {
           <li><Mono>HR-750</Mono> KTX-원강 (산천4)</li>
           <li><Mono>HR-760</Mono> KTX-이음 (EMU-260)</li>
           <li><Mono>HR-770</Mono> KTX-청룡 (EMU-320)</li>
-          <li><Mono>DW-860</Mono> ITX-마음 — <Text type="secondary">prefix와 카테고리 순서가 고속차량과 다름</Text></li>
+          <li><Mono>DW-860</Mono> ITX-마음 — <Text type="secondary">제작사가 다원시스라 prefix가 DW이고 카테고리 순서도 다름</Text></li>
         </ul>
       </Card>
 
@@ -152,15 +152,21 @@ export default function HelpPage({ role }: Props) {
         일반 조립체·부품 외에 BOM 코드 끝에 접미사를 붙여 특수 노드를 표기합니다.
       </Paragraph>
       <Card size="small" style={{ marginBottom: 12 }}>
-        <Text strong>수리키트 — 부모 BOM 코드 + <Mono>R</Mono></Text>
+        <Text strong>수리키트 / 임가공품 — 부모 BOM 코드 + <Mono>R</Mono> (<b>R</b>epair kit)</Text>
         <Paragraph style={{ marginTop: 6, marginBottom: 0 }}>
-          정비 시 함께 교체되는 부품을 한 묶음으로 등록합니다. 부모 부품의 BOM 코드 뒤에 <Mono>R</Mono>이 붙습니다.
+          정비 시 함께 교체되는 부품 묶음(수리키트)을 한 노드로 등록합니다. 부모 부품의 BOM 코드 뒤에 <Mono>R</Mono>이 붙으며, <b>R은 Repair kit의 약자</b>입니다.
           <ul style={{ marginTop: 4 }}>
             <li>예: <Mono>HR-770-1-1</Mono>의 수리키트 → <Mono>HR-770-1-1R</Mono></li>
             <li>여러 개일 경우 <Mono>HR-770-1-1R1</Mono>, <Mono>HR-770-1-1R2</Mono> 형태로 구분</li>
             <li>수리키트 노드를 열면 포함 자재 목록을 등록·조회할 수 있습니다.</li>
             <li>부품 탐색에서 <Tag color="purple" style={{ margin: 0 }}>수리키트</Tag> 태그로 구분 표시.</li>
           </ul>
+          <div style={{ marginTop: 10, padding: '8px 10px', borderRadius: 4, background: 'rgba(250,140,22,0.08)', border: '1px solid rgba(250,140,22,0.25)' }}>
+            <Text strong>임가공품도 같은 <Mono>R</Mono> 코드 사용을 권장</Text>
+            <div style={{ marginTop: 4, fontSize: 12 }}>
+              해당 자재의 임가공품(외주 가공·도색·재제작 등으로 별도 발주되는 부품)도 별도 코드를 새로 만들지 말고 같은 <Mono>R</Mono> 접미사 체계를 따라 등록하시기 바랍니다. 이력이 한 줄로 묶여 관리가 쉬워집니다.
+            </div>
+          </div>
         </Paragraph>
       </Card>
       <Card size="small" style={{ marginBottom: 16 }}>
