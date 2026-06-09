@@ -84,11 +84,7 @@ export default function HelpPage({ role }: Props) {
 
       <H id="login">로그인 / 권한</H>
       <Paragraph>
-        <ul>
-          <li><b>일반 사용자</b>: 본인 소속 <Mono>플랜트 코드</Mono>를 ID로 사용합니다 (예: <Mono>1000</Mono> 본사공통, <Mono>2100</Mono> 서울본부).</li>
-          <li><b>관리자</b>: 별도 관리자 ID로 로그인. 좌측 메뉴에 <Mono>데이터 수정 승인</Mono>, <Mono>로그인 기록</Mono> 항목이 추가로 나타납니다.</li>
-          <li>로그인 ID 옆 (괄호) 안에 현재 소속명이 표시됩니다.</li>
-        </ul>
+        본인 소속 <Mono>플랜트 코드</Mono>를 ID로 사용합니다 (예: <Mono>1000</Mono> 본사공통, <Mono>2100</Mono> 서울본부).
       </Paragraph>
 
       <H id="bom-code">BOM 코드 체계</H>
