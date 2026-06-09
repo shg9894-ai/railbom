@@ -21,6 +21,33 @@
     <meta name="mobile-web-app-capable" content="yes" />
 
     <title>철도차량 BOM</title>
+
+    <!-- 일회성 SW/캐시 정리: 옛 PWA 캐시 데드락 부수기 (v2 까지만 실행).
+         localStorage에 표시해서 한 번만 실행되도록 함. -->
+    <script>
+      (function() {
+        try {
+          var KEY = '__bom_sw_reset_v2';
+          if (localStorage.getItem(KEY) === '1') return;
+          var didWork = false;
+          if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.getRegistrations().then(function(regs) {
+              regs.forEach(function(r) { r.unregister(); didWork = true; });
+            });
+          }
+          if (window.caches && caches.keys) {
+            caches.keys().then(function(keys) {
+              return Promise.all(keys.map(function(k) { didWork = true; return caches.delete(k); }));
+            }).then(function() {
+              localStorage.setItem(KEY, '1');
+              if (didWork) location.reload();
+            });
+          } else {
+            localStorage.setItem(KEY, '1');
+          }
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
