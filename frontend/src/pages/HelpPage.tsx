@@ -45,7 +45,11 @@ export default function HelpPage({ role }: Props) {
     { key: 'menus', href: '#menus', title: '메뉴별 기능',
       children: [
         { key: 'menu-home',     href: '#menu-home',     title: '홈' },
-        { key: 'menu-diagram',  href: '#menu-diagram',  title: '부품 탐색' },
+        { key: 'menu-diagram',  href: '#menu-diagram',  title: '부품 탐색',
+          children: [
+            { key: 'detail-modal', href: '#detail-modal', title: '└ 부품 상세 모달' },
+          ],
+        },
         { key: 'menu-bom',      href: '#menu-bom',      title: 'BOM 원데이터' },
         { key: 'menu-catalog',  href: '#menu-catalog',  title: '차종별 명칭도감' },
         { key: 'menu-maint',    href: '#menu-maint',    title: '유지보수 기준' },
@@ -94,11 +98,9 @@ export default function HelpPage({ role }: Props) {
 
       <H4 id="bom-format">코드 구성 형식</H4>
       <Paragraph>
-        <Mono>HR-770-1-15-9-0-0-0</Mono> 같은 형태에서 뒤쪽의 <Mono>-0</Mono>은 시각적으로 생략되어 <Mono>HR-770-1-15-9</Mono>로 표시됩니다.
-        <br /><br />
-        각 자리 의미:
+        <Mono>HR-770-1-15-9</Mono> 같은 형태로 표시됩니다. 각 자리 의미:
         <ul>
-          <li><Mono>HR</Mono> — 철도차량 BOM 식별자 (고정)</li>
+          <li><Mono>HR</Mono> / <Mono>DW</Mono> — 차량 식별자 (HR=고속·전동차 계열, DW=ITX-마음)</li>
           <li><Mono>770</Mono> — 차종 코드 (아래 표 참고)</li>
           <li><Mono>1</Mono> — 카테고리(대분류). 1=전력추진, 2=연결, … (다음 절 참고)</li>
           <li><Mono>15-9-…</Mono> — 차종/카테고리 안에서의 위치(조립체→부품→하위부품)</li>
@@ -114,7 +116,7 @@ export default function HelpPage({ role }: Props) {
           <li><Mono>HR-750</Mono> KTX-원강 (산천4)</li>
           <li><Mono>HR-760</Mono> KTX-이음 (EMU-260)</li>
           <li><Mono>HR-770</Mono> KTX-청룡 (EMU-320)</li>
-          <li><Mono>HR-780</Mono> ITX-마음</li>
+          <li><Mono>DW-860</Mono> ITX-마음 — <Text type="secondary">prefix와 카테고리 순서가 고속차량과 다름</Text></li>
         </ul>
       </Card>
 
@@ -122,7 +124,8 @@ export default function HelpPage({ role }: Props) {
       <Paragraph>
         세 번째 자리 숫자가 카테고리(대분류)입니다. 부품 탐색 화면에서 색상 태그로도 표시됩니다.
       </Paragraph>
-      <Space wrap size={[8, 8]} style={{ marginBottom: 16 }}>
+      <Text strong style={{ display: 'block', marginBottom: 6 }}>고속·전동차 계열 (HR-710 ~ HR-770)</Text>
+      <Space wrap size={[8, 8]} style={{ marginBottom: 12 }}>
         <Tag color="#1677ff">1 전력추진</Tag>
         <Tag color="#52c41a">2 연결</Tag>
         <Tag color="#fa8c16">3 보조전원</Tag>
@@ -132,16 +135,45 @@ export default function HelpPage({ role }: Props) {
         <Tag color="#fadb14" style={{ color: '#000' }}>7 차상신호</Tag>
         <Tag color="#f5222d">8 차체 및 차내외 설비</Tag>
       </Space>
+      <Text strong style={{ display: 'block', marginBottom: 6 }}>ITX-마음 (DW-860) — 순서가 다름</Text>
+      <Space wrap size={[8, 8]} style={{ marginBottom: 16 }}>
+        <Tag color="#1677ff">1 추진</Tag>
+        <Tag color="#fa8c16">2 보조전원</Tag>
+        <Tag color="#722ed1">3 운전실 및 제어</Tag>
+        <Tag color="#fadb14" style={{ color: '#000' }}>4 차상신호</Tag>
+        <Tag color="#13c2c2">5 주행</Tag>
+        <Tag color="#eb2f96">6 제동</Tag>
+        <Tag color="#52c41a">7 연결</Tag>
+        <Tag color="#f5222d">8 차체 및 차내외 설비</Tag>
+      </Space>
 
       <H4 id="bom-kit">수리키트 / 개량 표기</H4>
       <Paragraph>
-        일반 조립체·부품 외에 다음과 같은 특수 노드가 있습니다.
-        <ul>
-          <li><b>수리키트(repair_kit)</b> — 정비 시 함께 교체되는 부품 묶음. 부품 탐색 화면에서 <Tag color="purple" style={{ margin: 0 }}>수리키트</Tag> 태그로 구분됩니다.</li>
-          <li><b>키트(kit)</b> — 동일 자재번호를 공유하는 부품 그룹.</li>
-          <li><b>개량 자재</b> — 기존 부품에서 변경/대체된 자재. BOM 코드 자체는 유지되며 노드의 <Mono>비고</Mono>에 개량 사유가 기록됩니다.</li>
-        </ul>
+        일반 조립체·부품 외에 BOM 코드 끝에 접미사를 붙여 특수 노드를 표기합니다.
       </Paragraph>
+      <Card size="small" style={{ marginBottom: 12 }}>
+        <Text strong>수리키트 — 부모 BOM 코드 + <Mono>R</Mono></Text>
+        <Paragraph style={{ marginTop: 6, marginBottom: 0 }}>
+          정비 시 함께 교체되는 부품을 한 묶음으로 등록합니다. 부모 부품의 BOM 코드 뒤에 <Mono>R</Mono>이 붙습니다.
+          <ul style={{ marginTop: 4 }}>
+            <li>예: <Mono>HR-770-1-1</Mono>의 수리키트 → <Mono>HR-770-1-1R</Mono></li>
+            <li>여러 개일 경우 <Mono>HR-770-1-1R1</Mono>, <Mono>HR-770-1-1R2</Mono> 형태로 구분</li>
+            <li>수리키트 노드를 열면 포함 자재 목록을 등록·조회할 수 있습니다.</li>
+            <li>부품 탐색에서 <Tag color="purple" style={{ margin: 0 }}>수리키트</Tag> 태그로 구분 표시.</li>
+          </ul>
+        </Paragraph>
+      </Card>
+      <Card size="small" style={{ marginBottom: 16 }}>
+        <Text strong>개량 자재 — 부모 BOM 코드 + <Mono>.버전</Mono></Text>
+        <Paragraph style={{ marginTop: 6, marginBottom: 0 }}>
+          기존 부품이 개량되어 자재가 바뀐 경우, 원본 코드를 유지하면서 버전을 붙여 이력 관리합니다.
+          <ul style={{ marginTop: 4 }}>
+            <li>예: <Mono>HR-770-1-1</Mono>이 개량되면 <Mono>HR-770-1-1.1</Mono></li>
+            <li>다시 개량되면 <Mono>HR-770-1-1.2</Mono>, <Mono>HR-770-1-1.3</Mono> 식으로 누적</li>
+            <li>원본·구버전·신버전이 모두 보존되어 정비 이력 추적이 가능합니다.</li>
+          </ul>
+        </Paragraph>
+      </Card>
 
       <H id="material-no">자재번호 (ecat)</H>
       <Paragraph>
@@ -154,7 +186,7 @@ export default function HelpPage({ role }: Props) {
         <ul>
           <li><Mono>1xxxxxx</Mono> — <b>ERSA (보수품)</b> · 정비 시 교체용으로 재고 관리</li>
           <li><Mono>6xxxxxx</Mono> — <b>ERSB (대표자재품)</b> · 같은 기능의 호환 자재 대표</li>
-          <li><Mono>7xxxxxx</Mono> — <b>HIBE (비재고품)</b> · 발주 시점에만 구매</li>
+          <li><Mono>7xxxxxx</Mono> — <b>HIBE (비재고품)</b> · 재고관리 비대상 물품 및 설비 등</li>
         </ul>
         이 외 <Mono>UNBW</Mono>, <Mono>EXTR</Mono>, <Mono>EPA</Mono> 등 사용 안 함 유형은 자재 마스터 화면에서 기본 숨김 처리됩니다.
       </Paragraph>
@@ -162,9 +194,14 @@ export default function HelpPage({ role }: Props) {
       <H4 id="mat-sync">동기화 주기</H4>
       <Paragraph>
         <ul>
-          <li><b>자재 상세 조회</b> — 자재마스터/부품 탐색에서 자재 클릭 시 ecat에서 <b>실시간</b>으로 가져옵니다. 동시에 우리 DB에도 캐시됩니다.</li>
-          <li><b>자동 동기화</b> — 매일 새벽 <b>03:00 KST</b>에 백엔드 스케줄러가 기존 자재 정보를 ecat에서 갱신합니다.</li>
-          <li><b>신규 자재 추가</b> — 관리자가 자재 마스터 화면의 <Mono>신규 자재 동기화</Mono>로 ecat 신규 발급 번호를 우리 DB로 가져옵니다.</li>
+          <li><b>자재 상세 조회 (실시간)</b> — 자재마스터/부품 탐색에서 자재 클릭 시 ecat에서 즉시 가져오고 우리 DB에도 캐시.</li>
+          <li><b>매일 03:00 KST 자동 동기화 (배치)</b> — 별도 조작 없이 자동 실행. 다음 두 작업을 함께 수행합니다.
+            <ul>
+              <li><b>기존 자재 갱신</b> — DB의 약 13만 건 전체를 ecat에서 다시 조회해 변경분을 반영.</li>
+              <li><b>신규 자재 발굴</b> — 자재유형 prefix(1/6/7)별로 DB 최대 번호 다음 구간을 스캔해 ecat에 새로 발급된 자재번호를 가져옵니다. 즉 신규 자재도 자동으로 추가됩니다.</li>
+            </ul>
+          </li>
+          <li><b>수동 신규 자재 동기화 (긴급용)</b> — 관리자가 자재 마스터 화면의 <Mono>신규 자재 동기화</Mono> 버튼으로 임의 시작번호·개수를 지정해 즉시 스캔. 평상시엔 사용할 일이 없습니다.</li>
         </ul>
       </Paragraph>
 
@@ -195,9 +232,59 @@ export default function HelpPage({ role }: Props) {
           <li><b>최상위 / 부품 탐색으로</b> 버튼 — 화면 상단 우측. 한 단계 위/처음으로 이동.</li>
           <li><b>검색창</b> — 현재 단계의 자식 노드 중 자재명/자재번호/도면번호/제조자 PN으로 즉시 필터.</li>
           <li><b>ecat ↗ 배지</b> (PC에서만) — 공사 자재번호가 연결된 노드에서 ecat 외부 페이지로 새 창. <i>모바일은 ecat 서버가 차단해서 자동 숨김.</i></li>
-          <li><b>부품 상세</b> — 부품 카드 클릭 시 우측에 자재 상세 모달. 자재번호·규격·제조사·도면번호·사진·호환 차종 등이 표시됩니다.</li>
+          <li><b>부품 상세</b> — 부품 카드 클릭 시 모달이 뜹니다. 다음 단락 참고.</li>
         </ul>
       </Paragraph>
+
+      <H4 id="detail-modal">부품 상세 모달 — 정보·액션 버튼</H4>
+      <Paragraph>
+        부품을 누르면 열리는 상세 모달에는 자재번호·규격·제조사·도면번호·사진·호환 차종 등이 표시되고, 우측·내부에 다음 액션 버튼이 있습니다.
+      </Paragraph>
+      <Card size="small" style={{ marginBottom: 12 }}>
+        <Text strong>모달 우측 상단</Text>
+        <ul style={{ marginTop: 6, marginBottom: 0 }}>
+          <li><b>BOM 수정 요청 버튼</b> — 이 노드 자체에 대한 변경 요청. 선택 가능한 유형:
+            <ul>
+              <li><Mono>BOM 노드 추가</Mono> — 이 노드의 자식으로 새 부품 등록 요청</li>
+              <li><Mono>BOM 코드 수정</Mono> — 자재명/규격/도면번호 등 정보 변경 요청</li>
+              <li><Mono>BOM 코드 삭제</Mono> — 잘못 등록된 노드 삭제 요청</li>
+              <li><Mono>키트 생성</Mono> — 여러 자식 노드를 묶어 키트로 등록 (수리키트 표기)</li>
+            </ul>
+            요청은 관리자 승인 후 반영됩니다. <i>관리자는 동일 버튼으로 즉시 반영도 가능.</i>
+          </li>
+          <li><b>✕</b> — 모달 닫기</li>
+        </ul>
+      </Card>
+      <Card size="small" style={{ marginBottom: 12 }}>
+        <Text strong>공사 자재번호 항목 옆</Text>
+        <ul style={{ marginTop: 6, marginBottom: 0 }}>
+          <li><b>자재번호 수정 요청 버튼</b> — 비어 있으면 <Mono>추가</Mono>, 있으면 <Mono>수정</Mono> / <Mono>삭제</Mono> 요청 가능.</li>
+          <li>자재번호 텍스트 자체를 클릭하면 자재 마스터 검색 페이지로 새 창 이동.</li>
+        </ul>
+      </Card>
+      <Card size="small" style={{ marginBottom: 12 }}>
+        <Text strong>사진 영역</Text>
+        <ul style={{ marginTop: 6, marginBottom: 0 }}>
+          <li><b>사진 추가/삭제 요청 버튼</b> — 이미지 파일 선택 후 제출. 일반 사용자는 요청만, 관리자는 즉시 업로드.</li>
+          <li>썸네일 클릭 시 확대.</li>
+          <li>ecat 사진(주황 테두리)은 ecat에서 자동으로 가져온 것이고, 수정·삭제 대상이 아닙니다.</li>
+        </ul>
+      </Card>
+      <Card size="small" style={{ marginBottom: 12 }}>
+        <Text strong>명칭도감 페이지</Text>
+        <ul style={{ marginTop: 6, marginBottom: 0 }}>
+          <li>도면번호·자재명이 매칭되는 명칭도감 페이지가 자동으로 표시됩니다.</li>
+          <li><b>관리자</b>는 <Mono>명칭도감 페이지 연결</Mono> 버튼으로 수동 매칭/해제 가능.</li>
+        </ul>
+      </Card>
+      <Card size="small" style={{ marginBottom: 16 }}>
+        <Text strong>호환 차종 / 수리키트 / 자식 부품</Text>
+        <ul style={{ marginTop: 6, marginBottom: 0 }}>
+          <li><b>호환 차종 칩</b> — 같은 공사 자재번호를 쓰는 타 차종의 BOM 코드. 칩을 누르면 비교 모달.</li>
+          <li><b>수리키트 항목</b> (이 노드가 수리키트일 때) — 포함 자재 목록. 관리자는 항목 추가/삭제 가능.</li>
+          <li><b>자식 부품 목록</b> — 하위 부품으로 드릴다운. 카드 클릭 또는 화살표.</li>
+        </ul>
+      </Card>
 
       <H4 id="menu-bom">BOM 원데이터</H4>
       <Paragraph>
@@ -277,8 +364,8 @@ export default function HelpPage({ role }: Props) {
           <H4 id="admin-sync">ecat 동기화 / 자재 추가</H4>
           <Paragraph>
             <ul>
-              <li><b>매일 03:00 자동 동기화</b> — 기존 자재의 ecat 정보가 갱신됨. 별도 조작 불필요.</li>
-              <li><b>신규 자재 동기화</b> — 자재 마스터 화면 우측 상단 버튼. ecat에 새로 발급된 자재번호를 우리 DB로 가져옵니다.
+              <li><b>매일 03:00 KST 자동 동기화</b> — 기존 자재 13만 건 갱신 + 신규 자재(1/6/7 prefix별) 발굴까지 모두 자동. <b>평상시엔 별도 조작 불필요.</b></li>
+              <li><b>수동 신규 자재 동기화</b> (자재 마스터 우측 상단 <Mono>신규 자재 동기화</Mono> 버튼) — 자동 배치 사이에 즉시 가져와야 할 일이 있을 때만 사용:
                 <ul>
                   <li><b>시작 번호</b>: 0이면 DB의 최대 자재번호 + 1부터. 특정 번호 지정 가능.</li>
                   <li><b>개수</b>: 한 번에 스캔할 번호 수 (기본 1000)</li>
