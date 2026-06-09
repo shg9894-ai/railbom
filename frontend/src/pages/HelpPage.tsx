@@ -112,7 +112,7 @@ export default function HelpPage({ role }: Props) {
           <li><Mono>HR-750</Mono> KTX-원강 (산천4)</li>
           <li><Mono>HR-760</Mono> KTX-이음 (EMU-260)</li>
           <li><Mono>HR-770</Mono> KTX-청룡 (EMU-320)</li>
-          <li><Mono>DW-860</Mono> ITX-마음</li>
+          <li><Mono>DW-860</Mono> ITX-마음 (EMU-150 3세대)</li>
         </ul>
       </Card>
 
