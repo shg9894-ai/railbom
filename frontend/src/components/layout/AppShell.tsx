@@ -4,7 +4,7 @@ import {
   NodeIndexOutlined, OrderedListOutlined, PictureOutlined,
   SearchOutlined, CheckSquareOutlined, LogoutOutlined, HistoryOutlined,
   BulbOutlined, BulbFilled, DatabaseOutlined, MenuFoldOutlined, MenuUnfoldOutlined,
-  ToolOutlined, CloudDownloadOutlined,
+  ToolOutlined, CloudDownloadOutlined, QuestionCircleOutlined,
 } from '@ant-design/icons'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { PLANT_NAMES } from '../../types'
@@ -52,6 +52,7 @@ export default function AppShell({ children, role, onLogout, darkMode, onToggleD
     { key: '/maintenance', icon: <ToolOutlined />,         label: '유지보수 기준' },
     { key: '/material-master', icon: <DatabaseOutlined />, label: '자재 마스터' },
     { key: '/offline',     icon: <CloudDownloadOutlined />, label: '앱 설치 / 오프라인' },
+    { key: '/help',        icon: <QuestionCircleOutlined />, label: '도움말 / 매뉴얼' },
     { key: '/vehicles',    icon: <NodeIndexOutlined />,    label: '차종 관리' },
     { key: '/formations',  icon: <OrderedListOutlined />,  label: '편성 관리' },
     ...(role === 'admin' ? [
