@@ -26,6 +26,12 @@ export default defineConfig({
         ],
       },
       workbox: {
+        // 새 SW가 대기하지 않고 즉시 활성화 + 모든 클라이언트 장악
+        // (autoUpdate가 동작하려면 필수 — 없으면 모바일 PWA가 옛 캐시를 영구 사용)
+        skipWaiting: true,
+        clientsClaim: true,
+        // 옛 precache 정리
+        cleanupOutdatedCaches: true,
         // 명칭도감 이미지 + ecat 이미지 캐싱 전략
         runtimeCaching: [
           {
