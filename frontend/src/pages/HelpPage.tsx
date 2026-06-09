@@ -96,7 +96,7 @@ export default function HelpPage({ role }: Props) {
       <Paragraph>
         <Mono>HR-770-1-15-9</Mono> 같은 형태로 표시됩니다. 각 자리 의미:
         <ul>
-          <li><Mono>HR</Mono> / <Mono>DW</Mono> — <b>제작사 약어</b>. HR=<b>현대로템</b>, DW=<b>다원시스</b>. (차량 식별자가 아니라 BOM을 제공한 제작사)</li>
+          <li><Mono>HR</Mono> / <Mono>DW</Mono> — <b>제작사 약어</b>. HR=<b>현대로템</b>, DW=<b>다원시스</b>.</li>
           <li><Mono>770</Mono> — 차종 코드 (아래 표 참고)</li>
           <li><Mono>1</Mono> — 카테고리(대분류). 1=전력추진, 2=연결, … (다음 절 참고)</li>
           <li><Mono>15-9-…</Mono> — 차종/카테고리 안에서의 위치(조립체→부품→하위부품)</li>
