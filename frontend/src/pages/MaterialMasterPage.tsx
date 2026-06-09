@@ -42,6 +42,7 @@ function SyncModal({ open, onClose }: { open: boolean; onClose: () => void }) {
       title={<span><SyncOutlined /> 신규 자재 동기화 (ecat)</span>}
       footer={null}
       width={600}
+      style={{ maxWidth: 'calc(100vw - 32px)' }}
     >
       <Alert
         type="info"
@@ -463,6 +464,7 @@ export default function MaterialMasterPage() {
         }
         footer={null}
         width={1000}
+        style={{ maxWidth: 'calc(100vw - 32px)' }}
       >
         {/* ecat 데이터를 메인으로 표시 */}
         {ecatLoading ? (

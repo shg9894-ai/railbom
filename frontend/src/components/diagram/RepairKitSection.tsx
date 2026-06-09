@@ -197,6 +197,7 @@ function RepairKitCreateModal({
       onCancel={onClose}
       confirmLoading={createMutation.isPending}
       width={560}
+      style={{ maxWidth: 'calc(100vw - 32px)' }}
       okText="수리키트 생성"
     >
       <Form form={form} layout="vertical">

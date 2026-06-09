@@ -51,11 +51,8 @@
 }
 
 #root {
-  width: 1126px;
-  max-width: 100%;
+  width: 100%;
   margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
   min-height: 100svh;
   display: flex;
   flex-direction: column;
@@ -64,6 +61,8 @@
 
 body {
   margin: 0;
+  /* 가로 스크롤 방지: 모바일에서 일부 페이지가 100vw 넘기는 사고 차단 */
+  overflow-x: hidden;
 }
 
 /* PWA standalone 모드(홈화면 앱)에서 status bar 영역과 안전 영역 처리.

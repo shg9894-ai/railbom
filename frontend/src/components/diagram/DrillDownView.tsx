@@ -160,6 +160,7 @@ function PhotoModal({
       onCancel={onClose}
       footer={null}
       width={720}
+      style={{ maxWidth: 'calc(100vw - 32px)' }}
     >
       {/* 업로드 */}
       <div style={{ marginBottom: 16 }}>
@@ -1119,6 +1120,7 @@ function LinkDiagramModal({
       title={`명칭도감 페이지 연결 — ${nodeName}`}
       footer={null}
       width={720}
+      style={{ maxWidth: 'calc(100vw - 32px)' }}
     >
       {!isAdmin && (
         <div style={{ marginBottom: 8, padding: '6px 10px', borderRadius: 4,

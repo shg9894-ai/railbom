@@ -476,6 +476,7 @@ export function CorpMatRequestButton({ node }: { node: BomNode }) {
         title={`공사 자재번호 수정 요청 — ${node.name}`}
         okText="제출" cancelText="취소"
         width={420}
+        style={{ maxWidth: 'calc(100vw - 32px)' }}
         onCancel={close}
         onOk={() => form.submit()}
         confirmLoading={submitting || simpleMut.isPending}
@@ -620,6 +621,7 @@ export function PhotoRequestButton({
         title={`사진 수정 요청 — ${node.name}`}
         okText="제출" cancelText="취소"
         width={440}
+        style={{ maxWidth: 'calc(100vw - 32px)' }}
         onCancel={close}
         onOk={() => form.submit()}
         confirmLoading={submitting || simpleMut.isPending}

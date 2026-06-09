@@ -43,9 +43,9 @@ export default function LoginPage({ onLogin }: Props) {
   return (
     <div style={{
       minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center',
-      background: '#f0f2f5',
+      background: 'var(--login-bg, #f0f2f5)', padding: 16,
     }}>
-      <Card style={{ width: 380, boxShadow: '0 4px 24px rgba(0,0,0,0.10)' }}>
+      <Card style={{ width: '100%', maxWidth: 380, boxShadow: '0 4px 24px rgba(0,0,0,0.10)' }}>
         <div style={{ textAlign: 'center', marginBottom: 32 }}>
           <Title level={3} style={{ margin: 0 }}>철도차량 BOM 시스템</Title>
           <Text type="secondary">한국철도공사</Text>

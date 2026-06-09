@@ -52,6 +52,7 @@ export default function BomNodeForm({ open, onClose, onSubmit, loading, initialV
       onCancel={onClose}
       confirmLoading={loading}
       width={620}
+      style={{ maxWidth: 'calc(100vw - 32px)' }}
     >
       <Form
         form={form}

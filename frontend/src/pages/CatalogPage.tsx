@@ -94,6 +94,7 @@ function RequestModal({
       onOk={handleOk}
       confirmLoading={mutation.isPending}
       width={480}
+      style={{ maxWidth: 'calc(100vw - 32px)' }}
     >
       {page && (
         <div style={{ marginBottom: 12, padding: '8px 12px', borderRadius: 6, border: '1px solid rgba(128,128,128,0.2)', background: 'rgba(128,128,128,0.08)', fontSize: 12, lineHeight: 1.8 }}>
@@ -255,6 +256,7 @@ function LinkBomModal({
       title={page ? `BOM 노드 연결 — ${page.assembly || page.chapter || ''} (p.${page.book_page ?? page.file_no})` : 'BOM 연결'}
       footer={null}
       width={720}
+      style={{ maxWidth: 'calc(100vw - 32px)' }}
     >
       {!isAdmin && (
         <div style={{ marginBottom: 8, padding: '6px 10px', borderRadius: 4,

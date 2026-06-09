@@ -32,6 +32,7 @@ function CompatNodeModal({ materialNos, onClose }: { materialNos: string[] | nul
       footer={null}
       title={<span>호환 부품 ({materialNos?.length ?? 0}개 차종)</span>}
       width={580}
+      style={{ maxWidth: 'calc(100vw - 32px)' }}
     >
       {isLoading ? (
         <div style={{ textAlign: 'center', padding: 40 }}><Spin /></div>

@@ -96,8 +96,12 @@ export default function AppShell({ children, role, onLogout, darkMode, onToggleD
             onClick={() => navigate('/')}
           >철도차량 BOM</span>
         </Space>
-        <Space>
-          <span style={{ fontSize: 12, color: '#888', whiteSpace: 'nowrap' }}>
+        <Space size={6} style={{ minWidth: 0, flexShrink: 1 }}>
+          <span style={{
+            fontSize: 12, color: '#888', whiteSpace: 'nowrap',
+            overflow: 'hidden', textOverflow: 'ellipsis',
+            maxWidth: isMobile ? 90 : 200,
+          }}>
             {userId}{role === 'admin' ? ' (관리자)' : PLANT_NAMES[userId] ? ` (${PLANT_NAMES[userId]})` : ''}
           </span>
           <Button
@@ -106,7 +110,9 @@ export default function AppShell({ children, role, onLogout, darkMode, onToggleD
             onClick={onToggleDark}
             title={darkMode ? '라이트 모드' : '다크 모드'}
           />
-          <Button icon={<LogoutOutlined />} size="small" onClick={onLogout}>로그아웃</Button>
+          <Button icon={<LogoutOutlined />} size="small" onClick={onLogout} title="로그아웃">
+            {isMobile ? '' : '로그아웃'}
+          </Button>
         </Space>
       </Header>
 
@@ -119,7 +125,9 @@ export default function AppShell({ children, role, onLogout, darkMode, onToggleD
           overflow: 'hidden',
           transition: 'width 0.2s',
           ...(isMobile ? {
-            position: 'fixed', top: 56, left: 0, bottom: 0,
+            position: 'fixed',
+            top: 'calc(56px + env(safe-area-inset-top, 0px))',
+            left: 0, bottom: 0,
             zIndex: 200, width: open ? SIDEBAR_W : 0,
           } : {}),
         }}>
@@ -143,14 +151,21 @@ export default function AppShell({ children, role, onLogout, darkMode, onToggleD
           <div
             onClick={() => setOpen(false)}
             style={{
-              position: 'fixed', inset: 0, top: 56,
+              position: 'fixed', inset: 0,
+              top: 'calc(56px + env(safe-area-inset-top, 0px))',
               background: 'rgba(0,0,0,0.45)', zIndex: 199,
             }}
           />
         )}
 
         {/* 콘텐츠 */}
-        <div style={{ flex: 1, minWidth: 0, overflowX: 'hidden', overflowY: 'auto', padding: 16, background: darkMode ? '#141414' : '#f5f5f5' }}>
+        <div style={{
+          flex: 1, minWidth: 0, overflowX: 'hidden', overflowY: 'auto',
+          padding: isMobile ? 12 : 16,
+          // iOS PWA 하단 home-indicator 회피
+          paddingBottom: 'max(12px, env(safe-area-inset-bottom, 0px))',
+          background: darkMode ? '#141414' : '#f5f5f5',
+        }}>
           {children}
         </div>
       </div>

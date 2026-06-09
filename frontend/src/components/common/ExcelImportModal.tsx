@@ -241,6 +241,7 @@ export default function ExcelImportModal({ open, onClose, vehicleId, onSuccess }
       onCancel={onClose}
       footer={null}
       width={520}
+      style={{ maxWidth: 'calc(100vw - 32px)' }}
     >
       <Tabs
         items={[

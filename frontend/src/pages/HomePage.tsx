@@ -53,12 +53,14 @@ export default function HomePage() {
     unitsByVtId[v.vehicle_type_id] = { active: v.active_units, total: v.total_units }
   })
 
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 640
+  const sidePad = isMobile ? 16 : 40
   return (
     <div style={{ minHeight: '100%', background: 'linear-gradient(135deg, #0a0e1a 0%, #0d1b2e 50%, #0a1628 100%)', padding: 0, margin: -16 }}>
       {/* 히어로 섹션 */}
       <div style={{
         position: 'relative', overflow: 'hidden',
-        padding: '60px 40px 40px',
+        padding: isMobile ? '32px 16px 24px' : '60px 40px 40px',
         borderBottom: '1px solid rgba(255,255,255,0.06)',
       }}>
         <div style={{
@@ -71,13 +73,13 @@ export default function HomePage() {
           <div style={{ fontSize: 11, color: '#1677ff', letterSpacing: 4, marginBottom: 12, fontFamily: 'monospace' }}>
             KORAIL ROLLING STOCK MANAGEMENT SYSTEM
           </div>
-          <h1 style={{ color: '#fff', fontSize: 36, fontWeight: 700, margin: '0 0 12px', lineHeight: 1.2 }}>
+          <h1 style={{ color: '#fff', fontSize: isMobile ? 26 : 36, fontWeight: 700, margin: '0 0 12px', lineHeight: 1.2 }}>
             철도차량 BOM
           </h1>
-          <p style={{ color: 'rgba(255,255,255,0.45)', fontSize: 14, margin: '0 0 32px' }}>
+          <p style={{ color: 'rgba(255,255,255,0.45)', fontSize: isMobile ? 12 : 14, margin: '0 0 24px' }}>
             한국철도공사 차량 부품 구성 정보 통합 관리 플랫폼
           </p>
-          <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', gap: isMobile ? 8 : 24, flexWrap: 'wrap' }}>
             {[
               { label: '등록 차종', value: '8종' },
               { label: 'BOM 노드', value: totalNodes.toLocaleString() + '개' },
@@ -85,17 +87,17 @@ export default function HomePage() {
             ].map(s => (
               <div key={s.label} style={{
                 background: 'rgba(22,119,255,0.08)', border: '1px solid rgba(22,119,255,0.2)',
-                borderRadius: 8, padding: '14px 24px',
+                borderRadius: 8, padding: isMobile ? '10px 14px' : '14px 24px', flex: isMobile ? '1 1 calc(33% - 8px)' : 'unset', minWidth: 0,
               }}>
-                <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: 11, marginBottom: 4 }}>{s.label}</div>
-                <div style={{ color: '#fff', fontSize: 22, fontWeight: 700, fontFamily: 'monospace' }}>{s.value}</div>
+                <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: 10, marginBottom: 4 }}>{s.label}</div>
+                <div style={{ color: '#fff', fontSize: isMobile ? 16 : 22, fontWeight: 700, fontFamily: 'monospace', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{s.value}</div>
               </div>
             ))}
           </div>
         </div>
       </div>
 
-      <div style={{ padding: '32px 40px 0', maxWidth: 940, margin: '0 auto' }}>
+      <div style={{ padding: `24px ${sidePad}px 0`, maxWidth: 940, margin: '0 auto' }}>
         {/* 바로가기 */}
         <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.3)', letterSpacing: 2, marginBottom: 16 }}>QUICK ACCESS</div>
         <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginBottom: 40 }}>
@@ -119,7 +121,7 @@ export default function HomePage() {
 
         {/* 차종별 현황 */}
         <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.3)', letterSpacing: 2, marginBottom: 16 }}>VEHICLE STATUS</div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: 16, paddingBottom: 40 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fill, minmax(260px, 1fr))', gap: 12, paddingBottom: 32 }}>
           {VEHICLES.map(v => {
             const count = counts[v.id] ?? 0
             const pct = Math.round(count / 9000 * 100)
