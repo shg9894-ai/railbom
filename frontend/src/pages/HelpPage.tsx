@@ -98,7 +98,7 @@ export default function HelpPage({ role }: Props) {
         <ul>
           <li><Mono>HR</Mono> / <Mono>DW</Mono> — <b>제작사 약어</b>. HR=<b>현대로템</b>, DW=<b>다원시스</b>.</li>
           <li><Mono>770</Mono> — 차종 코드 (아래 표 참고)</li>
-          <li><Mono>1</Mono> — 카테고리(대분류). 1=전력추진, 2=연결, … (다음 절 참고)</li>
+          <li><Mono>1</Mono> — 카테고리(대분류). 1=전력추진, 2=보조전원, … (다음 절 참고)</li>
           <li><Mono>15-9-…</Mono> — 차종/카테고리 안에서의 위치(조립체→부품→하위부품)</li>
         </ul>
       </Paragraph>
@@ -118,29 +118,17 @@ export default function HelpPage({ role }: Props) {
 
       <H4 id="bom-category">카테고리 (3번째 자리)</H4>
       <Paragraph>
-        세 번째 자리 숫자가 카테고리(대분류)입니다. 부품 탐색 화면에서 색상 태그로도 표시됩니다.
+        세 번째 자리 숫자가 카테고리(대분류)입니다. 부품 탐색 화면에서 색상 태그로도 표시되며, 모든 차종 공통입니다.
       </Paragraph>
-      <Text strong style={{ display: 'block', marginBottom: 6 }}>고속·전동차 계열 (HR-710 ~ HR-770)</Text>
-      <Space wrap size={[8, 8]} style={{ marginBottom: 12 }}>
-        <Tag color="#1677ff">1 전력추진</Tag>
-        <Tag color="#52c41a">2 연결</Tag>
-        <Tag color="#fa8c16">3 보조전원</Tag>
-        <Tag color="#722ed1">4 운전실 및 제어</Tag>
-        <Tag color="#eb2f96">5 제동</Tag>
-        <Tag color="#13c2c2">6 주행</Tag>
-        <Tag color="#fadb14" style={{ color: '#000' }}>7 차상신호</Tag>
-        <Tag color="#f5222d">8 차체 및 차내외 설비</Tag>
-      </Space>
-      <Text strong style={{ display: 'block', marginBottom: 6 }}>ITX-마음 (DW-860) — 간선형 전기동차라 순서가 다름</Text>
       <Space wrap size={[8, 8]} style={{ marginBottom: 16 }}>
-        <Tag color="#1677ff">1 추진</Tag>
+        <Tag color="#1677ff">1 전력추진</Tag>
         <Tag color="#fa8c16">2 보조전원</Tag>
-        <Tag color="#722ed1">3 운전실 및 제어</Tag>
+        <Tag color="#722ed1">3 운전실및제어</Tag>
         <Tag color="#fadb14" style={{ color: '#000' }}>4 차상신호</Tag>
         <Tag color="#13c2c2">5 주행</Tag>
         <Tag color="#eb2f96">6 제동</Tag>
         <Tag color="#52c41a">7 연결</Tag>
-        <Tag color="#f5222d">8 차체 및 차내외 설비</Tag>
+        <Tag color="#f5222d">8 차체및차내외설비</Tag>
       </Space>
 
       <H4 id="bom-kit">수리키트 / 개량 표기</H4>

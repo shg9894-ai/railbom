@@ -65,6 +65,28 @@ from jobs.ecat_sync import schedule_jobs as _schedule_ecat_jobs
 
 @app.on_event("startup")
 def _start_scheduler():
+    # ecat_sync_logs 테이블 미리 생성 — run_daily_sync 중 만들면 5시간 후에야 만들어져
+    # 중간에 실패 시 로그 누락. startup에 보장.
+    try:
+        from database.connection import get_connection
+        conn = get_connection()
+        try:
+            conn.execute("""
+                CREATE TABLE IF NOT EXISTS ecat_sync_logs (
+                    id SERIAL PRIMARY KEY,
+                    started_at TIMESTAMPTZ NOT NULL,
+                    finished_at TIMESTAMPTZ DEFAULT NOW(),
+                    duration_seconds INTEGER,
+                    detail TEXT
+                )
+            """)
+            conn.commit()
+        finally:
+            conn.close()
+    except Exception as e:
+        import logging
+        logging.warning(f"ecat_sync_logs 사전 생성 실패: {e}")
+
     sched = BackgroundScheduler(timezone='Asia/Seoul')
     _schedule_ecat_jobs(sched)
     sched.start()

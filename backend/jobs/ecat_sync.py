@@ -14,10 +14,11 @@ from routers.ecat import _fetch, _upsert_from_ecat
 
 
 # 신규 자재 발굴용 패턴 (DB 최대값 + buffer 만큼 스캔)
+# ERSA는 발급량이 많아 buffer 작으면 며칠치 신규를 놓침 (예: 1125406이 며칠간 미발견).
 SCAN_PATTERNS = [
-    {'name': 'ERSA 보수품', 'prefix': '1', 'buffer': 1000},
-    {'name': 'ERSB 대표자재', 'prefix': '6', 'buffer': 500},
-    {'name': 'HIBE 비재고품', 'prefix': '7', 'buffer': 500},
+    {'name': 'ERSA 보수품', 'prefix': '1', 'buffer': 5000},
+    {'name': 'ERSB 대표자재', 'prefix': '6', 'buffer': 1000},
+    {'name': 'HIBE 비재고품', 'prefix': '7', 'buffer': 1000},
 ]
 CONCURRENCY = 30   # 동시 요청 수
 
