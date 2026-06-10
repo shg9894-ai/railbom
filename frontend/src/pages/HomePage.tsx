@@ -91,16 +91,20 @@ export default function HomePage() {
             </p>
             <div style={{ display: 'flex', gap: isMobile ? 8 : 24, flexWrap: 'wrap' }}>
               {[
-                { label: '등록 차종', value: '8종' },
-                { label: 'BOM 노드', value: totalNodes.toLocaleString() + '개' },
-                { label: '명칭도감', value: diagramPageCount ? diagramPageCount.toLocaleString() + ' 페이지' : '...' },
+                { label: '등록 차종', num: '8',                                          unit: '종' },
+                { label: 'BOM 노드', num: totalNodes.toLocaleString(),                  unit: '개' },
+                { label: '명칭도감', num: diagramPageCount ? diagramPageCount.toLocaleString() : '...', unit: diagramPageCount ? '페이지' : '' },
               ].map(s => (
                 <div key={s.label} style={{
                   background: 'rgba(22,119,255,0.08)', border: '1px solid rgba(22,119,255,0.2)',
-                  borderRadius: 8, padding: isMobile ? '10px 14px' : '14px 24px', flex: isMobile ? '1 1 calc(33% - 8px)' : 'unset', minWidth: 0,
+                  borderRadius: 8, padding: isMobile ? '10px 14px' : '14px 24px',
+                  flex: isMobile ? '1 1 auto' : 'unset', minWidth: 0,
                 }}>
                   <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: 10, marginBottom: 4 }}>{s.label}</div>
-                  <div style={{ color: '#fff', fontSize: isMobile ? 16 : 22, fontWeight: 700, fontFamily: 'monospace', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{s.value}</div>
+                  <div style={{ color: '#fff', fontSize: isMobile ? 16 : 22, fontWeight: 700, fontFamily: 'monospace', whiteSpace: 'nowrap', display: 'flex', alignItems: 'baseline', gap: 2 }}>
+                    <span>{s.num}</span>
+                    {s.unit && <span style={{ fontSize: isMobile ? 11 : 13, opacity: 0.7 }}>{s.unit}</span>}
+                  </div>
                 </div>
               ))}
             </div>
