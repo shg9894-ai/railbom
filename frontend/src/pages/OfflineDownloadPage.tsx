@@ -114,6 +114,8 @@ export default function OfflineDownloadPage() {
   const downloadVehicle = async (vehicleId: number, vehicleName: string, vehicleCode: string) => {
     try {
       const pages = await diagramPagesApi.allPages(vehicleCode)
+      // 페이지 목록 받은 직후 loading 메시지 닫기 (진행률 바로 전환)
+      message.destroy(`dl-${vehicleId}`)
       setStatuses(prev => ({
         ...prev,
         [vehicleId]: {
@@ -324,11 +326,12 @@ export default function OfflineDownloadPage() {
                   loading={isDownloading}
                   disabled={allDownloading}
                   onClick={async () => {
+                    message.loading({ content: `${v.name} 페이지 목록 조회 중...`, key: `dl-${v.id}`, duration: 0 })
                     try {
                       const n = await downloadVehicle(v.id, v.name, code)
-                      message.success(`${v.name} ${n}장 다운로드 완료`)
+                      message.success({ content: `${v.name} ${n}장 다운로드 완료`, key: `dl-${v.id}` })
                     } catch (e: any) {
-                      message.error(`다운로드 실패: ${e.message}`)
+                      message.error({ content: `다운로드 실패: ${e?.message || e}`, key: `dl-${v.id}` })
                     }
                   }}
                   style={{ marginTop: status ? 0 : 8 }}
