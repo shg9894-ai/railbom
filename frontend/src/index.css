@@ -96,6 +96,32 @@ code,
   overflow-wrap: break-word;
 }
 
+/* Antd Typography(Title/Paragraph/Text)도 한글 어절 단위로 강제.
+   Antd 5는 .ant-typography에 word-break: break-word를 박아 한글이 글자 단위로
+   끊긴다. !important로 덮어쓴다. */
+.ant-typography,
+.ant-typography p,
+.ant-typography h1,
+.ant-typography h2,
+.ant-typography h3,
+.ant-typography h4,
+.ant-typography h5,
+h1.ant-typography,
+h2.ant-typography,
+h3.ant-typography,
+h4.ant-typography,
+h5.ant-typography,
+div.ant-typography {
+  word-break: keep-all !important;
+  overflow-wrap: break-word !important;
+}
+/* 단, 그 안의 code/Tag는 식별자성이라 break-all 유지 */
+.ant-typography code,
+.ant-typography .ant-tag {
+  word-break: break-all !important;
+  overflow-wrap: anywhere !important;
+}
+
 /* PWA standalone 모드(홈화면 앱)에서 status bar 영역과 안전 영역 처리.
    헤더 자체에서 safe-area-inset-top padding을 적용하므로 body는 배경만 깔아준다. */
 @media (display-mode: standalone), (display-mode: minimal-ui) {

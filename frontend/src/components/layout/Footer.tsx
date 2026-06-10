@@ -13,19 +13,34 @@ interface Props {
 
 // 자료/피드백 안내 문구 (default·login에서 공통 사용)
 function ContactBlock({ compact = false }: { compact?: boolean }) {
+  // 한글이 글자 단위로 끊기지 않도록 명시적으로 keep-all + break-word.
+  // 더불어 쉼표/문장부호 뒤에서 끊기게 두 문장으로 명시적 분리.
+  const textStyle: React.CSSProperties = {
+    wordBreak: 'keep-all',
+    overflowWrap: 'break-word',
+  }
   return (
     <div style={{
       marginTop: compact ? 6 : 10,
       fontSize: compact ? 11 : 12,
       lineHeight: 1.7,
       color: 'inherit',
+      maxWidth: 720,
+      marginLeft: 'auto',
+      marginRight: 'auto',
+      ...textStyle,
     }}>
-      <div style={{ marginBottom: 6 }}>
-        📩 <b>현재 시스템과 합쳐 더 고도화할 수 있는 자료</b>를 보내 주시면,
-        반영해서 발전된 모습으로 보답드리겠습니다.
+      <div style={{ marginBottom: 6, ...textStyle }}>
+        📩 <b>현재 시스템과 유기적으로 결합하여 고도화할 수 있는 관련 자료</b>를 공유해 주신다면,
+      </div>
+      <div style={{ marginBottom: 8, ...textStyle }}>
+        이를 면밀히 검토·반영하여 한층 더 완성도 높은 시스템으로 만들겠습니다.
       </div>
       {/* 메일 두 줄을 inline-grid로 묶어 라벨/주소 컬럼을 정렬 */}
-      <div style={{ display: 'inline-grid', gridTemplateColumns: 'auto auto', columnGap: 6, rowGap: 2, textAlign: 'left' }}>
+      <div style={{
+        display: 'inline-grid', gridTemplateColumns: 'auto auto',
+        columnGap: 6, rowGap: 2, textAlign: 'left', ...textStyle,
+      }}>
         <span>내부 메일 ·</span>
         <span>
           <a href={`mailto:${INTERNAL_EMAIL}`} style={{ color: '#1677ff', textDecoration: 'none' }}>
