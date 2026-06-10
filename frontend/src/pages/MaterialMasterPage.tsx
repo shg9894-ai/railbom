@@ -210,6 +210,15 @@ export default function MaterialMasterPage() {
   const [pageSize, setPageSize] = useState(30)
   const [selected, setSelected] = useState<string | null>(null)
 
+  // 좁은 화면 감지 — UA가 아니라 실제 viewport 폭 기준 (PC 좁은 창도 감지)
+  const [vw, setVw] = useState(() => typeof window !== 'undefined' ? window.innerWidth : 1200)
+  useEffect(() => {
+    const fn = () => setVw(window.innerWidth)
+    window.addEventListener('resize', fn)
+    return () => window.removeEventListener('resize', fn)
+  }, [])
+  const isNarrow = vw < 720
+
   const { data: stats } = useQuery({
     queryKey: ['mm-stats'],
     queryFn: materialMasterApi.stats,
@@ -393,9 +402,9 @@ export default function MaterialMasterPage() {
             current: page,
             pageSize,
             total: search?.total ?? 0,
-            // 모바일에선 simple 모드로 (페이지 번호 줄바꿈 방지)
-            simple: isMobileUA,
-            showSizeChanger: !isMobileUA,
+            // 좁은 화면에선 simple 모드로 (페이지 번호 줄바꿈 방지)
+            simple: isNarrow,
+            showSizeChanger: !isNarrow,
             pageSizeOptions: ['10', '20', '30', '50', '100'],
             onChange: (p, ps) => {
               setPage(p)
@@ -565,8 +574,8 @@ export default function MaterialMasterPage() {
                 { label: 'ecat 최종갱신', value: ecat.last_update_date ? `${ecat.last_update_date.slice(0,4)}.${ecat.last_update_date.slice(4,6)}.${ecat.last_update_date.slice(6,8)}` : '-' },
               ]
 
-              if (isMobileUA) {
-                // 모바일 — 한 행 = 라벨/값 가로 분할. 표 안 쓰고 단순 grid로 화면 안에 안전하게 가둠
+              if (isNarrow) {
+                // 좁은 화면(720px 미만) — 표 안 쓰고 단순 div grid로 화면 안에 안전하게 가둠
                 return (
                   <div style={{
                     border: '1px solid rgba(128,128,128,0.2)', borderRadius: 6,
