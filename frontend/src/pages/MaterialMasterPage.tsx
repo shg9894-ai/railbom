@@ -393,7 +393,9 @@ export default function MaterialMasterPage() {
             current: page,
             pageSize,
             total: search?.total ?? 0,
-            showSizeChanger: true,
+            // 모바일에선 simple 모드로 (페이지 번호 줄바꿈 방지)
+            simple: isMobileUA,
+            showSizeChanger: !isMobileUA,
             pageSizeOptions: ['10', '20', '30', '50', '100'],
             onChange: (p, ps) => {
               setPage(p)
@@ -535,7 +537,13 @@ export default function MaterialMasterPage() {
               </div>
             )}
 
-            <Descriptions size="small" bordered column={2}>
+            <Descriptions
+              size="small"
+              bordered
+              column={isMobileUA ? 1 : 2}
+              labelStyle={{ width: isMobileUA ? 90 : 140, wordBreak: 'keep-all' }}
+              contentStyle={{ wordBreak: 'break-word', overflowWrap: 'anywhere' }}
+            >
               <Descriptions.Item label="자재번호">{ecat.material_no}</Descriptions.Item>
               <Descriptions.Item label="단위">{ecat.unit}</Descriptions.Item>
               <Descriptions.Item label="자재내역" span={2}>{ecat.material_desc_full}</Descriptions.Item>

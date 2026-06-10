@@ -18,7 +18,8 @@ interface Props { role?: string }
 
 export default function InquiriesPage({ role }: Props) {
   const isAdmin = role === 'admin'
-  const [statusFilter, setStatusFilter] = useState<string | undefined>(isAdmin ? 'pending' : undefined)
+  // 기본 필터는 모두 전체 (관리자도 마찬가지 — 드롭다운으로 좁히고 싶을 때만)
+  const [statusFilter, setStatusFilter] = useState<string | undefined>(undefined)
   const [selected, setSelected] = useState<Inquiry | null>(null)
   const [reply, setReply] = useState('')
   const [newStatus, setNewStatus] = useState<string>('resolved')

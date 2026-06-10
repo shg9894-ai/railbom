@@ -80,7 +80,13 @@ export default function HomePage() {
         }} />
         <div style={{ position: 'relative', maxWidth: 900, margin: '0 auto' }}>
           <div style={{ minWidth: 0 }}>
-            <div style={{ fontSize: 11, color: '#1677ff', letterSpacing: 4, marginBottom: 12, fontFamily: 'monospace' }}>
+            <div style={{
+              fontSize: isMobile ? 9 : 11,
+              color: '#1677ff',
+              letterSpacing: isMobile ? 1.5 : 4,
+              marginBottom: 12,
+              fontFamily: 'monospace',
+            }}>
               KORAIL ROLLING STOCK MANAGEMENT SYSTEM
             </div>
             <h1 style={{ color: '#fff', fontSize: isMobile ? 26 : 36, fontWeight: 700, margin: '0 0 12px', lineHeight: 1.2 }}>

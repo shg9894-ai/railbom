@@ -55,7 +55,13 @@ export default function LoginLogsPage() {
       title: 'IP',
       dataIndex: 'ip',
       key: 'ip',
-      render: (v: string) => <span style={{ fontFamily: 'monospace', fontSize: 12 }}>{v}</span>,
+      width: 130,
+      render: (v: string) => (
+        <span style={{
+          fontFamily: 'monospace', fontSize: 12,
+          whiteSpace: 'nowrap', wordBreak: 'keep-all',
+        }}>{v}</span>
+      ),
     },
   ]
 
@@ -71,6 +77,7 @@ export default function LoginLogsPage() {
         rowKey="id"
         loading={isLoading}
         size="small"
+        scroll={{ x: 'max-content' }}
         pagination={{ pageSize: 50, showSizeChanger: true, showTotal: (t) => `총 ${t}건` }}
       />
     </Card>
