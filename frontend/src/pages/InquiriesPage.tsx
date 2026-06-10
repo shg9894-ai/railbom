@@ -57,11 +57,10 @@ export default function InquiriesPage({ role }: Props) {
       <Space style={{ marginTop: 16, marginBottom: 12 }}>
         <Text>상태:</Text>
         <Select
-          value={statusFilter}
-          onChange={setStatusFilter}
-          allowClear
-          placeholder="전체"
+          value={statusFilter ?? 'all'}
+          onChange={v => setStatusFilter(v === 'all' ? undefined : v)}
           options={[
+            { value: 'all',         label: '전체' },
             { value: 'pending',     label: '대기' },
             { value: 'in_progress', label: '처리중' },
             { value: 'resolved',    label: '해결' },
