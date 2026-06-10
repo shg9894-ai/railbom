@@ -67,18 +67,32 @@ def main():
     print(f'정사각 변환 후: {sq.size}')
 
     targets = [
-        ('pwa-512.png', 512),
-        ('pwa-192.png', 192),
-        ('apple-touch-icon.png', 180),
+        # rounded=True → 모서리 둥글게 깎아 PC에서도 둥근 앱 아이콘
+        # apple-touch-icon은 iOS가 자체 마스킹하므로 정사각 그대로
+        ('pwa-512.png', 512, True),
+        ('pwa-192.png', 192, True),
+        ('apple-touch-icon.png', 180, False),
     ]
     DST_DIR.mkdir(parents=True, exist_ok=True)
     print()
     print('PWA 아이콘 출력:')
-    for fname, size in targets:
-        out = sq.resize((size, size), Image.LANCZOS)
+    for fname, size, rounded in targets:
+        out = sq.resize((size, size), Image.LANCZOS).convert('RGBA')
+        if rounded:
+            # iOS 스타일 코너 반경 (≈22%) — 둥근 사각형 모서리
+            radius = int(size * 0.22)
+            mask = Image.new('L', (size, size), 0)
+            from PIL import ImageDraw
+            ImageDraw.Draw(mask).rounded_rectangle([0, 0, size, size], radius=radius, fill=255)
+            # 알파를 mask로 곱함 (기존 알파 보존)
+            r, g, b, a = out.split()
+            new_a = Image.eval(a, lambda v: v)
+            from PIL import ImageChops
+            new_a = ImageChops.multiply(new_a, mask)
+            out = Image.merge('RGBA', (r, g, b, new_a))
         path = DST_DIR / fname
         out.save(path, 'PNG', optimize=True)
-        print(f'  ✓ {fname:25s} {size}x{size}  ({path.stat().st_size:,} bytes)')
+        print(f'  ✓ {fname:25s} {size}x{size}  rounded={rounded}  ({path.stat().st_size:,} bytes)')
 
     print()
     print('완료. 빌드 후 홈 화면 재추가하면 새 아이콘 적용.')
