@@ -4,9 +4,11 @@ import { vehicleApi } from '../api/vehicles'
 import { vehicleUnitsApi } from '../api/vehicleUnits'
 
 const QUICK_LINKS = [
-  { label: '부품 탐색',    path: '/diagram',       desc: '차종별 부품 드릴다운' },
-  { label: 'BOM 원데이터', path: '/bom',           desc: '전체 BOM 트리 조회' },
-  { label: '명칭도감',     path: '/catalog',       desc: '차종별 부품 도면집' },
+  { label: '부품 탐색',    path: '/diagram',          desc: '차종별 부품 드릴다운' },
+  { label: 'BOM 원데이터', path: '/bom',              desc: '전체 BOM 트리 조회' },
+  { label: '명칭도감',     path: '/catalog',          desc: '차종별 부품 도면집' },
+  { label: '유지보수 기준', path: '/maintenance',     desc: '부품별 정비 주기' },
+  { label: '자재 마스터',   path: '/material-master', desc: 'ecat 자재 검색' },
 ]
 
 const VEHICLES = [
@@ -69,46 +71,90 @@ export default function HomePage() {
           backgroundSize: '40px 40px',
           pointerEvents: 'none',
         }} />
-        <div style={{ position: 'relative', maxWidth: 900, margin: '0 auto' }}>
-          <div style={{ fontSize: 11, color: '#1677ff', letterSpacing: 4, marginBottom: 12, fontFamily: 'monospace' }}>
-            KORAIL ROLLING STOCK MANAGEMENT SYSTEM
+        <div style={{
+          position: 'relative', maxWidth: 900, margin: '0 auto',
+          display: 'flex', gap: 24, alignItems: 'flex-start',
+          flexDirection: isMobile ? 'column' : 'row',
+        }}>
+          {/* 좌측: 제목 + 통계 */}
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <div style={{ fontSize: 11, color: '#1677ff', letterSpacing: 4, marginBottom: 12, fontFamily: 'monospace' }}>
+              KORAIL ROLLING STOCK MANAGEMENT SYSTEM
+            </div>
+            <h1 style={{ color: '#fff', fontSize: isMobile ? 26 : 36, fontWeight: 700, margin: '0 0 12px', lineHeight: 1.2 }}>
+              철도차량 BOM
+            </h1>
+            <p style={{ color: 'rgba(255,255,255,0.45)', fontSize: isMobile ? 12 : 14, margin: '0 0 24px' }}>
+              한국철도공사 차량 부품 구성 정보 통합 관리 플랫폼
+            </p>
+            <div style={{ display: 'flex', gap: isMobile ? 8 : 24, flexWrap: 'wrap' }}>
+              {[
+                { label: '등록 차종', value: '8종' },
+                { label: 'BOM 노드', value: totalNodes.toLocaleString() + '개' },
+                { label: '명칭도감', value: diagramPageCount ? diagramPageCount.toLocaleString() + ' 페이지' : '...' },
+              ].map(s => (
+                <div key={s.label} style={{
+                  background: 'rgba(22,119,255,0.08)', border: '1px solid rgba(22,119,255,0.2)',
+                  borderRadius: 8, padding: isMobile ? '10px 14px' : '14px 24px', flex: isMobile ? '1 1 calc(33% - 8px)' : 'unset', minWidth: 0,
+                }}>
+                  <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: 10, marginBottom: 4 }}>{s.label}</div>
+                  <div style={{ color: '#fff', fontSize: isMobile ? 16 : 22, fontWeight: 700, fontFamily: 'monospace', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{s.value}</div>
+                </div>
+              ))}
+            </div>
           </div>
-          <h1 style={{ color: '#fff', fontSize: isMobile ? 26 : 36, fontWeight: 700, margin: '0 0 12px', lineHeight: 1.2 }}>
-            철도차량 BOM
-          </h1>
-          <p style={{ color: 'rgba(255,255,255,0.45)', fontSize: isMobile ? 12 : 14, margin: '0 0 24px' }}>
-            한국철도공사 차량 부품 구성 정보 통합 관리 플랫폼
-          </p>
-          <div style={{ display: 'flex', gap: isMobile ? 8 : 24, flexWrap: 'wrap' }}>
-            {[
-              { label: '등록 차종', value: '8종' },
-              { label: 'BOM 노드', value: totalNodes.toLocaleString() + '개' },
-              { label: '명칭도감', value: diagramPageCount ? diagramPageCount.toLocaleString() + ' 페이지' : '...' },
-            ].map(s => (
-              <div key={s.label} style={{
-                background: 'rgba(22,119,255,0.08)', border: '1px solid rgba(22,119,255,0.2)',
-                borderRadius: 8, padding: isMobile ? '10px 14px' : '14px 24px', flex: isMobile ? '1 1 calc(33% - 8px)' : 'unset', minWidth: 0,
-              }}>
-                <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: 10, marginBottom: 4 }}>{s.label}</div>
-                <div style={{ color: '#fff', fontSize: isMobile ? 16 : 22, fontWeight: 700, fontFamily: 'monospace', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{s.value}</div>
+
+          {/* 우측: 도움말/매뉴얼 카드 — 빈 공간 활용, 강조 */}
+          {!isMobile && (
+            <div
+              onClick={() => navigate('/help')}
+              style={{
+                width: 220, flexShrink: 0,
+                background: 'linear-gradient(135deg, rgba(82,196,26,0.15) 0%, rgba(82,196,26,0.05) 100%)',
+                border: '1px solid rgba(82,196,26,0.4)',
+                borderRadius: 12, padding: '20px 18px', cursor: 'pointer',
+                transition: 'all 0.2s', alignSelf: 'stretch',
+                display: 'flex', flexDirection: 'column', justifyContent: 'center',
+              }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = '#52c41a'; e.currentTarget.style.transform = 'translateY(-2px)' }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(82,196,26,0.4)'; e.currentTarget.style.transform = 'translateY(0)' }}
+            >
+              <div style={{ fontSize: 28, marginBottom: 10 }}>📖</div>
+              <div style={{ color: '#73d13d', fontWeight: 700, fontSize: 16, marginBottom: 6 }}>도움말 / 매뉴얼</div>
+              <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: 11, lineHeight: 1.5 }}>
+                BOM 코드 체계, 자재번호, 메뉴별 사용법 등 시스템 안내. 처음 사용한다면 여기부터.
               </div>
-            ))}
-          </div>
+            </div>
+          )}
         </div>
       </div>
 
       <div style={{ padding: `24px ${sidePad}px 0`, maxWidth: 940, margin: '0 auto' }}>
         {/* 바로가기 */}
         <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.3)', letterSpacing: 2, marginBottom: 16 }}>QUICK ACCESS</div>
-        <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginBottom: 40 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr 1fr' : 'repeat(auto-fill, minmax(180px, 1fr))', gap: 12, marginBottom: 40 }}>
+          {/* 모바일에선 우측 도움말 카드가 안 보이므로 QUICK ACCESS 첫 자리에 표시 */}
+          {isMobile && (
+            <div
+              onClick={() => navigate('/help')}
+              style={{
+                background: 'rgba(82,196,26,0.12)', border: '1px solid rgba(82,196,26,0.4)',
+                borderRadius: 8, padding: '12px 16px', cursor: 'pointer',
+                gridColumn: '1 / -1',
+              }}
+            >
+              <div style={{ color: '#73d13d', fontWeight: 600, fontSize: 13, marginBottom: 3 }}>📖 도움말 / 매뉴얼</div>
+              <div style={{ color: 'rgba(115,209,61,0.7)', fontSize: 11 }}>처음 사용한다면 여기부터</div>
+            </div>
+          )}
           {QUICK_LINKS.map(q => (
             <div
               key={q.path}
               onClick={() => navigate(q.path)}
               style={{
                 background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.1)',
-                borderRadius: 8, padding: '12px 20px', cursor: 'pointer',
-                transition: 'all 0.15s', minWidth: 140,
+                borderRadius: 8, padding: '12px 16px', cursor: 'pointer',
+                transition: 'all 0.15s', minWidth: 0,
               }}
               onMouseEnter={e => { e.currentTarget.style.borderColor = '#1677ff'; e.currentTarget.style.background = 'rgba(22,119,255,0.1)' }}
               onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)'; e.currentTarget.style.background = 'rgba(255,255,255,0.04)' }}
