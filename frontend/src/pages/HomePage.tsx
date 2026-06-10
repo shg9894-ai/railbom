@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
+import { useState, useEffect } from 'react'
 import { vehicleApi } from '../api/vehicles'
 import { vehicleUnitsApi } from '../api/vehicleUnits'
 
@@ -55,7 +56,14 @@ export default function HomePage() {
     unitsByVtId[v.vehicle_type_id] = { active: v.active_units, total: v.total_units }
   })
 
-  const isMobile = typeof window !== 'undefined' && window.innerWidth < 640
+  const [vw, setVw] = useState<number>(() => typeof window !== 'undefined' ? window.innerWidth : 1200)
+  useEffect(() => {
+    const fn = () => setVw(window.innerWidth)
+    window.addEventListener('resize', fn)
+    return () => window.removeEventListener('resize', fn)
+  }, [])
+  const isMobile = vw < 768           // 모바일 + 작은 태블릿
+  const showSideHelp = vw >= 1024     // 우측 도움말 카드는 충분히 넓을 때만
   const sidePad = isMobile ? 16 : 40
   return (
     <div style={{ minHeight: '100%', background: 'linear-gradient(135deg, #0a0e1a 0%, #0d1b2e 50%, #0a1628 100%)', padding: 0, margin: -16 }}>
@@ -104,8 +112,8 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* 우측: 도움말/매뉴얼 카드 — 빈 공간 활용, 강조 */}
-          {!isMobile && (
+          {/* 우측: 도움말/매뉴얼 카드 — 빈 공간이 충분할 때만(1024px+) */}
+          {showSideHelp && (
             <div
               onClick={() => navigate('/help')}
               style={{
@@ -133,8 +141,8 @@ export default function HomePage() {
         {/* 바로가기 */}
         <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.3)', letterSpacing: 2, marginBottom: 16 }}>QUICK ACCESS</div>
         <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr 1fr' : 'repeat(auto-fill, minmax(180px, 1fr))', gap: 12, marginBottom: 40 }}>
-          {/* 모바일에선 우측 도움말 카드가 안 보이므로 QUICK ACCESS 첫 자리에 표시 */}
-          {isMobile && (
+          {/* 우측 도움말 카드가 안 보이는 폭에선 QUICK ACCESS 첫 줄에 가로 전체 폭으로 */}
+          {!showSideHelp && (
             <div
               onClick={() => navigate('/help')}
               style={{
