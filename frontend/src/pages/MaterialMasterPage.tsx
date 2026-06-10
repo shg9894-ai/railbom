@@ -537,43 +537,71 @@ export default function MaterialMasterPage() {
               </div>
             )}
 
-            <Descriptions
-              size="small"
-              bordered
-              column={isMobileUA ? 1 : 2}
-              labelStyle={{ width: isMobileUA ? 90 : 140, wordBreak: 'keep-all' }}
-              contentStyle={{ wordBreak: 'break-word', overflowWrap: 'anywhere' }}
-            >
-              <Descriptions.Item label="자재번호">{ecat.material_no}</Descriptions.Item>
-              <Descriptions.Item label="단위">{ecat.unit}</Descriptions.Item>
-              <Descriptions.Item label="자재내역" span={2}>{ecat.material_desc_full}</Descriptions.Item>
-              <Descriptions.Item label="자재그룹 분류번호">{ecat.group_classification_no}</Descriptions.Item>
-              <Descriptions.Item label="자재그룹 분류명">{ecat.group_classification_name}</Descriptions.Item>
-              <Descriptions.Item label="자재그룹 영문" span={2}>{ecat.group_classification_en || '-'}</Descriptions.Item>
-              {ecat.group_classification_desc && (
-                <Descriptions.Item label="품명 설명" span={2}>
-                  <Text style={{ fontSize: 12 }}>{ecat.group_classification_desc}</Text>
-                </Descriptions.Item>
-              )}
-              <Descriptions.Item label="용품별그룹">{ecat.product_group} {ecat.product_group_desc && `(${ecat.product_group_desc})`}</Descriptions.Item>
-              <Descriptions.Item label="대분류">{ecat.category_2 || '-'}</Descriptions.Item>
-              <Descriptions.Item label="제조자 PN">{ecat.manufacturer_pn || '-'}</Descriptions.Item>
-              <Descriptions.Item label="생성일">{ecat.created_date}</Descriptions.Item>
-              <Descriptions.Item label="조달구분">{ecat.procurement_name}</Descriptions.Item>
-              <Descriptions.Item label="안전구분">{ecat.safety_code} / {ecat.safety_type}</Descriptions.Item>
-              <Descriptions.Item label="구매그룹">{ecat.purchase_group} {ecat.purchase_group_name && `(${ecat.purchase_group_name})`}</Descriptions.Item>
-              <Descriptions.Item label="미사용 여부">{ecat.is_unused ? <Tag color="default">미사용</Tag> : <Tag color="green">사용중</Tag>}</Descriptions.Item>
-              <Descriptions.Item label="현재고">{ecat.stock_count} {ecat.unit}</Descriptions.Item>
-              <Descriptions.Item label="적정재고">{ecat.optimal_stock} {ecat.unit}</Descriptions.Item>
-              <Descriptions.Item label="조달리드타임">{ecat.lead_time}일</Descriptions.Item>
-              <Descriptions.Item label="연간계획액">{ecat.yearly_plan_amount}</Descriptions.Item>
-              <Descriptions.Item label="등록업체수">{ecat.registered_company_count}곳</Descriptions.Item>
-              <Descriptions.Item label="계약 진행중">{ecat.contract_in_progress}건</Descriptions.Item>
-              <Descriptions.Item label="계약 완료">{ecat.contract_completed}건</Descriptions.Item>
-              <Descriptions.Item label="ecat 최종갱신">
-                {ecat.last_update_date ? `${ecat.last_update_date.slice(0,4)}.${ecat.last_update_date.slice(4,6)}.${ecat.last_update_date.slice(6,8)}` : '-'}
-              </Descriptions.Item>
-            </Descriptions>
+            {(() => {
+              type Row = { label: string; value: React.ReactNode; full?: boolean }
+              const rows: Row[] = [
+                { label: '자재번호', value: ecat.material_no },
+                { label: '단위', value: ecat.unit },
+                { label: '자재내역', value: ecat.material_desc_full, full: true },
+                { label: '자재그룹 분류번호', value: ecat.group_classification_no },
+                { label: '자재그룹 분류명', value: ecat.group_classification_name },
+                { label: '자재그룹 영문', value: ecat.group_classification_en || '-', full: true },
+                ...(ecat.group_classification_desc ? [{ label: '품명 설명', value: <Text style={{ fontSize: 12 }}>{ecat.group_classification_desc}</Text>, full: true }] : []),
+                { label: '용품별그룹', value: <>{ecat.product_group} {ecat.product_group_desc && `(${ecat.product_group_desc})`}</> },
+                { label: '대분류', value: ecat.category_2 || '-' },
+                { label: '제조자 PN', value: ecat.manufacturer_pn || '-' },
+                { label: '생성일', value: ecat.created_date },
+                { label: '조달구분', value: ecat.procurement_name },
+                { label: '안전구분', value: <>{ecat.safety_code} / {ecat.safety_type}</> },
+                { label: '구매그룹', value: <>{ecat.purchase_group} {ecat.purchase_group_name && `(${ecat.purchase_group_name})`}</> },
+                { label: '미사용 여부', value: ecat.is_unused ? <Tag color="default">미사용</Tag> : <Tag color="green">사용중</Tag> },
+                { label: '현재고', value: <>{ecat.stock_count} {ecat.unit}</> },
+                { label: '적정재고', value: <>{ecat.optimal_stock} {ecat.unit}</> },
+                { label: '조달리드타임', value: <>{ecat.lead_time}일</> },
+                { label: '연간계획액', value: ecat.yearly_plan_amount },
+                { label: '등록업체수', value: <>{ecat.registered_company_count}곳</> },
+                { label: '계약 진행중', value: <>{ecat.contract_in_progress}건</> },
+                { label: '계약 완료', value: <>{ecat.contract_completed}건</> },
+                { label: 'ecat 최종갱신', value: ecat.last_update_date ? `${ecat.last_update_date.slice(0,4)}.${ecat.last_update_date.slice(4,6)}.${ecat.last_update_date.slice(6,8)}` : '-' },
+              ]
+
+              if (isMobileUA) {
+                // 모바일 — 한 행 = 라벨/값 가로 분할. 표 안 쓰고 단순 grid로 화면 안에 안전하게 가둠
+                return (
+                  <div style={{
+                    border: '1px solid rgba(128,128,128,0.2)', borderRadius: 6,
+                    overflow: 'hidden', fontSize: 12, width: '100%',
+                  }}>
+                    {rows.map((r, i) => (
+                      <div key={i} style={{
+                        display: 'grid', gridTemplateColumns: '92px 1fr',
+                        borderTop: i === 0 ? 'none' : '1px solid rgba(128,128,128,0.15)',
+                      }}>
+                        <div style={{
+                          padding: '8px 10px', background: 'rgba(128,128,128,0.08)',
+                          color: 'rgba(128,128,128,1)', fontWeight: 500,
+                          wordBreak: 'keep-all', overflowWrap: 'break-word',
+                        }}>{r.label}</div>
+                        <div style={{
+                          padding: '8px 10px', wordBreak: 'break-word', overflowWrap: 'anywhere', minWidth: 0,
+                        }}>{r.value}</div>
+                      </div>
+                    ))}
+                  </div>
+                )
+              }
+
+              // 데스크탑 — 기존 Descriptions 그대로 (가로 공간 충분)
+              return (
+                <Descriptions size="small" bordered column={2}>
+                  {rows.map((r, i) => (
+                    <Descriptions.Item key={i} label={r.label} span={r.full ? 2 : 1}>
+                      {r.value}
+                    </Descriptions.Item>
+                  ))}
+                </Descriptions>
+              )
+            })()}
 
             {ecat.attributes && ecat.attributes.length > 0 && (
               <div style={{ marginTop: 16 }}>
