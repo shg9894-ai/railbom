@@ -63,7 +63,6 @@ export default function HomePage() {
     return () => window.removeEventListener('resize', fn)
   }, [])
   const isMobile = vw < 768           // 모바일 + 작은 태블릿
-  const showSideHelp = vw >= 1024     // 우측 도움말 카드는 충분히 넓을 때만
   const sidePad = isMobile ? 16 : 40
   return (
     <div style={{ minHeight: '100%', background: 'linear-gradient(135deg, #0a0e1a 0%, #0d1b2e 50%, #0a1628 100%)', padding: 0, margin: -16 }}>
@@ -79,13 +78,8 @@ export default function HomePage() {
           backgroundSize: '40px 40px',
           pointerEvents: 'none',
         }} />
-        <div style={{
-          position: 'relative', maxWidth: 900, margin: '0 auto',
-          display: 'flex', gap: 24, alignItems: 'flex-start',
-          flexDirection: isMobile ? 'column' : 'row',
-        }}>
-          {/* 좌측: 제목 + 통계 */}
-          <div style={{ flex: 1, minWidth: 0 }}>
+        <div style={{ position: 'relative', maxWidth: 900, margin: '0 auto' }}>
+          <div style={{ minWidth: 0 }}>
             <div style={{ fontSize: 11, color: '#1677ff', letterSpacing: 4, marginBottom: 12, fontFamily: 'monospace' }}>
               KORAIL ROLLING STOCK MANAGEMENT SYSTEM
             </div>
@@ -112,28 +106,6 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* 우측: 도움말/매뉴얼 카드 — 빈 공간이 충분할 때만(1024px+) */}
-          {showSideHelp && (
-            <div
-              onClick={() => navigate('/help')}
-              style={{
-                width: 220, flexShrink: 0,
-                background: 'linear-gradient(135deg, rgba(82,196,26,0.15) 0%, rgba(82,196,26,0.05) 100%)',
-                border: '1px solid rgba(82,196,26,0.4)',
-                borderRadius: 12, padding: '20px 18px', cursor: 'pointer',
-                transition: 'all 0.2s', alignSelf: 'stretch',
-                display: 'flex', flexDirection: 'column', justifyContent: 'center',
-              }}
-              onMouseEnter={e => { e.currentTarget.style.borderColor = '#52c41a'; e.currentTarget.style.transform = 'translateY(-2px)' }}
-              onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(82,196,26,0.4)'; e.currentTarget.style.transform = 'translateY(0)' }}
-            >
-              <div style={{ fontSize: 28, marginBottom: 10 }}>📖</div>
-              <div style={{ color: '#73d13d', fontWeight: 700, fontSize: 16, marginBottom: 6 }}>도움말 / 매뉴얼</div>
-              <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: 11, lineHeight: 1.5 }}>
-                BOM 코드 체계, 자재번호, 메뉴별 사용법 등 시스템 안내. 처음 사용한다면 여기부터.
-              </div>
-            </div>
-          )}
         </div>
       </div>
 
@@ -141,8 +113,8 @@ export default function HomePage() {
         {/* 바로가기 */}
         <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.3)', letterSpacing: 2, marginBottom: 16 }}>QUICK ACCESS</div>
         <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr 1fr' : 'repeat(auto-fill, minmax(180px, 1fr))', gap: 12, marginBottom: 40 }}>
-          {/* 도움말 — 다른 QUICK ACCESS 카드와 동일 크기, 색상만 초록 강조 */}
-          {!showSideHelp && (
+          {/* 도움말 — 다른 QUICK ACCESS 카드와 동일 크기, 색상만 초록 강조. 모든 폭에서 표시. */}
+          {(
             <div
               onClick={() => navigate('/help')}
               style={{

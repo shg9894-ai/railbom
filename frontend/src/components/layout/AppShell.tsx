@@ -4,10 +4,12 @@ import {
   NodeIndexOutlined, OrderedListOutlined, PictureOutlined,
   SearchOutlined, CheckSquareOutlined, LogoutOutlined, HistoryOutlined,
   BulbOutlined, BulbFilled, DatabaseOutlined, MenuFoldOutlined, MenuUnfoldOutlined,
-  ToolOutlined, CloudDownloadOutlined, QuestionCircleOutlined,
+  ToolOutlined, CloudDownloadOutlined, QuestionCircleOutlined, HomeOutlined,
+  MessageOutlined,
 } from '@ant-design/icons'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { PLANT_NAMES } from '../../types'
+import InquiryModal from './InquiryModal'
 
 const { Content, Header } = Layout
 
@@ -25,6 +27,7 @@ export default function AppShell({ children, role, onLogout, darkMode, onToggleD
   const navigate = useNavigate()
   const location = useLocation()
   const [isMobile, setIsMobile] = useState(() => window.innerWidth < 768)
+  const [inquiryOpen, setInquiryOpen] = useState(false)
   const [open, setOpen] = useState(() => {
     if (window.innerWidth < 768) return false
     const saved = localStorage.getItem('sidebar_open')
@@ -46,18 +49,20 @@ export default function AppShell({ children, role, onLogout, darkMode, onToggleD
   }, [])
 
   const menuItems = [
-    { key: '/diagram',     icon: <PictureOutlined />,      label: '부품 탐색' },
-    { key: '/bom',         icon: <DatabaseOutlined />,     label: 'BOM 원데이터' },
-    { key: '/catalog',     icon: <SearchOutlined />,       label: '차종별 명칭도감' },
-    { key: '/maintenance', icon: <ToolOutlined />,         label: '유지보수 기준' },
-    { key: '/material-master', icon: <DatabaseOutlined />, label: '자재 마스터' },
-    { key: '/offline',     icon: <CloudDownloadOutlined />, label: '앱 설치 / 오프라인' },
-    { key: '/help',        icon: <QuestionCircleOutlined />, label: '도움말 / 매뉴얼' },
-    { key: '/vehicles',    icon: <NodeIndexOutlined />,    label: '차종 관리' },
-    { key: '/formations',  icon: <OrderedListOutlined />,  label: '편성 관리' },
+    { key: '/',                icon: <HomeOutlined />,         label: '메인' },
+    { key: '/diagram',         icon: <PictureOutlined />,      label: '부품 탐색' },
+    { key: '/bom',             icon: <DatabaseOutlined />,     label: 'BOM 원데이터' },
+    { key: '/catalog',         icon: <SearchOutlined />,       label: '차종별 명칭도감' },
+    { key: '/maintenance',     icon: <ToolOutlined />,         label: '유지보수 기준' },
+    { key: '/material-master', icon: <DatabaseOutlined />,     label: '자재 마스터' },
+    { key: '/vehicles',        icon: <NodeIndexOutlined />,    label: '차종 관리' },
+    { key: '/formations',      icon: <OrderedListOutlined />,  label: '편성 관리' },
+    { key: '/offline',         icon: <CloudDownloadOutlined />, label: '앱 설치 / 오프라인' },
+    { key: '/help',            icon: <QuestionCircleOutlined />, label: '도움말 / 매뉴얼' },
     ...(role === 'admin' ? [
-      { key: '/requests',         icon: <CheckSquareOutlined />, label: '데이터 수정 승인' },
-      { key: '/login-logs',       icon: <HistoryOutlined />,     label: '로그인 기록' },
+      { key: '/inquiries',         icon: <MessageOutlined />,     label: '문의 / 요청' },
+      { key: '/requests',          icon: <CheckSquareOutlined />, label: '데이터 수정 승인' },
+      { key: '/login-logs',        icon: <HistoryOutlined />,     label: '로그인 기록' },
       { key: '/material-activity', icon: <DatabaseOutlined />,    label: '자재마스터 변경 로그' },
     ] : []),
   ]
@@ -108,6 +113,15 @@ export default function AppShell({ children, role, onLogout, darkMode, onToggleD
           </span>
           <Button
             size="small"
+            icon={<MessageOutlined />}
+            onClick={() => setInquiryOpen(true)}
+            title="관리자에게 문의/요청"
+            style={{ color: '#52c41a', borderColor: 'rgba(82,196,26,0.4)' }}
+          >
+            {isMobile ? '' : '문의'}
+          </Button>
+          <Button
+            size="small"
             icon={darkMode ? <BulbFilled style={{ color: '#fadb14' }} /> : <BulbOutlined />}
             onClick={onToggleDark}
             title={darkMode ? '라이트 모드' : '다크 모드'}
@@ -117,6 +131,7 @@ export default function AppShell({ children, role, onLogout, darkMode, onToggleD
           </Button>
         </Space>
       </Header>
+      <InquiryModal open={inquiryOpen} onClose={() => setInquiryOpen(false)} />
 
       {/* 바디 */}
       <div style={{ display: 'flex', flex: 1, minHeight: 0, position: 'relative' }}>

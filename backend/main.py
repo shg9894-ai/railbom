@@ -5,7 +5,7 @@ import sys
 
 from config.settings import CORS_ORIGINS, LOG_LEVEL, DATABASE_URL
 from database.connection import initialize_db
-from routers import vehicles, formations, bom, compatibility, excel, photos, diagram_pages, change_requests, diagram_page_requests, auth, failure_cases, repair_kits, vehicle_units, material_master, ecat
+from routers import vehicles, formations, bom, compatibility, excel, photos, diagram_pages, change_requests, diagram_page_requests, auth, failure_cases, repair_kits, vehicle_units, material_master, ecat, inquiries
 
 # ── 로깅 설정 ──────────────────────────────────────────────────────────────────
 logger.remove()
@@ -52,6 +52,7 @@ app.include_router(repair_kits.router)
 app.include_router(vehicle_units.router)
 app.include_router(material_master.router)
 app.include_router(ecat.router)
+app.include_router(inquiries.router)
 
 
 @app.get("/api/health")
