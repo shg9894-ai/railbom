@@ -402,9 +402,11 @@ export default function MaterialMasterPage() {
             current: page,
             pageSize,
             total: search?.total ?? 0,
-            // 좁은 화면에선 simple 모드로 (페이지 번호 줄바꿈 방지)
-            simple: isNarrow,
+            // 좁은 화면에선 현재 페이지 전후로 1~2개만 보이게(showLessItems)
+            showLessItems: isNarrow,
             showSizeChanger: !isNarrow,
+            // 페이지 번호 클릭 + 직접 입력 둘 다 가능
+            showQuickJumper: true,
             pageSizeOptions: ['10', '20', '30', '50', '100'],
             onChange: (p, ps) => {
               setPage(p)
@@ -427,8 +429,6 @@ export default function MaterialMasterPage() {
                   <Text style={{ fontSize: 12, opacity: r.is_unused ? 0.6 : 1 }}>{v || '-'}</Text>
                 </span>
               ) },
-            { title: '제조자 PN', dataIndex: 'manufacturer_pn', width: 130,
-              render: (v: string | null) => v ? <Text code style={{ fontSize: 11 }}>{v}</Text> : <Text type="secondary">-</Text> },
             { title: '단위', dataIndex: 'unit', width: 50, align: 'center' as const },
             { title: '용품별그룹', dataIndex: 'product_group', width: 180,
               render: (v: string | null, r: MaterialMasterItem) => v ? (
@@ -473,8 +473,6 @@ export default function MaterialMasterPage() {
               ) }]),
             { title: '생성일', dataIndex: 'created_date', width: 100,
               render: (v: string | null) => v ? <Text style={{ fontSize: 11 }}>{v}</Text> : <Text type="secondary">-</Text> },
-            { title: '기존자재번호', dataIndex: 'legacy_material_no', width: 120,
-              render: (v: string | null) => v ? <Text code style={{ fontSize: 10 }}>{v}</Text> : null },
           ]}
         />
       </Card>
