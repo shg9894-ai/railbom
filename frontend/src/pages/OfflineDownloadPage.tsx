@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Card, Button, Progress, Typography, Space, Tag, Alert, message } from 'antd'
 import { CloudDownloadOutlined, CheckCircleOutlined, DeleteOutlined, MobileOutlined } from '@ant-design/icons'
 import { useQuery } from '@tanstack/react-query'
@@ -56,6 +56,9 @@ export default function OfflineDownloadPage() {
   const [installEvent, setInstallEvent] = useState<any>(null)
   const [statuses, setStatuses] = useState<Record<number, VehicleDownloadStatus>>({})
   const [records, setRecords] = useState<Record<number, DownloadRecord>>(() => loadRecords())
+  // 현재 다운로드 진행 중인 차종 ID — useState는 비동기 갱신이라 즉시 검사가 필요한
+  // 동시 호출 차단엔 부적합. useRef로 즉시 동기 검사.
+  const inFlightRef = useRef<Set<number>>(new Set())
 
   const { data: vehicles = [] } = useQuery({
     queryKey: ['vehicles'],
@@ -112,6 +115,12 @@ export default function OfflineDownloadPage() {
   const supportedVehicles = vehicles.filter(v => VEHICLE_DB_CODE[v.id])
 
   const downloadVehicle = async (vehicleId: number, vehicleName: string, vehicleCode: string) => {
+    // 같은 차종이 이미 다운로드 중이면 두 번째 호출 무시 (진행률 왔다갔다 방지)
+    if (inFlightRef.current.has(vehicleId)) {
+      message.info(`${vehicleName}은(는) 이미 다운로드 중입니다.`)
+      return 0
+    }
+    inFlightRef.current.add(vehicleId)
     try {
       const pages = await diagramPagesApi.allPages(vehicleCode)
       // 페이지 목록 받은 직후 loading 메시지 닫기 (진행률 바로 전환)
@@ -167,6 +176,8 @@ export default function OfflineDownloadPage() {
         [vehicleId]: { ...prev[vehicleId], inProgress: false },
       }))
       throw e
+    } finally {
+      inFlightRef.current.delete(vehicleId)
     }
   }
 
@@ -335,7 +346,7 @@ export default function OfflineDownloadPage() {
                   block
                   icon={<CloudDownloadOutlined />}
                   loading={isDownloading}
-                  disabled={allDownloading}
+                  disabled={allDownloading || isDownloading}
                   onClick={async () => {
                     message.loading({ content: `${v.name} 페이지 목록 조회 중...`, key: `dl-${v.id}`, duration: 0 })
                     try {
