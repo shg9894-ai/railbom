@@ -402,11 +402,11 @@ export default function MaterialMasterPage() {
             current: page,
             pageSize,
             total: search?.total ?? 0,
-            // 좁은 화면에선 현재 페이지 전후로 1~2개만 보이게(showLessItems)
-            showLessItems: isNarrow,
+            // 모든 화면에서 동일하게 — 현재 페이지 ± 2까지 번호 노출
+            // 좁은 화면에선 한 줄에 다 못 들어가니까 size changer/quick jumper는 숨김
             showSizeChanger: !isNarrow,
-            // 페이지 번호 클릭 + 직접 입력 둘 다 가능
-            showQuickJumper: true,
+            showQuickJumper: !isNarrow,
+            size: isNarrow ? 'small' as const : undefined,
             pageSizeOptions: ['10', '20', '30', '50', '100'],
             onChange: (p, ps) => {
               setPage(p)
