@@ -22,6 +22,34 @@ interface VehicleDownloadStatus {
   inProgress: boolean
 }
 
+// 캐시에 저장된 차종별 이미지 수를 센다. vehicleCode가 URL의 ?vehicle= 파라미터에
+// 들어가므로 URL 문자열 매칭으로 차종별로 분리 가능.
+async function countCachedImages(vehicleCodes: string[]): Promise<Record<string, number>> {
+  const result: Record<string, number> = {}
+  vehicleCodes.forEach(c => { result[c] = 0 })
+  if (!('caches' in window)) return result
+  try {
+    const cacheNames = ['diagram-api-images', 'diagram-images']
+    for (const name of cacheNames) {
+      const cache = await caches.open(name)
+      const keys = await cache.keys()
+      for (const req of keys) {
+        const url = req.url
+        for (const code of vehicleCodes) {
+          // ?vehicle=KTX-1 같은 패턴 (encoded 형태도 고려)
+          if (url.includes(`vehicle=${code}`) || url.includes(`vehicle=${encodeURIComponent(code)}`)) {
+            result[code]++
+            break
+          }
+        }
+      }
+    }
+  } catch {
+    /* ignore */
+  }
+  return result
+}
+
 export default function OfflineDownloadPage() {
   const [installEvent, setInstallEvent] = useState<any>(null)
   const [statuses, setStatuses] = useState<Record<number, VehicleDownloadStatus>>({})
@@ -30,6 +58,53 @@ export default function OfflineDownloadPage() {
     queryKey: ['vehicles'],
     queryFn: vehicleApi.list,
   })
+
+  // 차종별 총 페이지 수를 미리 받아둠 (캐시된 수 / 총 페이지 비교용)
+  const { data: pageCounts = {} } = useQuery({
+    queryKey: ['vehicle-page-counts', vehicles.map(v => v.id).join(',')],
+    queryFn: async () => {
+      const out: Record<number, number> = {}
+      for (const v of vehicles) {
+        const code = VEHICLE_DB_CODE[v.id]
+        if (!code) continue
+        try {
+          const pages = await diagramPagesApi.allPages(code)
+          out[v.id] = pages.length
+        } catch {
+          out[v.id] = 0
+        }
+      }
+      return out
+    },
+    enabled: vehicles.length > 0,
+    staleTime: 5 * 60_000,
+  })
+
+  // 페이지 마운트 시 / 차종 목록 로드 후 캐시 검사 → 다운로드 상태 복원
+  useEffect(() => {
+    if (vehicles.length === 0 || Object.keys(pageCounts).length === 0) return
+    const codes = vehicles.map(v => VEHICLE_DB_CODE[v.id]).filter(Boolean)
+    countCachedImages(codes).then(counts => {
+      setStatuses(prev => {
+        const next = { ...prev }
+        for (const v of vehicles) {
+          const code = VEHICLE_DB_CODE[v.id]
+          const cached = counts[code] || 0
+          const total = pageCounts[v.id] || 0
+          // 이미 다운로드 중이면 건드리지 않음
+          if (prev[v.id]?.inProgress) continue
+          // 캐시에 무언가 있으면 그 만큼 복원
+          if (cached > 0 && total > 0) {
+            next[v.id] = {
+              vehicleId: v.id, vehicleName: v.name, vehicleCode: code,
+              totalPages: total, downloaded: Math.min(cached, total), inProgress: false,
+            }
+          }
+        }
+        return next
+      })
+    })
+  }, [vehicles, pageCounts])
 
   // PWA 설치 이벤트 캐치
   useEffect(() => {
@@ -138,7 +213,7 @@ export default function OfflineDownloadPage() {
       await caches.delete(name)
     }
     setStatuses({})
-    message.success('오프라인 캐시 삭제 완료')
+    message.success('오프라인 캐시 삭제 완료. 다운로드 상태가 초기화됩니다.')
   }
 
   return (
@@ -210,17 +285,27 @@ export default function OfflineDownloadPage() {
           {supportedVehicles.map(v => {
             const code = VEHICLE_DB_CODE[v.id]
             const status = statuses[v.id]
-            const isDone = status && !status.inProgress && status.downloaded > 0
             const isDownloading = status?.inProgress
+            // 캐시된 비율 95% 이상이면 완료로 본다 (총 페이지 수 모를 땐 다운로드 > 0)
+            const ratio = status && status.totalPages > 0
+              ? status.downloaded / status.totalPages : 0
+            const isDone = !!status && !isDownloading && (
+              status.totalPages === 0 ? status.downloaded > 0 : ratio >= 0.95
+            )
+            const isPartial = !!status && !isDownloading && !isDone && status.downloaded > 0
 
             return (
-              <Card key={v.id} size="small" styles={{ body: { padding: '10px 12px' } }}>
+              <Card key={v.id} size="small"
+                styles={{ body: { padding: '10px 12px' } }}
+                style={isDone ? { borderColor: '#52c41a', background: 'rgba(82,196,26,0.04)' } : undefined}
+              >
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                   <div>
                     <div style={{ fontWeight: 600, fontSize: 14 }}>{v.name}</div>
                     <Text type="secondary" style={{ fontSize: 11 }}>{v.code}</Text>
                   </div>
-                  {isDone && <Tag color="success" icon={<CheckCircleOutlined />}>완료</Tag>}
+                  {isDone && <Tag color="success" icon={<CheckCircleOutlined />}>다운로드 완료</Tag>}
+                  {isPartial && <Tag color="warning">일부 다운로드</Tag>}
                 </div>
 
                 {status && (
