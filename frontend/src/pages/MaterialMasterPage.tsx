@@ -548,6 +548,10 @@ export default function MaterialMasterPage() {
 
             {(() => {
               type Row = { label: string; value: React.ReactNode; full?: boolean }
+              // 실측 결과 stock_count/optimal_stock/lead_time/yearly_plan_amount/
+              // contract_*/avg_contract_amount/last_update_date/purchase_group 은 거의
+              // 모든 자재가 '0' 또는 빈 값. ecat 최종갱신은 매일 자동 동기화 새벽 시각이
+              // 박혀 변별력 없음. → 모두 제거. 등록업체수만 의미 있어서 유지.
               const rows: Row[] = [
                 { label: '자재번호', value: ecat.material_no },
                 { label: '단위', value: ecat.unit },
@@ -562,16 +566,10 @@ export default function MaterialMasterPage() {
                 { label: '생성일', value: ecat.created_date },
                 { label: '조달구분', value: ecat.procurement_name },
                 { label: '안전구분', value: <>{ecat.safety_code} / {ecat.safety_type}</> },
-                { label: '구매그룹', value: <>{ecat.purchase_group} {ecat.purchase_group_name && `(${ecat.purchase_group_name})`}</> },
                 { label: '미사용 여부', value: ecat.is_unused ? <Tag color="default">미사용</Tag> : <Tag color="green">사용중</Tag> },
-                { label: '현재고', value: <>{ecat.stock_count} {ecat.unit}</> },
-                { label: '적정재고', value: <>{ecat.optimal_stock} {ecat.unit}</> },
-                { label: '조달리드타임', value: <>{ecat.lead_time}일</> },
-                { label: '연간계획액', value: ecat.yearly_plan_amount },
-                { label: '등록업체수', value: <>{ecat.registered_company_count}곳</> },
-                { label: '계약 진행중', value: <>{ecat.contract_in_progress}건</> },
-                { label: '계약 완료', value: <>{ecat.contract_completed}건</> },
-                { label: 'ecat 최종갱신', value: ecat.last_update_date ? `${ecat.last_update_date.slice(0,4)}.${ecat.last_update_date.slice(4,6)}.${ecat.last_update_date.slice(6,8)}` : '-' },
+                ...(ecat.registered_company_count && Number(ecat.registered_company_count) > 0
+                  ? [{ label: '등록업체수', value: <>{ecat.registered_company_count}곳</> }]
+                  : []),
               ]
 
               if (isNarrow) {
