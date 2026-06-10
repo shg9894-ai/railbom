@@ -22,89 +22,67 @@ interface VehicleDownloadStatus {
   inProgress: boolean
 }
 
-// 캐시에 저장된 차종별 이미지 수를 센다. vehicleCode가 URL의 ?vehicle= 파라미터에
-// 들어가므로 URL 문자열 매칭으로 차종별로 분리 가능.
-async function countCachedImages(vehicleCodes: string[]): Promise<Record<string, number>> {
-  const result: Record<string, number> = {}
-  vehicleCodes.forEach(c => { result[c] = 0 })
-  if (!('caches' in window)) return result
+// localStorage에 다운로드 기록을 저장. 서비스워커 캐시 검사와 별개로 100% 신뢰.
+// 다운로드 행위 자체를 기록하므로 페이지 떠났다 와도, 앱 껐다 켜도 유지됨.
+// 단점: 사용자가 브라우저 데이터 지우면 함께 사라짐(그땐 실제 캐시도 사라지므로 동기화됨).
+const DL_KEY = 'bom_offline_downloads_v1'
+
+interface DownloadRecord {
+  totalPages: number
+  downloaded: number
+  downloadedAt: string  // ISO timestamp
+}
+
+function loadRecords(): Record<number, DownloadRecord> {
   try {
-    const cacheNames = ['diagram-api-images', 'diagram-images']
-    for (const name of cacheNames) {
-      const cache = await caches.open(name)
-      const keys = await cache.keys()
-      for (const req of keys) {
-        const url = req.url
-        for (const code of vehicleCodes) {
-          // ?vehicle=KTX-1 같은 패턴 (encoded 형태도 고려)
-          if (url.includes(`vehicle=${code}`) || url.includes(`vehicle=${encodeURIComponent(code)}`)) {
-            result[code]++
-            break
-          }
-        }
-      }
-    }
+    const raw = localStorage.getItem(DL_KEY)
+    return raw ? JSON.parse(raw) : {}
   } catch {
-    /* ignore */
+    return {}
   }
-  return result
+}
+
+function saveRecord(vehicleId: number, rec: DownloadRecord) {
+  const all = loadRecords()
+  all[vehicleId] = rec
+  localStorage.setItem(DL_KEY, JSON.stringify(all))
+}
+
+function clearAllRecords() {
+  localStorage.removeItem(DL_KEY)
 }
 
 export default function OfflineDownloadPage() {
   const [installEvent, setInstallEvent] = useState<any>(null)
   const [statuses, setStatuses] = useState<Record<number, VehicleDownloadStatus>>({})
+  const [records, setRecords] = useState<Record<number, DownloadRecord>>(() => loadRecords())
 
   const { data: vehicles = [] } = useQuery({
     queryKey: ['vehicles'],
     queryFn: vehicleApi.list,
   })
 
-  // 차종별 총 페이지 수를 미리 받아둠 (캐시된 수 / 총 페이지 비교용)
-  const { data: pageCounts = {} } = useQuery({
-    queryKey: ['vehicle-page-counts', vehicles.map(v => v.id).join(',')],
-    queryFn: async () => {
-      const out: Record<number, number> = {}
+  // 페이지 마운트 시 localStorage에서 다운로드 기록을 읽어 상태 복원
+  useEffect(() => {
+    if (vehicles.length === 0) return
+    const records = loadRecords()
+    setStatuses(prev => {
+      const next = { ...prev }
       for (const v of vehicles) {
         const code = VEHICLE_DB_CODE[v.id]
         if (!code) continue
-        try {
-          const pages = await diagramPagesApi.allPages(code)
-          out[v.id] = pages.length
-        } catch {
-          out[v.id] = 0
-        }
-      }
-      return out
-    },
-    enabled: vehicles.length > 0,
-    staleTime: 5 * 60_000,
-  })
-
-  // 페이지 마운트 시 / 차종 목록 로드 후 캐시 검사 → 다운로드 상태 복원
-  useEffect(() => {
-    if (vehicles.length === 0 || Object.keys(pageCounts).length === 0) return
-    const codes = vehicles.map(v => VEHICLE_DB_CODE[v.id]).filter(Boolean)
-    countCachedImages(codes).then(counts => {
-      setStatuses(prev => {
-        const next = { ...prev }
-        for (const v of vehicles) {
-          const code = VEHICLE_DB_CODE[v.id]
-          const cached = counts[code] || 0
-          const total = pageCounts[v.id] || 0
-          // 이미 다운로드 중이면 건드리지 않음
-          if (prev[v.id]?.inProgress) continue
-          // 캐시에 무언가 있으면 그 만큼 복원
-          if (cached > 0 && total > 0) {
-            next[v.id] = {
-              vehicleId: v.id, vehicleName: v.name, vehicleCode: code,
-              totalPages: total, downloaded: Math.min(cached, total), inProgress: false,
-            }
+        if (prev[v.id]?.inProgress) continue  // 다운로드 중이면 건드리지 않음
+        const rec = records[v.id]
+        if (rec) {
+          next[v.id] = {
+            vehicleId: v.id, vehicleName: v.name, vehicleCode: code,
+            totalPages: rec.totalPages, downloaded: rec.downloaded, inProgress: false,
           }
         }
-        return next
-      })
+      }
+      return next
     })
-  }, [vehicles, pageCounts])
+  }, [vehicles])
 
   // PWA 설치 이벤트 캐치
   useEffect(() => {
@@ -172,6 +150,14 @@ export default function OfflineDownloadPage() {
         ...prev,
         [vehicleId]: { ...prev[vehicleId], inProgress: false },
       }))
+      // localStorage에 영구 기록 (페이지 떠나도 / 앱 껐다 켜도 유지)
+      const rec: DownloadRecord = {
+        totalPages: pages.length,
+        downloaded,
+        downloadedAt: new Date().toISOString(),
+      }
+      saveRecord(vehicleId, rec)
+      setRecords(prev => ({ ...prev, [vehicleId]: rec }))
       return downloaded
     } catch (e: any) {
       setStatuses(prev => ({
@@ -212,6 +198,8 @@ export default function OfflineDownloadPage() {
     for (const name of targets) {
       await caches.delete(name)
     }
+    clearAllRecords()  // localStorage 기록도 함께 제거
+    setRecords({})
     setStatuses({})
     message.success('오프라인 캐시 삭제 완료. 다운로드 상태가 초기화됩니다.')
   }
@@ -319,6 +307,15 @@ export default function OfflineDownloadPage() {
                   </div>
                 )}
 
+                {/* 다운로드 시각 표시 */}
+                {records[v.id]?.downloadedAt && !isDownloading && (
+                  <Text type="secondary" style={{ fontSize: 10, display: 'block', marginBottom: 4 }}>
+                    📅 {new Date(records[v.id].downloadedAt).toLocaleString('ko-KR', {
+                      month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit',
+                    })} 받음
+                  </Text>
+                )}
+
                 <Button
                   size="small"
                   type={isDone ? 'default' : 'primary'}
@@ -336,7 +333,7 @@ export default function OfflineDownloadPage() {
                   }}
                   style={{ marginTop: status ? 0 : 8 }}
                 >
-                  {isDone ? '다시 다운로드' : '다운로드 시작'}
+                  {isDone ? '재다운로드 (최신 동기화)' : isPartial ? '이어서 다운로드' : '다운로드 시작'}
                 </Button>
               </Card>
             )
