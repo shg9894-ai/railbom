@@ -65,6 +65,48 @@ body {
   overflow-x: hidden;
 }
 
+/* Antd Pagination: 좁은 화면에서 끝 화살표/점이 다음 줄로 깨지는 문제
+   - 한 줄에 강제로 다 들어가게 nowrap
+   - 부모 컨테이너가 좁으면 가로 스크롤
+   - 768px 이하에서만 폰트 크기도 살짝 줄여 한 줄에 맞춤 */
+.ant-pagination {
+  flex-wrap: nowrap !important;
+  white-space: nowrap !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  -webkit-overflow-scrolling: touch;
+  /* 스크롤바 숨김 (필요 시 드래그/스와이프로 이동) */
+  scrollbar-width: none;
+}
+.ant-pagination::-webkit-scrollbar {
+  display: none;
+}
+.ant-pagination .ant-pagination-item,
+.ant-pagination .ant-pagination-prev,
+.ant-pagination .ant-pagination-next,
+.ant-pagination .ant-pagination-jump-prev,
+.ant-pagination .ant-pagination-jump-next,
+.ant-pagination .ant-pagination-total-text {
+  flex-shrink: 0;
+}
+@media (max-width: 768px) {
+  .ant-pagination,
+  .ant-pagination .ant-pagination-item a,
+  .ant-pagination .ant-pagination-total-text {
+    font-size: 12px;
+  }
+  .ant-pagination .ant-pagination-item,
+  .ant-pagination .ant-pagination-prev .ant-pagination-item-link,
+  .ant-pagination .ant-pagination-next .ant-pagination-item-link {
+    min-width: 24px;
+    height: 24px;
+    line-height: 22px;
+  }
+  .ant-pagination .ant-pagination-item a {
+    padding: 0 4px;
+  }
+}
+
 /* === 강제 어절 단위 줄바꿈 ===
    Antd가 컴포넌트 단위로 word-break를 박는 경우가 있어, 거의 모든 텍스트 요소에
    !important로 keep-all을 강제한다. 식별자성 요소(code, .ant-tag, monospace)는
