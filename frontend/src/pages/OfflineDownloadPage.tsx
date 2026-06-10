@@ -174,8 +174,17 @@ export default function OfflineDownloadPage() {
     setAllDownloading(true)
     let totalDownloaded = 0
     let totalFailed = 0
+    let totalSkipped = 0
+    // localStorage 기록 다시 읽어 최신 상태로 (state가 stale일 수 있음)
+    const currentRecords = loadRecords()
     for (const v of supportedVehicles) {
       const code = VEHICLE_DB_CODE[v.id]
+      // 이미 95% 이상 다운로드된 차종은 건너뜀
+      const rec = currentRecords[v.id]
+      if (rec && rec.totalPages > 0 && rec.downloaded / rec.totalPages >= 0.95) {
+        totalSkipped++
+        continue
+      }
       try {
         const n = await downloadVehicle(v.id, v.name, code)
         totalDownloaded += n
@@ -184,11 +193,13 @@ export default function OfflineDownloadPage() {
       }
     }
     setAllDownloading(false)
-    if (totalFailed === 0) {
-      message.success(`전체 ${totalDownloaded}장 다운로드 완료`)
-    } else {
-      message.warning(`${totalDownloaded}장 다운로드 / ${totalFailed}개 차종 실패`)
-    }
+    const parts: string[] = []
+    if (totalDownloaded > 0) parts.push(`${totalDownloaded}장 다운로드`)
+    if (totalSkipped > 0) parts.push(`${totalSkipped}개 차종은 이미 받음(건너뜀)`)
+    if (totalFailed > 0) parts.push(`${totalFailed}개 차종 실패`)
+    const msg = parts.join(' / ') || '대상 없음'
+    if (totalFailed === 0) message.success(msg)
+    else message.warning(msg)
   }
 
   const clearCache = async () => {
@@ -256,7 +267,7 @@ export default function OfflineDownloadPage() {
             <div>
               <div style={{ fontWeight: 600, fontSize: 14 }}>📦 전체 차종 한번에 다운로드</div>
               <Text type="secondary" style={{ fontSize: 11 }}>
-                {supportedVehicles.length}개 차종 모두 순차 다운로드 (약 10~20분 소요)
+                {supportedVehicles.length}개 차종 순차 다운로드 (이미 받은 차종은 자동 건너뜀)
               </Text>
             </div>
             <Button
