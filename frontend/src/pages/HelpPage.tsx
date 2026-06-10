@@ -5,15 +5,95 @@ const { Title, Paragraph, Text } = Typography
 
 interface Props { role?: string }
 
-// 섹션 헤딩 — 좌측 목차에서 anchor로 연결
-function H({ id, children }: { id: string; children: React.ReactNode }) {
-  return <Title id={id} level={3} style={{ marginTop: 32, scrollMarginTop: 80 }}>{children}</Title>
+// ── 디자인 토큰 ────────────────────────────────────────────────
+// 색은 카테고리별로 다르게 줘서 시각적으로 묶음을 구분.
+const SECTION_COLORS: Record<string, { bar: string; bg: string; tag: string }> = {
+  blue:   { bar: '#1677ff', bg: 'rgba(22,119,255,0.06)',  tag: 'blue' },
+  green:  { bar: '#52c41a', bg: 'rgba(82,196,26,0.06)',   tag: 'green' },
+  orange: { bar: '#fa8c16', bg: 'rgba(250,140,22,0.06)',  tag: 'orange' },
+  purple: { bar: '#722ed1', bg: 'rgba(114,46,209,0.06)',  tag: 'purple' },
+  pink:   { bar: '#eb2f96', bg: 'rgba(235,47,150,0.06)',  tag: 'pink' },
+  cyan:   { bar: '#13c2c2', bg: 'rgba(19,194,194,0.06)',  tag: 'cyan' },
+  red:    { bar: '#cf1322', bg: 'rgba(207,19,34,0.06)',   tag: 'red' },
 }
-function H4({ id, children }: { id: string; children: React.ReactNode }) {
-  return <Title id={id} level={5} style={{ marginTop: 20, scrollMarginTop: 80 }}>{children}</Title>
+
+// ── 헤딩 ────────────────────────────────────────────────
+// H1: 대섹션. 좌측에 색 바 + 큰 타이틀
+function H({ id, children, color = 'blue' }: { id: string; children: React.ReactNode; color?: keyof typeof SECTION_COLORS }) {
+  const c = SECTION_COLORS[color]
+  return (
+    <div id={id} style={{
+      marginTop: 40, scrollMarginTop: 80,
+      borderLeft: `4px solid ${c.bar}`,
+      paddingLeft: 14,
+    }}>
+      <Title level={3} style={{ margin: 0, color: c.bar, fontSize: 22, fontWeight: 700 }}>
+        {children}
+      </Title>
+    </div>
+  )
+}
+// H2: 중간 헤딩. 박스 위에 색 점 + 굵은 글씨
+function H4({ id, children, color = 'blue' }: { id: string; children: React.ReactNode; color?: keyof typeof SECTION_COLORS }) {
+  const c = SECTION_COLORS[color]
+  return (
+    <div id={id} style={{
+      marginTop: 24, marginBottom: 10, scrollMarginTop: 80,
+      display: 'flex', alignItems: 'center', gap: 8,
+    }}>
+      <span style={{ width: 8, height: 8, borderRadius: '50%', background: c.bar, flexShrink: 0 }} />
+      <Title level={5} style={{ margin: 0, fontSize: 15, fontWeight: 700 }}>{children}</Title>
+    </div>
+  )
 }
 function Mono({ children }: { children: React.ReactNode }) {
   return <Text code style={{ fontFamily: 'monospace' }}>{children}</Text>
+}
+
+// ── 강조 박스 ────────────────────────────────────────────────
+// 박스 — 주제별 정보 묶음
+function Box({ children, color = 'blue', title }: {
+  children: React.ReactNode; color?: keyof typeof SECTION_COLORS; title?: React.ReactNode
+}) {
+  const c = SECTION_COLORS[color]
+  return (
+    <div style={{
+      background: c.bg,
+      border: `1px solid ${c.bar}40`,
+      borderLeft: `3px solid ${c.bar}`,
+      borderRadius: 6,
+      padding: '12px 14px',
+      marginBottom: 10,
+    }}>
+      {title && (
+        <div style={{ fontWeight: 600, fontSize: 13, color: c.bar, marginBottom: 6 }}>
+          {title}
+        </div>
+      )}
+      <div style={{ fontSize: 13, lineHeight: 1.7 }}>{children}</div>
+    </div>
+  )
+}
+// 액션/버튼 설명 카드 — 작은 항목 묶음에 사용
+function ActionCard({ icon, title, color = 'blue', children }: {
+  icon?: React.ReactNode; title: React.ReactNode; color?: keyof typeof SECTION_COLORS; children: React.ReactNode
+}) {
+  const c = SECTION_COLORS[color]
+  return (
+    <div style={{
+      background: 'rgba(128,128,128,0.04)',
+      border: '1px solid rgba(128,128,128,0.15)',
+      borderRadius: 6,
+      padding: '10px 12px',
+      marginBottom: 8,
+    }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4 }}>
+        {icon && <span style={{ color: c.bar }}>{icon}</span>}
+        <Text strong style={{ fontSize: 13, color: c.bar }}>{title}</Text>
+      </div>
+      <div style={{ fontSize: 12, lineHeight: 1.6, color: 'rgba(128,128,128,1)' }}>{children}</div>
+    </div>
+  )
 }
 
 export default function HelpPage({ role }: Props) {
@@ -82,17 +162,17 @@ export default function HelpPage({ role }: Props) {
         style={{ marginBottom: 24 }}
       />
 
-      <H id="login">로그인 / 권한</H>
+      <H id="login" color="blue">로그인 / 권한</H>
       <Paragraph>
         본인 소속 <Mono>플랜트 코드</Mono>를 ID로 사용합니다 (예: <Mono>1000</Mono> 본사공통, <Mono>2100</Mono> 서울본부).
       </Paragraph>
 
-      <H id="bom-code">BOM 코드 체계</H>
+      <H id="bom-code" color="purple">BOM 코드 체계</H>
       <Paragraph>
         BOM 코드는 한 자재의 차종 내 위치를 한 줄로 표현하는 식별자입니다. 화면 곳곳에 파란 글씨 <Mono>HR-770-1-15-9</Mono> 형태로 표시됩니다.
       </Paragraph>
 
-      <H4 id="bom-format">코드 구성 형식</H4>
+      <H4 id="bom-format" color="purple">코드 구성 형식</H4>
       <Paragraph>
         <Mono>HR-770-1-15-9</Mono> 같은 형태로 표시됩니다. 각 자리 의미:
         <ul>
@@ -116,7 +196,7 @@ export default function HelpPage({ role }: Props) {
         </ul>
       </Card>
 
-      <H4 id="bom-category">카테고리 (3번째 자리)</H4>
+      <H4 id="bom-category" color="purple">카테고리 (3번째 자리)</H4>
       <Paragraph>
         세 번째 자리 숫자가 카테고리(대분류)입니다. 부품 탐색 화면에서 색상 태그로도 표시되며, 모든 차종 공통입니다.
       </Paragraph>
@@ -131,7 +211,7 @@ export default function HelpPage({ role }: Props) {
         <Tag color="#f5222d">8 차체및차내외설비</Tag>
       </Space>
 
-      <H4 id="bom-kit">수리키트 / 개량 표기</H4>
+      <H4 id="bom-kit" color="purple">수리키트 / 개량 표기</H4>
       <Paragraph>
         일반 조립체·부품 외에 BOM 코드 끝에 접미사를 붙여 특수 노드를 표기합니다.
       </Paragraph>
@@ -165,12 +245,12 @@ export default function HelpPage({ role }: Props) {
         </Paragraph>
       </Card>
 
-      <H id="material-no">자재번호 (ecat)</H>
+      <H id="material-no" color="orange">자재번호 (ecat)</H>
       <Paragraph>
         <b>자재번호</b>는 한국철도공사 사내 자재관리시스템(ecat)에서 발급하는 7자리 코드입니다 (예: <Mono>1012665</Mono>). 우리 BOM의 각 노드는 자재번호를 통해 ecat의 자재 마스터(품명·규격·제조사·사진 등)와 연결됩니다.
       </Paragraph>
 
-      <H4 id="mat-prefix">자재유형 (앞자리 규칙)</H4>
+      <H4 id="mat-prefix" color="orange">자재유형 (앞자리 규칙)</H4>
       <Paragraph>
         자재번호의 첫 숫자가 자재유형을 결정합니다.
         <ul>
@@ -181,7 +261,7 @@ export default function HelpPage({ role }: Props) {
         이 외 <Mono>UNBW</Mono>, <Mono>EXTR</Mono>, <Mono>EPA</Mono> 등 사용 안 함 유형은 자재 마스터 화면에서 기본 숨김 처리됩니다.
       </Paragraph>
 
-      <H4 id="mat-sync">동기화 주기</H4>
+      <H4 id="mat-sync" color="orange">동기화 주기</H4>
       <Paragraph>
         <ul>
           <li><b>자재 상세 조회 (실시간)</b> — 자재마스터/부품 탐색에서 자재 클릭 시 ecat에서 즉시 가져오고 우리 DB에도 캐시.</li>
@@ -195,7 +275,7 @@ export default function HelpPage({ role }: Props) {
         </ul>
       </Paragraph>
 
-      <H4 id="mat-group">용품별그룹 (BB01 등)</H4>
+      <H4 id="mat-group" color="orange">용품별그룹 (BB01 등)</H4>
       <Paragraph>
         ecat의 자재그룹 분류 prefix입니다. 자재 마스터에서 이걸로 필터링할 수 있습니다.
         <ul>
@@ -205,14 +285,14 @@ export default function HelpPage({ role }: Props) {
         </ul>
       </Paragraph>
 
-      <H id="menus">메뉴별 기능</H>
+      <H id="menus" color="green">메뉴별 기능</H>
 
-      <H4 id="menu-home">홈</H4>
+      <H4 id="menu-home" color="green">홈</H4>
       <Paragraph>
         시스템 전체 통계(등록 차종 8종, BOM 노드 수, 명칭도감 페이지 수)와 차종별 현황 카드. 카드를 누르면 해당 차종의 부품 탐색 화면으로 바로 이동합니다.
       </Paragraph>
 
-      <H4 id="menu-diagram">부품 탐색</H4>
+      <H4 id="menu-diagram" color="green">부품 탐색</H4>
       <Paragraph>
         가장 자주 쓰는 화면입니다. 차종 선택 → 카테고리 → 조립체 → 부품 순으로 드릴다운합니다.
         <ul>
@@ -226,72 +306,96 @@ export default function HelpPage({ role }: Props) {
         </ul>
       </Paragraph>
 
-      <H4 id="detail-modal">부품 상세 모달 — 정보·액션 버튼</H4>
-      <Paragraph>
-        부품을 누르면 열리는 상세 모달에는 자재번호·규격·제조사·도면번호·사진·호환 차종 등이 표시되고, 우측·내부에 다음 액션 버튼이 있습니다.
+      <H4 id="detail-modal" color="blue">부품 상세 모달 — 정보 / 액션</H4>
+      <Paragraph style={{ marginBottom: 10 }}>
+        부품 카드를 누르면 상세 모달이 열립니다. 모달은 다음 5개 영역으로 구성되어 있고, 각 영역마다 액션 버튼이 다릅니다.
       </Paragraph>
-      <Card size="small" style={{ marginBottom: 12 }}>
-        <Text strong>모달 우측 상단</Text>
-        <ul style={{ marginTop: 6, marginBottom: 0 }}>
-          <li><b>BOM 수정 요청 버튼</b> — 이 노드 자체에 대한 변경 요청. 선택 가능한 유형:
-            <ul>
-              <li><Mono>BOM 노드 추가</Mono> — 이 노드의 자식으로 새 부품 등록 요청</li>
-              <li><Mono>BOM 코드 수정</Mono> — 자재명/규격/도면번호 등 정보 변경 요청</li>
-              <li><Mono>BOM 코드 삭제</Mono> — 잘못 등록된 노드 삭제 요청</li>
-              <li><Mono>키트 생성</Mono> — 여러 자식 노드를 묶어 키트로 등록 (수리키트 표기)</li>
-            </ul>
-            요청은 관리자 승인 후 반영됩니다. <i>관리자는 동일 버튼으로 즉시 반영도 가능.</i>
-          </li>
-          <li><b>✕</b> — 모달 닫기</li>
-        </ul>
-      </Card>
-      <Card size="small" style={{ marginBottom: 12 }}>
-        <Text strong>공사 자재번호 항목 옆</Text>
-        <ul style={{ marginTop: 6, marginBottom: 0 }}>
-          <li><b>자재번호 수정 요청 버튼</b> — 비어 있으면 <Mono>추가</Mono>, 있으면 <Mono>수정</Mono> / <Mono>삭제</Mono> 요청 가능.</li>
-          <li>자재번호 텍스트 자체를 클릭하면 자재 마스터 검색 페이지로 새 창 이동.</li>
-        </ul>
-      </Card>
-      <Card size="small" style={{ marginBottom: 12 }}>
-        <Text strong>사진 영역</Text>
-        <ul style={{ marginTop: 6, marginBottom: 0 }}>
-          <li><b>사진 추가/삭제 요청 버튼</b> — 이미지 파일 선택 후 제출. 일반 사용자는 요청만, 관리자는 즉시 업로드.</li>
-          <li>썸네일 클릭 시 확대.</li>
-          <li>ecat 사진(주황 테두리)은 ecat에서 자동으로 가져온 것이고, 수정·삭제 대상이 아닙니다.</li>
-        </ul>
-      </Card>
-      <Card size="small" style={{ marginBottom: 12 }}>
-        <Text strong>명칭도감 페이지</Text>
-        <ul style={{ marginTop: 6, marginBottom: 0 }}>
-          <li>도면번호·자재명이 매칭되는 명칭도감 페이지가 자동으로 표시됩니다.</li>
-          <li><b>관리자</b>는 <Mono>명칭도감 페이지 연결</Mono> 버튼으로 수동 매칭/해제 가능.</li>
-        </ul>
-      </Card>
-      <Card size="small" style={{ marginBottom: 16 }}>
-        <Text strong>호환 차종 / 수리키트 / 자식 부품</Text>
-        <ul style={{ marginTop: 6, marginBottom: 0 }}>
-          <li><b>호환 차종 칩</b> — 같은 공사 자재번호를 쓰는 타 차종의 BOM 코드. 칩을 누르면 비교 모달.</li>
-          <li><b>수리키트 항목</b> (이 노드가 수리키트일 때) — 포함 자재 목록. 관리자는 항목 추가/삭제 가능.</li>
-          <li><b>자식 부품 목록</b> — 하위 부품으로 드릴다운. 카드 클릭 또는 화살표.</li>
-        </ul>
-      </Card>
 
-      <H4 id="menu-bom">BOM 원데이터</H4>
+      {/* ── 1) 헤더 영역 ── */}
+      <Box color="blue" title="① 모달 헤더 (상단)">
+        <Paragraph style={{ marginBottom: 8, fontSize: 13 }}>
+          노드명·BOM 코드·우측 상단의 <Mono>BOM 수정 요청</Mono> 버튼과 <b>✕ 닫기</b>.
+        </Paragraph>
+        <Text strong style={{ display: 'block', marginBottom: 6, fontSize: 12 }}>BOM 수정 요청 버튼을 누르면 다음 4가지 유형 중 선택:</Text>
+        <ActionCard color="green" title="BOM 노드 추가">
+          이 노드의 자식으로 새 부품을 등록 요청. 자재명·자재번호·도면번호 등 입력.
+        </ActionCard>
+        <ActionCard color="orange" title="BOM 코드 수정">
+          노드의 자재명·규격·도면번호 등 정보 변경 요청.
+        </ActionCard>
+        <ActionCard color="red" title="BOM 코드 삭제">
+          잘못 등록된 노드 삭제 요청.
+        </ActionCard>
+        <ActionCard color="purple" title="키트 생성">
+          여러 자식 노드를 묶어 하나의 수리키트(<Mono>R</Mono> 접미사)로 등록.
+        </ActionCard>
+        <Text type="secondary" style={{ fontSize: 12, display: 'block', marginTop: 4 }}>
+          ※ 일반 사용자가 보낸 요청은 관리자 승인 후 반영됩니다. 관리자는 같은 버튼으로 즉시 반영도 가능.
+        </Text>
+      </Box>
+
+      {/* ── 2) 공사 자재번호 ── */}
+      <Box color="orange" title="② 공사 자재번호 영역">
+        <ActionCard color="orange" title="자재번호 수정 요청">
+          자재번호 항목 옆 버튼. 비어 있으면 <Mono>추가</Mono>, 채워져 있으면 <Mono>수정</Mono> / <Mono>삭제</Mono> 요청 가능.
+        </ActionCard>
+        <ActionCard color="blue" title="자재번호 텍스트 클릭">
+          자재 마스터 검색 페이지로 새 창 이동. 같은 번호로 등록된 다른 BOM 노드들을 한 번에 확인.
+        </ActionCard>
+      </Box>
+
+      {/* ── 3) 사진 영역 ── */}
+      <Box color="green" title="③ 사진 영역">
+        <ActionCard color="green" title="사진 추가 / 삭제 요청">
+          이미지 파일 선택 후 제출. 일반 사용자는 요청만, 관리자는 즉시 업로드/삭제.
+        </ActionCard>
+        <ActionCard color="blue" title="썸네일 클릭">
+          확대 보기. PreviewGroup으로 연결되어 좌/우 이동 가능.
+        </ActionCard>
+        <Box color="orange">
+          <Text strong>ecat 사진</Text>(주황 테두리)은 ecat에서 자동 동기화한 것입니다. 수정·삭제 대상이 아닙니다.
+        </Box>
+      </Box>
+
+      {/* ── 4) 명칭도감 페이지 ── */}
+      <Box color="purple" title="④ 명칭도감 페이지">
+        <ActionCard color="purple" title="자동 매칭 표시">
+          도면번호·자재명이 일치하는 명칭도감 페이지가 자동으로 나타납니다.
+        </ActionCard>
+        <ActionCard color="red" title="명칭도감 페이지 연결 (관리자 전용)">
+          자동 매칭이 잘못됐거나 빠졌을 때, 관리자가 수동으로 페이지를 BOM 노드에 연결/해제.
+        </ActionCard>
+      </Box>
+
+      {/* ── 5) 호환 차종 / 수리키트 / 자식 부품 ── */}
+      <Box color="cyan" title="⑤ 호환 차종 / 수리키트 / 자식 부품">
+        <ActionCard color="cyan" title="호환 차종 칩">
+          같은 공사 자재번호를 쓰는 타 차종의 BOM 코드 목록. 칩을 누르면 비교 모달이 떠서 어느 차종의 어떤 위치에 같은 자재가 쓰이는지 확인.
+        </ActionCard>
+        <ActionCard color="purple" title="수리키트 항목 (이 노드가 수리키트일 때만)">
+          키트에 포함된 자재 목록. 관리자는 항목 추가·삭제 가능.
+        </ActionCard>
+        <ActionCard color="blue" title="자식 부품 목록">
+          하위 부품으로 드릴다운. 카드 클릭 또는 우측 화살표.
+        </ActionCard>
+      </Box>
+
+      <H4 id="menu-bom" color="green">BOM 원데이터</H4>
       <Paragraph>
         차종 전체 BOM을 트리 형태로 한 번에 펼쳐서 조회. Excel 내보내기 가능. 호환 코드(같은 자재번호를 공유하는 타 차종) 클릭 시 한 번에 비교 모달이 뜹니다. 관리자라면 노드 추가/수정/삭제도 가능합니다.
       </Paragraph>
 
-      <H4 id="menu-catalog">차종별 명칭도감</H4>
+      <H4 id="menu-catalog" color="green">차종별 명칭도감</H4>
       <Paragraph>
         명칭도감(제작사 도면집)의 페이지를 직접 조회. 도면 페이지를 BOM 노드와 연결해 두면 부품 탐색에서 <Tag color="blue" style={{ margin: 0 }}>📘</Tag> 아이콘으로 바로 펼쳐 볼 수 있습니다. 관리자만 페이지-BOM 연결을 등록/수정할 수 있습니다.
       </Paragraph>
 
-      <H4 id="menu-maint">유지보수 기준</H4>
+      <H4 id="menu-maint" color="green">유지보수 기준</H4>
       <Paragraph>
         부품별 정비 주기·교체 기준 등을 조회. 차종/카테고리/부품명으로 검색할 수 있습니다.
       </Paragraph>
 
-      <H4 id="menu-mm">자재 마스터</H4>
+      <H4 id="menu-mm" color="green">자재 마스터</H4>
       <Paragraph>
         ecat의 전체 자재 마스터(약 13만 건)를 검색하는 화면. SAP MM 데이터와 ecat 실시간 정보가 합쳐져 있습니다.
         <ul>
@@ -307,7 +411,7 @@ export default function HelpPage({ role }: Props) {
         </Text>
       </Paragraph>
 
-      <H4 id="menu-offline">앱 설치 / 명칭도감 미리받기</H4>
+      <H4 id="menu-offline" color="green">앱 설치 / 명칭도감 미리받기</H4>
       <Paragraph>
         <ul>
           <li><b>휴대폰 설치</b> — Safari/Chrome에서 페이지를 연 뒤 공유 → "홈 화면에 추가". 다음부터는 일반 앱처럼 실행됩니다.</li>
@@ -317,7 +421,7 @@ export default function HelpPage({ role }: Props) {
         </ul>
       </Paragraph>
 
-      <H4 id="menu-vehicles">차종·편성 관리</H4>
+      <H4 id="menu-vehicles" color="green">차종·편성 관리</H4>
       <Paragraph>
         <ul>
           <li><b>차종 관리</b> — 8개 차종의 기본 정보(제작사·도입연도·중량 등) 조회</li>
@@ -325,7 +429,7 @@ export default function HelpPage({ role }: Props) {
         </ul>
       </Paragraph>
 
-      <H id="change-req">데이터 수정 요청</H>
+      <H id="change-req" color="cyan">데이터 수정 요청</H>
       <Paragraph>
         일반 사용자는 데이터를 직접 수정할 수 없지만, 잘못된 자재번호·사진·BOM 연결 등에 대해 <b>수정 요청</b>을 보낼 수 있습니다.
         <ul>
@@ -337,7 +441,7 @@ export default function HelpPage({ role }: Props) {
 
       {isAdmin && (
         <>
-          <H id="admin">관리자 기능</H>
+          <H id="admin" color="red">관리자 기능</H>
           <Alert
             type="warning"
             showIcon
@@ -345,7 +449,7 @@ export default function HelpPage({ role }: Props) {
             style={{ marginBottom: 16 }}
           />
 
-          <H4 id="admin-req">수정 요청 승인 (좌측 메뉴: 데이터 수정 승인)</H4>
+          <H4 id="admin-req" color="red">수정 요청 승인 (좌측 메뉴: 데이터 수정 승인)</H4>
           <Paragraph>
             일반 사용자가 제출한 자재번호/사진/BOM 변경 요청을 검토합니다.
             <ul>
@@ -355,7 +459,7 @@ export default function HelpPage({ role }: Props) {
             </ul>
           </Paragraph>
 
-          <H4 id="admin-sync">ecat 동기화 / 자재 추가</H4>
+          <H4 id="admin-sync" color="red">ecat 동기화 / 자재 추가</H4>
           <Paragraph>
             <ul>
               <li><b>매일 03:00 KST 자동 동기화</b> — 기존 자재 13만 건 갱신 + 신규 자재(1/6/7 prefix별) 발굴까지 모두 자동. <b>평상시엔 별도 조작 불필요.</b></li>
@@ -370,14 +474,14 @@ export default function HelpPage({ role }: Props) {
             </ul>
           </Paragraph>
 
-          <H4 id="admin-logs">로그인 기록 (좌측 메뉴)</H4>
+          <H4 id="admin-logs" color="red">로그인 기록 (좌측 메뉴)</H4>
           <Paragraph>
             전 사용자의 로그인 시각·IP·성공/실패를 조회. 보안 점검용입니다.
           </Paragraph>
         </>
       )}
 
-      <H id="faq">자주 묻는 질문</H>
+      <H id="faq" color="pink">자주 묻는 질문</H>
       <Paragraph>
         <H4 id="faq-1">Q. 모바일에서 "ecat에서 보기"를 누르면 "허용되지 않는 요청" 에러가 나요.</H4>
         ecat 서버가 모바일 User-Agent의 자재 상세 페이지 접근을 차단합니다. 우리가 우회할 수 없어 모바일에선 ecat 외부 링크 버튼을 숨겨두었습니다. 자재 사진·속성·내역은 우리 앱의 상세 모달에 그대로 표시되니 그대로 보시면 됩니다.
