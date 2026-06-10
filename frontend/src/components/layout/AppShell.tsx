@@ -10,6 +10,7 @@ import {
 import { useNavigate, useLocation } from 'react-router-dom'
 import { PLANT_NAMES } from '../../types'
 import InquiryModal from './InquiryModal'
+import Footer from './Footer'
 
 const { Content, Header } = Layout
 
@@ -57,7 +58,7 @@ export default function AppShell({ children, role, onLogout, darkMode, onToggleD
     { key: '/material-master', icon: <DatabaseOutlined />,     label: '자재 마스터' },
     { key: '/vehicles',        icon: <NodeIndexOutlined />,    label: '차종 관리' },
     { key: '/formations',      icon: <OrderedListOutlined />,  label: '편성 관리' },
-    { key: '/offline',         icon: <CloudDownloadOutlined />, label: '앱 설치 / 명칭도감 미리받기' },
+    { key: '/offline',         icon: <CloudDownloadOutlined />, label: '홈화면 추가 / 명칭도감' },
     { key: '/help',            icon: <QuestionCircleOutlined />, label: '도움말 / 매뉴얼' },
     ...(role === 'admin' ? [
       { key: '/inquiries',         icon: <MessageOutlined />,     label: '문의 / 요청' },
@@ -182,8 +183,10 @@ export default function AppShell({ children, role, onLogout, darkMode, onToggleD
           // iOS PWA 하단 home-indicator 회피
           paddingBottom: 'max(12px, env(safe-area-inset-bottom, 0px))',
           background: darkMode ? '#141414' : '#f5f5f5',
+          display: 'flex', flexDirection: 'column',
         }}>
-          {children}
+          <div style={{ flex: 1 }}>{children}</div>
+          <Footer />
         </div>
       </div>
     </div>

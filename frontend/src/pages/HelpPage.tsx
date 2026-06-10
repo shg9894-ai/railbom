@@ -134,7 +134,7 @@ export default function HelpPage({ role }: Props) {
         { key: 'menu-catalog',  href: '#menu-catalog',  title: '차종별 명칭도감' },
         { key: 'menu-maint',    href: '#menu-maint',    title: '유지보수 기준' },
         { key: 'menu-mm',       href: '#menu-mm',       title: '자재 마스터' },
-        { key: 'menu-offline',  href: '#menu-offline',  title: '앱 설치 / 명칭도감 미리받기' },
+        { key: 'menu-offline',  href: '#menu-offline',  title: '홈 화면 추가 / 명칭도감' },
         { key: 'menu-vehicles', href: '#menu-vehicles', title: '차종·편성 관리' },
       ],
     },
@@ -411,10 +411,10 @@ export default function HelpPage({ role }: Props) {
         </Text>
       </Paragraph>
 
-      <H4 id="menu-offline" color="green">앱 설치 / 명칭도감 미리받기</H4>
+      <H4 id="menu-offline" color="green">홈 화면 추가 / 명칭도감 미리받기</H4>
       <Paragraph>
         <ul>
-          <li><b>휴대폰 설치</b> — Safari/Chrome에서 페이지를 연 뒤 공유 → "홈 화면에 추가". 다음부터는 일반 앱처럼 실행됩니다.</li>
+          <li><b>홈 화면 추가</b> — 별도 앱 설치 없이 브라우저 메뉴 → "홈 화면에 추가". iOS는 공유 버튼, 안드로이드는 ⋮ 메뉴에 있습니다. 다음부터는 일반 앱처럼 실행됩니다.</li>
           <li><b>명칭도감 미리받기</b> — 차종별로 명칭도감 이미지(50~150MB)를 폰에 미리 캐싱. <b>본래 목적은 속도 향상</b>입니다. 한 번 받으면 다음 조회 때 서버를 거치지 않고 즉시 표시되어, 사진 한 장당 0.5~2초씩 걸리던 로딩이 사라집니다.</li>
           <li><b>전체 다운로드</b> — 모든 차종 한 번에. 저장 용량(약 1GB)과 데이터 사용량에 유의하세요. Wi-Fi에서 권장.</li>
           <li>인터넷이 약하거나 잠시 끊겨도 받아둔 사진은 표시됩니다. <b>다만 자재마스터 검색·ecat 자재 상세·BOM 새 경로</b>는 항상 서버 통신이 필요해 완전한 오프라인 모드는 아닙니다.</li>

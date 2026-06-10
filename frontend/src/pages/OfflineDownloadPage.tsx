@@ -53,7 +53,6 @@ function clearAllRecords() {
 }
 
 export default function OfflineDownloadPage() {
-  const [installEvent, setInstallEvent] = useState<any>(null)
   const [statuses, setStatuses] = useState<Record<number, VehicleDownloadStatus>>({})
   const [records, setRecords] = useState<Record<number, DownloadRecord>>(() => loadRecords())
   // 현재 다운로드 진행 중인 차종 ID — useState는 비동기 갱신이라 즉시 검사가 필요한
@@ -86,29 +85,6 @@ export default function OfflineDownloadPage() {
       return next
     })
   }, [vehicles])
-
-  // PWA 설치 이벤트 캐치
-  useEffect(() => {
-    const handler = (e: any) => {
-      e.preventDefault()
-      setInstallEvent(e)
-    }
-    window.addEventListener('beforeinstallprompt', handler)
-    return () => window.removeEventListener('beforeinstallprompt', handler)
-  }, [])
-
-  const handleInstall = async () => {
-    if (!installEvent) {
-      message.info('이미 설치되었거나, 브라우저 메뉴에서 "홈 화면에 추가"를 선택하세요.')
-      return
-    }
-    installEvent.prompt()
-    const choice = await installEvent.userChoice
-    if (choice.outcome === 'accepted') {
-      message.success('앱이 설치되었습니다!')
-      setInstallEvent(null)
-    }
-  }
 
   // 차종별 페이지 목록 조회 + 다운로드 진행
   const [allDownloading, setAllDownloading] = useState(false)
@@ -232,27 +208,23 @@ export default function OfflineDownloadPage() {
     <div>
       <Title level={4} style={{ marginBottom: 4 }}>
         <CloudDownloadOutlined style={{ marginRight: 8, color: '#1677ff' }} />
-        앱 설치 / 명칭도감 미리받기
+        홈 화면 추가 / 명칭도감 미리받기
       </Title>
       <Text type="secondary" style={{ fontSize: 12 }}>
         명칭도감 사진을 Wi-Fi에서 미리 받아두면, 현장에서 사진 로딩 대기 없이 즉시 열람할 수 있습니다.
       </Text>
 
-      {/* 1. 홈화면 앱 설치 */}
+      {/* 1. 홈 화면 추가 */}
       <Card size="small" style={{ marginTop: 16 }}
-        title={<span><MobileOutlined /> 1. 홈 화면에 앱 설치</span>}>
+        title={<span><MobileOutlined /> 1. 홈 화면에 추가</span>}>
         <Paragraph style={{ marginBottom: 8, fontSize: 13 }}>
-          이 시스템을 휴대폰 바탕화면 아이콘으로 추가해 앱처럼 즉시 실행할 수 있습니다.
+          이 시스템을 휴대폰 바탕화면 아이콘으로 추가해 앱처럼 즉시 실행할 수 있습니다. 별도 앱 설치 없이 브라우저에서 다음 단계만 거치면 됩니다.
         </Paragraph>
         <Space direction="vertical" size={6} style={{ fontSize: 12 }}>
-          <Text>📱 <b>안드로이드(Chrome/삼성인터넷)</b>: 아래 "앱 설치" 버튼 또는 브라우저 메뉴 → "홈 화면에 추가"</Text>
-          <Text>🍎 <b>iOS(Safari)</b>: 공유 버튼 → "홈 화면에 추가"</Text>
+          <Text>📱 <b>안드로이드 (Chrome / 삼성 인터넷)</b>: 우측 상단 ⋮ 메뉴 → <b>"홈 화면에 추가"</b></Text>
+          <Text>🍎 <b>iOS (Safari)</b>: 하단 공유 버튼 → <b>"홈 화면에 추가"</b></Text>
+          <Text>💻 <b>PC (Chrome / Edge)</b>: 주소창 우측 끝의 설치 아이콘(또는 ⋮ 메뉴 → "앱 설치")</Text>
         </Space>
-        <div style={{ marginTop: 12 }}>
-          <Button type="primary" icon={<MobileOutlined />} onClick={handleInstall}>
-            앱 설치
-          </Button>
-        </div>
       </Card>
 
       {/* 2. 명칭도감 미리받기 */}

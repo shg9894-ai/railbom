@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Form, Input, Button, Card, Typography, Alert } from 'antd'
 import { LockOutlined, UserOutlined } from '@ant-design/icons'
+import Footer from '../components/layout/Footer'
 
 const { Title, Text } = Typography
 
@@ -45,7 +46,8 @@ export default function LoginPage({ onLogin }: Props) {
       minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center',
       background: 'var(--login-bg, #f0f2f5)', padding: 16,
     }}>
-      <Card style={{ width: '100%', maxWidth: 380, boxShadow: '0 4px 24px rgba(0,0,0,0.10)' }}>
+      <div style={{ width: '100%', maxWidth: 380 }}>
+      <Card style={{ width: '100%', boxShadow: '0 4px 24px rgba(0,0,0,0.10)' }}>
         <div style={{ textAlign: 'center', marginBottom: 32 }}>
           <Title level={3} style={{ margin: 0 }}>철도차량 BOM 시스템</Title>
           <Text type="secondary">한국철도공사</Text>
@@ -65,6 +67,8 @@ export default function LoginPage({ onLogin }: Props) {
           </Form.Item>
         </Form>
       </Card>
+      <Footer variant="login" />
+      </div>
     </div>
   )
 }
