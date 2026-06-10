@@ -337,31 +337,34 @@ def last_sync():
 def activity(days: int = 7, _=Depends(require_admin)):
     """자재마스터 변경 활동 일별 집계 (관리자 전용).
        지난 N일간 (신규 추가 / 갱신 / 미사용 전환) 건수."""
+    # days는 신뢰 가능한 정수만 (외부 입력 sanitize)
+    n_days = max(1, min(365, int(days)))
+    interval = f"INTERVAL '{n_days} days'"
     conn = get_connection()
     try:
         # 일별 created_date 기준 신규
-        new_rows = conn.execute("""
+        new_rows = conn.execute(f"""
             SELECT created_date::date AS day, COUNT(*) AS n
             FROM material_master
-            WHERE created_date >= CURRENT_DATE - INTERVAL '%s days' AND created_date IS NOT NULL
+            WHERE created_date >= CURRENT_DATE - {interval} AND created_date IS NOT NULL
             GROUP BY day ORDER BY day DESC
-        """ % int(days)).fetchall()
+        """).fetchall()
 
         # 일별 updated_at(KST) 기준 갱신
-        upd_rows = conn.execute("""
+        upd_rows = conn.execute(f"""
             SELECT (updated_at AT TIME ZONE 'Asia/Seoul')::date AS day, COUNT(*) AS n
             FROM material_master
-            WHERE updated_at >= NOW() - INTERVAL '%s days'
+            WHERE updated_at >= NOW() - {interval}
             GROUP BY day ORDER BY day DESC
-        """ % int(days)).fetchall()
+        """).fetchall()
 
         # 일별 is_unused=true 갱신 (정확한 '전환'은 추적 안 되니 unused 갱신 건수로 근사)
-        unused_rows = conn.execute("""
+        unused_rows = conn.execute(f"""
             SELECT (updated_at AT TIME ZONE 'Asia/Seoul')::date AS day, COUNT(*) AS n
             FROM material_master
-            WHERE updated_at >= NOW() - INTERVAL '%s days' AND is_unused = true
+            WHERE updated_at >= NOW() - {interval} AND is_unused = true
             GROUP BY day ORDER BY day DESC
-        """ % int(days)).fetchall()
+        """).fetchall()
 
         def to_map(rows):
             m = {}
