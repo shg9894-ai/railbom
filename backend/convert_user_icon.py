@@ -66,33 +66,41 @@ def main():
     sq = fit_to_square(padded)
     print(f'정사각 변환 후: {sq.size}')
 
+    # 원본은 둥근 사각형 카드 디자인 + 그 바깥(모서리 4개)이 흰색 배경.
+    # 모서리 흰색을 누끼처럼 투명(알파 0)으로 처리해서, PC/모바일 모두
+    # 자연스러운 둥근 앱 아이콘으로 보이게 함.
+    # KTX 본체의 흰색은 둥근 사각형 안쪽에 있으니 보존됨.
+    from PIL import ImageDraw
+    W, H = sq.size
+    radius = int(min(W, H) * 0.22)
+    # 둥근 사각형 마스크: 안쪽=255, 모서리 바깥=0
+    inside_mask = Image.new('L', (W, H), 0)
+    ImageDraw.Draw(inside_mask).rounded_rectangle([0, 0, W, H], radius=radius, fill=255)
+    inside_arr = np.array(inside_mask) > 0
+
+    # 모서리 바깥의 흰/회색 픽셀을 투명으로
+    rgb = np.array(sq.convert('RGB'))
+    sat = rgb.max(axis=-1).astype(int) - rgb.min(axis=-1).astype(int)
+    bright = rgb.mean(axis=-1) > 180
+    knockout = bright & (sat < 25) & (~inside_arr)
+
+    rgba = np.dstack([rgb, np.full((H, W), 255, dtype=np.uint8)])
+    rgba[knockout, 3] = 0  # 알파 0 = 투명
+    sq_filled = Image.fromarray(rgba, 'RGBA')
+
     targets = [
-        # rounded=True → 모서리 둥글게 깎아 PC에서도 둥근 앱 아이콘
-        # apple-touch-icon은 iOS가 자체 마스킹하므로 정사각 그대로
-        ('pwa-512.png', 512, True),
-        ('pwa-192.png', 192, True),
-        ('apple-touch-icon.png', 180, False),
+        ('pwa-512.png', 512),
+        ('pwa-192.png', 192),
+        ('apple-touch-icon.png', 180),
     ]
     DST_DIR.mkdir(parents=True, exist_ok=True)
     print()
     print('PWA 아이콘 출력:')
-    for fname, size, rounded in targets:
-        out = sq.resize((size, size), Image.LANCZOS).convert('RGBA')
-        if rounded:
-            # iOS 스타일 코너 반경 (≈22%) — 둥근 사각형 모서리
-            radius = int(size * 0.22)
-            mask = Image.new('L', (size, size), 0)
-            from PIL import ImageDraw
-            ImageDraw.Draw(mask).rounded_rectangle([0, 0, size, size], radius=radius, fill=255)
-            # 알파를 mask로 곱함 (기존 알파 보존)
-            r, g, b, a = out.split()
-            new_a = Image.eval(a, lambda v: v)
-            from PIL import ImageChops
-            new_a = ImageChops.multiply(new_a, mask)
-            out = Image.merge('RGBA', (r, g, b, new_a))
+    for fname, size in targets:
+        out = sq_filled.resize((size, size), Image.LANCZOS).convert('RGBA')
         path = DST_DIR / fname
         out.save(path, 'PNG', optimize=True)
-        print(f'  ✓ {fname:25s} {size}x{size}  rounded={rounded}  ({path.stat().st_size:,} bytes)')
+        print(f'  ✓ {fname:25s} {size}x{size}  ({path.stat().st_size:,} bytes)')
 
     print()
     print('완료. 빌드 후 홈 화면 재추가하면 새 아이콘 적용.')
