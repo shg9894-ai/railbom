@@ -14,7 +14,10 @@ import Footer from './Footer'
 
 const { Content, Header } = Layout
 
-const SIDEBAR_W = 200
+// 사이드바 폭 — 메뉴 라벨('홈화면 추가 / 명칭도감', '매뉴얼 / 자주 묻는 질문' 등)이
+// 잘리지 않게 모바일에선 더 넓게.
+const SIDEBAR_W_DESKTOP = 220
+const SIDEBAR_W_MOBILE = 240
 
 interface Props {
   children: React.ReactNode
@@ -30,6 +33,7 @@ export default function AppShell({ children, role, onLogout, darkMode, onToggleD
   const [isMobile, setIsMobile] = useState(() => window.innerWidth < 768)
   const [inquiryOpen, setInquiryOpen] = useState(false)
   const unreadInquiries = useUnreadInquiryCount()
+  const sidebarW = isMobile ? SIDEBAR_W_MOBILE : SIDEBAR_W_DESKTOP
 
   // 문의/요청 페이지 진입 시 미확인 카운트 리셋
   useEffect(() => {
@@ -146,7 +150,7 @@ export default function AppShell({ children, role, onLogout, darkMode, onToggleD
       <div style={{ display: 'flex', flex: 1, minHeight: 0, position: 'relative' }}>
         {/* 사이드바 — 모바일은 overlay, 데스크탑은 inline */}
         <div style={{
-          width: open ? SIDEBAR_W : 0,
+          width: open ? sidebarW : 0,
           flexShrink: 0,
           overflow: 'hidden',
           transition: 'width 0.2s',
@@ -154,11 +158,11 @@ export default function AppShell({ children, role, onLogout, darkMode, onToggleD
             position: 'fixed',
             top: 'calc(56px + env(safe-area-inset-top, 0px))',
             left: 0, bottom: 0,
-            zIndex: 200, width: open ? SIDEBAR_W : 0,
+            zIndex: 200, width: open ? sidebarW : 0,
           } : {}),
         }}>
           <div style={{
-            width: SIDEBAR_W, height: '100%',
+            width: sidebarW, height: '100%',
             background: '#001529', display: 'flex', flexDirection: 'column',
           }}>
             <Menu
