@@ -57,7 +57,7 @@ export default function AppShell({ children, role, onLogout, darkMode, onToggleD
     { key: '/material-master', icon: <DatabaseOutlined />,     label: '자재 마스터' },
     { key: '/vehicles',        icon: <NodeIndexOutlined />,    label: '차종 관리' },
     { key: '/formations',      icon: <OrderedListOutlined />,  label: '편성 관리' },
-    { key: '/offline',         icon: <CloudDownloadOutlined />, label: '앱 설치 / 오프라인' },
+    { key: '/offline',         icon: <CloudDownloadOutlined />, label: '앱 설치 / 명칭도감 미리받기' },
     { key: '/help',            icon: <QuestionCircleOutlined />, label: '도움말 / 매뉴얼' },
     ...(role === 'admin' ? [
       { key: '/inquiries',         icon: <MessageOutlined />,     label: '문의 / 요청' },

@@ -232,10 +232,10 @@ export default function OfflineDownloadPage() {
     <div>
       <Title level={4} style={{ marginBottom: 4 }}>
         <CloudDownloadOutlined style={{ marginRight: 8, color: '#1677ff' }} />
-        오프라인 사용 / 앱 설치
+        앱 설치 / 명칭도감 미리받기
       </Title>
       <Text type="secondary" style={{ fontSize: 12 }}>
-        명칭도감 사진을 기기에 미리 다운로드하면 인터넷 없이도 빠르게 열람 가능합니다.
+        명칭도감 사진을 Wi-Fi에서 미리 받아두면, 현장에서 사진 로딩 대기 없이 즉시 열람할 수 있습니다.
       </Text>
 
       {/* 1. 홈화면 앱 설치 */}
@@ -255,9 +255,9 @@ export default function OfflineDownloadPage() {
         </div>
       </Card>
 
-      {/* 2. 오프라인 다운로드 */}
+      {/* 2. 명칭도감 미리받기 */}
       <Card size="small" style={{ marginTop: 12 }}
-        title={<span><CloudDownloadOutlined /> 2. 명칭도감 오프라인 다운로드</span>}
+        title={<span><CloudDownloadOutlined /> 2. 명칭도감 미리받기</span>}
         extra={
           <Button size="small" danger icon={<DeleteOutlined />} onClick={clearCache}>
             캐시 삭제
@@ -267,8 +267,16 @@ export default function OfflineDownloadPage() {
           type="info"
           showIcon
           style={{ marginBottom: 12 }}
-          message="명칭도감 사진을 미리 받아두면 비행기 모드에서도 빠르게 열람할 수 있습니다."
-          description="Wi-Fi 환경에서 다운로드 권장. 전체 차종 합치면 약 1GB, 한 차종은 50~150MB 정도입니다."
+          message="이 기능은 명칭도감 사진을 기기에 미리 캐싱해 두는 기능입니다."
+          description={
+            <span>
+              <b>현장에서 사진 로딩 시간을 단축</b>하기 위한 용도예요. 한 번 받아두면 다음 조회 때 서버를 거치지 않고 즉시 표시됩니다.<br />
+              Wi-Fi 환경에서 다운로드 권장 — 전체 차종 약 1GB, 한 차종은 50~150MB.<br />
+              <Text type="warning" style={{ fontSize: 12 }}>
+                ⚠️ 자재마스터 검색·ecat 자재 상세는 인터넷이 필요합니다(완전한 오프라인 모드 아님).
+              </Text>
+            </span>
+          }
         />
 
         {/* 전체 다운로드 */}
@@ -368,16 +376,19 @@ export default function OfflineDownloadPage() {
 
       <Card size="small" style={{ marginTop: 12 }} title="💡 작동 원리 (간단)">
         <Paragraph style={{ fontSize: 12, marginBottom: 4 }}>
-          • 다운로드한 사진은 브라우저의 서비스워커 캐시에 저장됩니다.
+          • 다운로드한 사진은 브라우저 캐시에 저장되어, 다음 조회 때 서버를 거치지 않고 즉시 표시됩니다.
         </Paragraph>
         <Paragraph style={{ fontSize: 12, marginBottom: 4 }}>
-          • 인터넷이 끊어져도 캐시에서 즉시 표시 (네트워크 요청 안 함 → 빠름).
+          • <b>본래 목적은 속도 향상</b>입니다. 현장에서 사진 한 장당 0.5~2초씩 걸리던 로딩이 사라집니다.
         </Paragraph>
         <Paragraph style={{ fontSize: 12, marginBottom: 4 }}>
-          • BOM 데이터(자재번호, 명칭도감 페이지 정보 등)도 자동으로 캐시됩니다.
+          • 인터넷이 약하거나 잠시 끊겨도 받아둔 사진은 캐시에서 표시됩니다.
+        </Paragraph>
+        <Paragraph style={{ fontSize: 12, marginBottom: 4, color: '#fa8c16' }}>
+          • <b>주의:</b> 자재마스터 검색·ecat 자재 상세·BOM 새 경로 등은 항상 서버 통신이 필요합니다. 완전한 오프라인 모드는 아닙니다.
         </Paragraph>
         <Paragraph style={{ fontSize: 12, marginBottom: 0 }}>
-          • 다른 사람이 데이터 수정해도 다음 온라인 접속 시 자동 동기화됩니다.
+          • 다른 사람이 명칭도감 사진을 교체하면 캐시 삭제 후 다시 받아야 최신본을 봅니다.
         </Paragraph>
       </Card>
     </div>

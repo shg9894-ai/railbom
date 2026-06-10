@@ -54,7 +54,7 @@ export default function HelpPage({ role }: Props) {
         { key: 'menu-catalog',  href: '#menu-catalog',  title: '차종별 명칭도감' },
         { key: 'menu-maint',    href: '#menu-maint',    title: '유지보수 기준' },
         { key: 'menu-mm',       href: '#menu-mm',       title: '자재 마스터' },
-        { key: 'menu-offline',  href: '#menu-offline',  title: '앱 설치 / 오프라인' },
+        { key: 'menu-offline',  href: '#menu-offline',  title: '앱 설치 / 명칭도감 미리받기' },
         { key: 'menu-vehicles', href: '#menu-vehicles', title: '차종·편성 관리' },
       ],
     },
@@ -302,14 +302,18 @@ export default function HelpPage({ role }: Props) {
           <li><b>이동 버튼</b> (PC 전용) — ecat 외부 페이지로 새 창</li>
           <li><b>자재 클릭</b> — ecat에서 사진·속성·내역을 실시간으로 가져와 상세 모달 표시</li>
         </ul>
+        <Text type="warning" style={{ fontSize: 12 }}>
+          ⚠️ 이 화면은 인터넷 연결이 필요합니다(실시간 ecat 조회).
+        </Text>
       </Paragraph>
 
-      <H4 id="menu-offline">앱 설치 / 오프라인</H4>
+      <H4 id="menu-offline">앱 설치 / 명칭도감 미리받기</H4>
       <Paragraph>
         <ul>
           <li><b>휴대폰 설치</b> — Safari/Chrome에서 페이지를 연 뒤 공유 → "홈 화면에 추가". 다음부터는 일반 앱처럼 실행됩니다.</li>
-          <li><b>명칭도감 오프라인 다운로드</b> — 차종별로 명칭도감 이미지(50~200MB)를 폰에 저장. 인터넷이 안 되는 차량 안에서도 도면을 봅니다.</li>
-          <li><b>전체 다운로드</b> 버튼 — 모든 차종 한 번에. 저장 용량과 데이터 사용량에 유의하세요.</li>
+          <li><b>명칭도감 미리받기</b> — 차종별로 명칭도감 이미지(50~150MB)를 폰에 미리 캐싱. <b>본래 목적은 속도 향상</b>입니다. 한 번 받으면 다음 조회 때 서버를 거치지 않고 즉시 표시되어, 사진 한 장당 0.5~2초씩 걸리던 로딩이 사라집니다.</li>
+          <li><b>전체 다운로드</b> — 모든 차종 한 번에. 저장 용량(약 1GB)과 데이터 사용량에 유의하세요. Wi-Fi에서 권장.</li>
+          <li>인터넷이 약하거나 잠시 끊겨도 받아둔 사진은 표시됩니다. <b>다만 자재마스터 검색·ecat 자재 상세·BOM 새 경로</b>는 항상 서버 통신이 필요해 완전한 오프라인 모드는 아닙니다.</li>
         </ul>
       </Paragraph>
 
@@ -386,6 +390,9 @@ export default function HelpPage({ role }: Props) {
 
         <H4 id="faq-4">Q. BOM 코드가 잘못된 것 같아요.</H4>
         부품 상세 화면의 <Mono>수정 요청</Mono> 버튼으로 변경을 제안하세요. 관리자가 검토 후 반영합니다.
+
+        <H4 id="faq-5">Q. 인터넷 없이 시스템을 사용할 수 있나요?</H4>
+        완전한 오프라인 모드는 아닙니다. <b>명칭도감 미리받기</b>로 받아둔 사진만 인터넷 없이 표시되고, 자재마스터 검색·ecat 자재 상세·BOM 새 경로 등 데이터 조회는 항상 서버 통신이 필요합니다. 명칭도감 미리받기의 본래 목적은 <b>현장에서 사진 로딩 시간을 단축</b>하기 위함입니다(한 장당 0.5~2초 → 즉시).
       </Paragraph>
     </Typography>
   )
