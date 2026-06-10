@@ -85,7 +85,7 @@ export default function App() {
               {role === 'admin' && <Route path="/requests" element={<RequestsPage />} />}
               {role === 'admin' && <Route path="/login-logs" element={<LoginLogsPage />} />}
               {role === 'admin' && <Route path="/material-activity" element={<MaterialActivityPage />} />}
-              {role === 'admin' && <Route path="/inquiries" element={<InquiriesPage />} />}
+              <Route path="/inquiries" element={<InquiriesPage role={role} />} />
               <Route path="*" element={<Navigate to="/diagram" replace />} />
             </Routes>
           </AppShell>

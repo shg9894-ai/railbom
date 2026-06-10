@@ -139,6 +139,7 @@ export default function HelpPage({ role }: Props) {
       ],
     },
     { key: 'change-req', href: '#change-req', title: '데이터 수정 요청' },
+    { key: 'inquiry',    href: '#inquiry',    title: '문의 / 요청' },
     ...(isAdmin ? [{ key: 'admin', href: '#admin', title: '관리자 기능',
       children: [
         { key: 'admin-req',   href: '#admin-req',   title: '수정 요청 승인' },
@@ -438,6 +439,26 @@ export default function HelpPage({ role }: Props) {
           <li>승인된 변경 사항은 자동으로 반영됩니다.</li>
         </ul>
       </Paragraph>
+
+      <H id="inquiry" color="cyan">문의 / 요청 (공개 게시판)</H>
+      <Paragraph>
+        시스템 사용 중 궁금하거나 개선·자료 요청이 있다면 <b>관리자에게 문의</b>를 보낼 수 있습니다.
+      </Paragraph>
+      <Box color="cyan" title="새 문의 작성">
+        화면 우측 상단 초록색 <Mono>문의</Mono> 버튼을 누르면 모달이 열립니다.
+        <ul style={{ marginTop: 4 }}>
+          <li>메시지(필수) + 스크린샷(선택) + 현재 보고 있는 화면 경로가 자동 전송됩니다.</li>
+          <li>스크린샷은 파일 선택 또는 메시지 칸에서 <b>Ctrl+V</b>로 클립보드 붙여넣기 가능.</li>
+        </ul>
+      </Box>
+      <Box color="cyan" title="문의 게시판 / 답변 확인">
+        좌측 메뉴 <Mono>문의 / 요청</Mono>에서 모든 사용자가 보낸 문의와 관리자 답변을 함께 볼 수 있습니다.
+        <ul style={{ marginTop: 4 }}>
+          <li>본인 문의의 새 답변이 도착하면 우측 상단 <Mono>문의</Mono> 버튼에 빨간 알림 표시.</li>
+          <li>상태: <Tag color="orange" style={{ margin: 0 }}>대기</Tag> · <Tag color="blue" style={{ margin: 0 }}>처리중</Tag> · <Tag color="green" style={{ margin: 0 }}>해결</Tag> · <Tag>종료</Tag></li>
+          <li>답변·상태 변경은 관리자만 가능. 일반 사용자는 읽기 전용.</li>
+        </ul>
+      </Box>
 
       {isAdmin && (
         <>

@@ -94,9 +94,9 @@ def list_inquiries(
     status: Optional[str] = None,
     limit: int = 50,
     offset: int = 0,
-    _=Depends(require_admin),
+    _=Depends(require_user),
 ):
-    """관리자 전용 — 문의 목록."""
+    """모든 사용자 — 전체 문의 게시판 (답변·상태 변경은 관리자만)."""
     conn = get_connection()
     try:
         _ensure_table(conn)

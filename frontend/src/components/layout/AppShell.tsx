@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Layout, Menu, Button, Space } from 'antd'
+import { Layout, Menu, Button, Space, Badge } from 'antd'
 import {
   NodeIndexOutlined, OrderedListOutlined, PictureOutlined,
   SearchOutlined, CheckSquareOutlined, LogoutOutlined, HistoryOutlined,
@@ -9,7 +9,7 @@ import {
 } from '@ant-design/icons'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { PLANT_NAMES } from '../../types'
-import InquiryModal from './InquiryModal'
+import InquiryModal, { useUnreadInquiryCount, markInquiriesSeen } from './InquiryModal'
 import Footer from './Footer'
 
 const { Content, Header } = Layout
@@ -29,6 +29,12 @@ export default function AppShell({ children, role, onLogout, darkMode, onToggleD
   const location = useLocation()
   const [isMobile, setIsMobile] = useState(() => window.innerWidth < 768)
   const [inquiryOpen, setInquiryOpen] = useState(false)
+  const unreadInquiries = useUnreadInquiryCount()
+
+  // 문의/요청 페이지 진입 시 미확인 카운트 리셋
+  useEffect(() => {
+    if (location.pathname === '/inquiries') markInquiriesSeen()
+  }, [location.pathname])
   const [open, setOpen] = useState(() => {
     if (window.innerWidth < 768) return false
     const saved = localStorage.getItem('sidebar_open')
@@ -59,9 +65,9 @@ export default function AppShell({ children, role, onLogout, darkMode, onToggleD
     { key: '/vehicles',        icon: <NodeIndexOutlined />,    label: '차종 관리' },
     { key: '/formations',      icon: <OrderedListOutlined />,  label: '편성 관리' },
     { key: '/offline',         icon: <CloudDownloadOutlined />, label: '홈화면 추가 / 명칭도감' },
-    { key: '/help',            icon: <QuestionCircleOutlined />, label: '도움말 / 매뉴얼' },
+    { key: '/help',            icon: <QuestionCircleOutlined />, label: '매뉴얼 / 자주 묻는 질문' },
+    { key: '/inquiries',       icon: <MessageOutlined />,        label: '문의 / 요청' },
     ...(role === 'admin' ? [
-      { key: '/inquiries',         icon: <MessageOutlined />,     label: '문의 / 요청' },
       { key: '/requests',          icon: <CheckSquareOutlined />, label: '데이터 수정 승인' },
       { key: '/login-logs',        icon: <HistoryOutlined />,     label: '로그인 기록' },
       { key: '/material-activity', icon: <DatabaseOutlined />,    label: '자재마스터 변경 로그' },
@@ -112,15 +118,17 @@ export default function AppShell({ children, role, onLogout, darkMode, onToggleD
           }}>
             {userId}{role === 'admin' ? ' (관리자)' : PLANT_NAMES[userId] ? ` (${PLANT_NAMES[userId]})` : ''}
           </span>
-          <Button
-            size="small"
-            icon={<MessageOutlined />}
-            onClick={() => setInquiryOpen(true)}
-            title="관리자에게 문의/요청"
-            style={{ color: '#52c41a', borderColor: 'rgba(82,196,26,0.4)' }}
-          >
-            {isMobile ? '' : '문의'}
-          </Button>
+          <Badge count={unreadInquiries} size="small" offset={[-2, 2]}>
+            <Button
+              size="small"
+              icon={<MessageOutlined />}
+              onClick={() => setInquiryOpen(true)}
+              title="관리자에게 문의/요청"
+              style={{ color: '#52c41a', borderColor: 'rgba(82,196,26,0.4)' }}
+            >
+              {isMobile ? '' : '문의'}
+            </Button>
+          </Badge>
           <Button
             size="small"
             icon={darkMode ? <BulbFilled style={{ color: '#fadb14' }} /> : <BulbOutlined />}

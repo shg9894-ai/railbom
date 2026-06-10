@@ -125,7 +125,7 @@ export default function HomePage() {
               onMouseEnter={e => { e.currentTarget.style.borderColor = '#52c41a'; e.currentTarget.style.background = 'rgba(82,196,26,0.18)' }}
               onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(82,196,26,0.35)'; e.currentTarget.style.background = 'rgba(82,196,26,0.1)' }}
             >
-              <div style={{ color: '#73d13d', fontWeight: 600, fontSize: 13, marginBottom: 3 }}>도움말 / 매뉴얼</div>
+              <div style={{ color: '#73d13d', fontWeight: 600, fontSize: 13, marginBottom: 3 }}>매뉴얼 / 자주 묻는 질문</div>
               <div style={{ color: 'rgba(115,209,61,0.7)', fontSize: 11 }}>처음 사용한다면 여기부터</div>
             </div>
           )}
