@@ -141,17 +141,19 @@ export default function HomePage() {
         {/* 바로가기 */}
         <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.3)', letterSpacing: 2, marginBottom: 16 }}>QUICK ACCESS</div>
         <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr 1fr' : 'repeat(auto-fill, minmax(180px, 1fr))', gap: 12, marginBottom: 40 }}>
-          {/* 우측 도움말 카드가 안 보이는 폭에선 QUICK ACCESS 첫 줄에 가로 전체 폭으로 */}
+          {/* 도움말 — 다른 QUICK ACCESS 카드와 동일 크기, 색상만 초록 강조 */}
           {!showSideHelp && (
             <div
               onClick={() => navigate('/help')}
               style={{
-                background: 'rgba(82,196,26,0.12)', border: '1px solid rgba(82,196,26,0.4)',
+                background: 'rgba(82,196,26,0.1)', border: '1px solid rgba(82,196,26,0.35)',
                 borderRadius: 8, padding: '12px 16px', cursor: 'pointer',
-                gridColumn: '1 / -1',
+                transition: 'all 0.15s', minWidth: 0,
               }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = '#52c41a'; e.currentTarget.style.background = 'rgba(82,196,26,0.18)' }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(82,196,26,0.35)'; e.currentTarget.style.background = 'rgba(82,196,26,0.1)' }}
             >
-              <div style={{ color: '#73d13d', fontWeight: 600, fontSize: 13, marginBottom: 3 }}>📖 도움말 / 매뉴얼</div>
+              <div style={{ color: '#73d13d', fontWeight: 600, fontSize: 13, marginBottom: 3 }}>도움말 / 매뉴얼</div>
               <div style={{ color: 'rgba(115,209,61,0.7)', fontSize: 11 }}>처음 사용한다면 여기부터</div>
             </div>
           )}
