@@ -207,8 +207,11 @@ export default function MaterialMasterPage() {
   const [materialType, setMaterialType] = useState<string | undefined>()
   const [showUnused, setShowUnused] = useState(false)   // false = 사용중만, true = 미사용 포함
   const [page, setPage] = useState(1)
-  const [pageSize, setPageSize] = useState(30)
+  const pageSize = 50  // 고정
   const [selected, setSelected] = useState<string | null>(null)
+  // 현재 페이지 인라인 입력 모드 (페이지 번호 클릭 시 input으로 바뀜)
+  const [pageInputOpen, setPageInputOpen] = useState(false)
+  const [pageInputValue, setPageInputValue] = useState('')
 
   // 좁은 화면 감지 — UA가 아니라 실제 viewport 폭 기준 (PC 좁은 창도 감지)
   const [vw, setVw] = useState(() => typeof window !== 'undefined' ? window.innerWidth : 1200)
@@ -402,21 +405,66 @@ export default function MaterialMasterPage() {
             current: page,
             pageSize,
             total: search?.total ?? 0,
-            // 모든 화면에서 동일하게 — 현재 페이지 ± 2까지 번호 노출
-            // 좁은 화면에선 한 줄에 다 못 들어가니까 size changer/quick jumper는 숨김
-            showSizeChanger: !isNarrow,
-            showQuickJumper: !isNarrow,
+            showSizeChanger: false,    // 50건 고정
+            showQuickJumper: false,    // 현재 페이지 클릭하면 입력 가능하니 별도 불필요
             size: isNarrow ? 'small' as const : undefined,
-            pageSizeOptions: ['10', '20', '30', '50', '100'],
-            onChange: (p, ps) => {
+            onChange: (p) => {
               setPage(p)
-              if (ps !== pageSize) setPageSize(ps)
+              setPageInputOpen(false)
             },
-            onShowSizeChange: (_c, ps) => {
-              setPageSize(ps)
-              setPage(1)
+            showTotal: total => `전체 ${total.toLocaleString()}건 · 50건씩`,
+            // 현재 페이지 번호를 클릭하면 input으로 바뀌어 직접 입력 → Enter로 이동
+            itemRender: (pageNum, type, originalElement) => {
+              if (type !== 'page' || pageNum !== page) return originalElement
+              const totalPages = Math.max(1, Math.ceil((search?.total ?? 0) / pageSize))
+              if (pageInputOpen) {
+                return (
+                  <input
+                    autoFocus
+                    type="number"
+                    min={1}
+                    max={totalPages}
+                    value={pageInputValue}
+                    onChange={e => setPageInputValue(e.target.value)}
+                    onKeyDown={e => {
+                      if (e.key === 'Enter') {
+                        const n = parseInt(pageInputValue, 10)
+                        if (!isNaN(n) && n >= 1 && n <= totalPages) {
+                          setPage(n)
+                        }
+                        setPageInputOpen(false)
+                      } else if (e.key === 'Escape') {
+                        setPageInputOpen(false)
+                      }
+                    }}
+                    onBlur={() => setPageInputOpen(false)}
+                    onClick={e => e.stopPropagation()}
+                    style={{
+                      width: 64, height: 28, padding: '0 6px', borderRadius: 4,
+                      border: '1px solid #1677ff', textAlign: 'center',
+                      background: 'transparent', color: 'inherit', outline: 'none',
+                      fontFamily: 'monospace',
+                    }}
+                  />
+                )
+              }
+              return (
+                <a
+                  onClick={e => {
+                    e.preventDefault()
+                    e.stopPropagation()
+                    setPageInputValue(String(page))
+                    setPageInputOpen(true)
+                  }}
+                  title="클릭해서 직접 입력"
+                  style={{
+                    padding: '0 10px', cursor: 'text',
+                    border: '1px solid #1677ff', borderRadius: 4,
+                    color: '#1677ff',
+                  }}
+                >{page}</a>
+              )
             },
-            showTotal: total => `전체 ${total.toLocaleString()}건`,
           }}
           onRow={(r) => ({ onClick: () => setSelected(r.material_no), style: { cursor: 'pointer' } })}
           columns={[
