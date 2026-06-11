@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Select, Card, Spin, Empty, Image, theme, Typography, Button, Modal, Form, Input, Select as AntSelect, message, Tooltip, Tag, List } from 'antd'
-import { EditOutlined, LinkOutlined, DisconnectOutlined, PlusOutlined } from '@ant-design/icons'
+import { EditOutlined, LinkOutlined, DisconnectOutlined, PlusOutlined, SearchOutlined } from '@ant-design/icons'
 import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query'
 import { vehicleApi } from '../api/vehicles'
 import { diagramPagesApi } from '../api/diagramPages'
@@ -11,7 +11,7 @@ import type { DiagramPage } from '../api/diagramPages'
 import { CATEGORIES, CATEGORY_COLORS } from '../types'
 import type { BomNode } from '../types'
 
-const { Text } = Typography
+const { Text, Title } = Typography
 const { TextArea } = Input
 const userId = localStorage.getItem('user_id') ?? ''
 
@@ -404,10 +404,19 @@ export default function CatalogPage() {
 
   return (
     <div style={{ height: 'calc(100vh - 112px)', display: 'flex', flexDirection: 'column', gap: 8 }}>
+      {/* 페이지 헤더 */}
+      <div>
+        <Title level={4} style={{ marginBottom: 2 }}>
+          <SearchOutlined style={{ marginRight: 8, color: '#1677ff' }} />
+          차종별 명칭도감
+        </Title>
+        <Text type="secondary" style={{ fontSize: 12 }}>
+          차종을 선택하면 전체 명칭도감 페이지를 갤러리 형태로 볼 수 있습니다
+        </Text>
+      </div>
       {/* 툴바 */}
       <Card size="small" style={{ flexShrink: 0 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-          <span style={{ fontWeight: 600, fontSize: 14 }}>차종별 명칭도감</span>
           <Select
             placeholder="차종 선택"
             style={{ width: 220 }}

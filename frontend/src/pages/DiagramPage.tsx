@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Select, Card, Empty, Typography, Image } from 'antd'
+import { PictureOutlined } from '@ant-design/icons'
 import { useQuery } from '@tanstack/react-query'
 import { useSearchParams } from 'react-router-dom'
 import { vehicleApi } from '../api/vehicles'
@@ -8,7 +9,7 @@ import TrainDiagramSVG from '../components/diagram/TrainDiagramSVG'
 import TrainPhotoView from '../components/diagram/TrainPhotoView'
 import DrillDownView from '../components/diagram/DrillDownView'
 
-const { Text } = Typography
+const { Text, Title } = Typography
 
 const VEHICLE_CODE_MAP: Record<number, string> = {
   1: 'emu320',      // KTX-청룡
@@ -96,6 +97,16 @@ export default function DiagramPage() {
 
   return (
     <div style={{ minHeight: 'calc(100vh - 112px)', display: 'flex', flexDirection: 'column', gap: 12 }}>
+      {/* 페이지 헤더 */}
+      <div>
+        <Title level={4} style={{ marginBottom: 2 }}>
+          <PictureOutlined style={{ marginRight: 8, color: '#1677ff' }} />
+          부품 탐색
+        </Title>
+        <Text type="secondary" style={{ fontSize: 12 }}>
+          차종별 열차 도면에서 부품을 선택하면 BOM 코드·자재 정보·명칭도감을 확인할 수 있습니다
+        </Text>
+      </div>
       {/* 차종 선택 바 */}
       <Card size="small" style={{ flexShrink: 0 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, minWidth: 0 }}>

@@ -5,7 +5,7 @@ import {
   Typography, theme, Modal, Descriptions, Tag,
 } from 'antd'
 import {
-  SearchOutlined, DownloadOutlined, RightOutlined, DownOutlined,
+  SearchOutlined, DownloadOutlined, RightOutlined, DownOutlined, DatabaseOutlined,
 } from '@ant-design/icons'
 import { useQuery } from '@tanstack/react-query'
 import { vehicleApi } from '../api/vehicles'
@@ -14,7 +14,7 @@ import { excelApi } from '../api/excel'
 import type { BomNode } from '../types'
 import { CATEGORY_COLORS, CATEGORIES, formatBomCode, getCategoryCode } from '../types'
 
-const { Text } = Typography
+const { Text, Title } = Typography
 
 // ── 호환 코드 클릭 팝업 ──────────────────────────────────────────────────────
 // materialNos: 클릭한 코드 + 해당 노드 자신의 material_no (모두 같은 corp_material_no 공유)
@@ -411,6 +411,16 @@ export default function BomPage() {
     <CompatNodeModal materialNos={compatModal} onClose={() => setCompatModal(null)} />
     <div style={{ height: 'calc(100vh - 112px)', display: 'flex', flexDirection: 'column', gap: 8 }}>
 
+      {/* 페이지 헤더 */}
+      <div>
+        <Title level={4} style={{ marginBottom: 2 }}>
+          <DatabaseOutlined style={{ marginRight: 8, color: '#1677ff' }} />
+          BOM 원데이터
+        </Title>
+        <Text type="secondary" style={{ fontSize: 12 }}>
+          차종별 계층형 BOM 구조를 트리 형태로 탐색하고 각 노드의 자재 정보를 확인할 수 있습니다
+        </Text>
+      </div>
       {/* 툴바 */}
       <Card size="small" style={{ flexShrink: 0 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
