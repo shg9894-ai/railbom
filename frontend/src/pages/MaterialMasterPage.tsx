@@ -469,7 +469,7 @@ export default function MaterialMasterPage() {
           onRow={(r) => ({ onClick: () => setSelected(r.material_no), style: { cursor: 'pointer' } })}
           columns={[
             { title: '자재번호', dataIndex: 'material_no', width: 100,
-              render: (v: string) => <Text code style={{ fontSize: 12 }}>{v}</Text> },
+              render: (v: string) => <span style={{ fontSize: 12, fontFamily: 'monospace' }}>{v}</span> },
             { title: '자재내역', dataIndex: 'material_desc',
               render: (v: string | null, r: MaterialMasterItem) => (
                 <span>
