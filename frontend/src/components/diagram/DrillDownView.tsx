@@ -669,13 +669,16 @@ function LeafDetail({
   const drawingNo = node.drawing_no || node.manufacturer_pn
 
   const vehicleCode = VEHICLE_DB_CODE[vehicleTypeId]
-  const { data: byDrawingPages = [], isLoading: drawingLoading } = useQuery({
+  const qcLeaf = useQueryClient()
+
+  // 자동 매칭 조회 (DB 저장용, 화면 표시는 linkedDiagrams만 사용)
+  const { data: byDrawingPages = [] } = useQuery({
     queryKey: ['diagram-pages', 'drawing', drawingNo, vehicleCode],
     queryFn: () => diagramPagesApi.byDrawingNo(drawingNo!, vehicleCode),
     enabled: !!drawingNo,
     staleTime: 300_000,
   })
-  const { data: byAssemblyPages = [], isLoading: assemblyLoading } = useQuery({
+  const { data: byAssemblyPages = [] } = useQuery({
     queryKey: ['diagram-pages', 'assembly', node.name, vehicleCode],
     queryFn: () => diagramPagesApi.byAssembly(node.name, vehicleCode!),
     enabled: !drawingNo && !!vehicleCode,
@@ -687,6 +690,17 @@ function LeafDetail({
     staleTime: 60_000,
   })
 
+  // 자동 매칭 결과를 bom_node_diagrams에 저장 (이미 excluded된 건 백엔드에서 무시)
+  const autoPages = byDrawingPages.length > 0 ? byDrawingPages : byAssemblyPages
+  useEffect(() => {
+    if (autoPages.length === 0) return
+    const ids = autoPages.map((p: any) => p.id)
+    bomApi.autoLinkDiagrams(node.id, ids).then(() => {
+      qcLeaf.invalidateQueries({ queryKey: ['node-diagrams', node.id] })
+    }).catch(() => {})
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [node.id, autoPages.map((p: any) => p.id).join(',')])
+
   // ecat 자재 사진 (corp_material_no가 있으면 ecat에서 사진 가져옴)
   const { data: ecatData } = useQuery({
     queryKey: ['ecat', node.corp_material_no],
@@ -697,17 +711,19 @@ function LeafDetail({
   })
   const ecatImages = ecatData?.images ?? []
 
-  const diagramsLoading = drawingLoading || assemblyLoading || linkedLoading
+  const diagramsLoading = linkedLoading
 
-  // bom_node_diagrams로 직접 연결된 페이지의 link_id 맵 (해제 시 사용)
-  const linkIdByFileNo: Record<number, number> = {}
-  linkedDiagrams.forEach((d: any) => { linkIdByFileNo[d.file_no] = d.link_id })
+  // linkedDiagrams만으로 표시 (자동 매칭도 DB에 저장됐으므로 단일 소스)
+  const dbDiagramPages: any[] = linkedDiagrams.map((d: any) => ({
+    id: d.id, file_no: d.file_no, vehicle: d.vehicle,
+    assembly: d.assembly, chapter: d.chapter, book_page: d.book_page,
+    link_id: d.link_id, parts: [] as any[],
+  }))
 
   const role = localStorage.getItem('role') ?? ''
   const userId = localStorage.getItem('user_id') ?? ''
   const isAdmin = role === 'admin'
 
-  const qcLeaf = useQueryClient()
   const unlinkMutation = useMutation({
     mutationFn: (linkId: number) => bomApi.unlinkDiagram(node.id, linkId),
     onSuccess: () => {
@@ -729,15 +745,6 @@ function LeafDetail({
   })
 
   const [linkModalOpen, setLinkModalOpen] = useState(false)
-  const linkedPages: any[] = linkedDiagrams.map((d: any) => ({
-    id: d.id, file_no: d.file_no, vehicle: d.vehicle,
-    assembly: d.assembly, chapter: d.chapter, book_page: d.book_page, parts: [] as any[],
-  }))
-  const basePages = byDrawingPages.length > 0 ? byDrawingPages : byAssemblyPages
-  const dbDiagramPages = [
-    ...basePages,
-    ...linkedPages.filter((lp: any) => !basePages.some((bp: any) => bp.file_no === lp.file_no)),
-  ]
 
   const compatCodes = node.compat_codes ?? []
 
@@ -977,9 +984,9 @@ function LeafDetail({
 
               <Image.PreviewGroup>
                 {dbDiagramPages.map(dp => {
-                  const linkId = linkIdByFileNo[dp.file_no]
+                  const linkId = dp.link_id
                   return (
-                    <div key={dp.id} style={{ position: 'relative', width: 130,
+                    <div key={dp.file_no} style={{ position: 'relative', width: 130,
                       borderRadius: 6, overflow: 'hidden', border: '1px solid #91caff' }}>
                       <Image src={diagramPagesApi.imageUrl(dp.file_no, vehicleCode)}
                         style={{ width: 130, height: 98, objectFit: 'cover', objectPosition: 'top' }}
@@ -1042,7 +1049,7 @@ function LeafDetail({
         nodeId={node.id}
         nodeName={node.name}
         vehicleCode={vehicleCode}
-        alreadyLinkedFileNos={Object.keys(linkIdByFileNo).map(Number)}
+        alreadyLinkedFileNos={linkedDiagrams.map((d: any) => d.file_no)}
         isAdmin={isAdmin}
         userId={userId}
       />

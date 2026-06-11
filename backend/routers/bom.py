@@ -144,7 +144,7 @@ class DiagramLinkBody(_BaseModel):
 
 @router.get("/nodes/{node_id}/diagrams")
 def get_node_diagrams(node_id: int):
-    """BOM 노드에 연결된 명칭도감 페이지 목록"""
+    """BOM 노드에 연결된 명칭도감 페이지 목록 (is_excluded=false만)"""
     conn = get_connection()
     try:
         rows = conn.execute(
@@ -154,7 +154,7 @@ def get_node_diagrams(node_id: int):
                       dp.parent_assembly, dp.drawing_no
                FROM bom_node_diagrams bnd
                JOIN diagram_pages dp ON dp.id = bnd.diagram_page_id
-               WHERE bnd.bom_node_id = ?
+               WHERE bnd.bom_node_id = ? AND bnd.is_excluded = FALSE
                ORDER BY dp.vehicle, dp.file_no""",
             (node_id,)
         ).fetchall()
@@ -163,36 +163,82 @@ def get_node_diagrams(node_id: int):
         conn.close()
 
 
+class AutoLinkBody(BaseModel):
+    diagram_page_ids: list[int]
+    match_type: str = "auto"
+
+
+@router.post("/nodes/{node_id}/diagrams/auto", status_code=200)
+def auto_link_diagrams(node_id: int, body: AutoLinkBody, _=Depends(require_user)):
+    """자동 매칭된 명칭도감 페이지를 bom_node_diagrams에 upsert.
+    이미 is_excluded=true인 항목은 건너뜀 (사용자가 명시적으로 해제한 것)."""
+    conn = get_connection()
+    try:
+        for page_id in body.diagram_page_ids:
+            # 이미 excluded로 마킹된 건 건너뜀
+            existing = conn.execute(
+                "SELECT id, is_excluded FROM bom_node_diagrams WHERE bom_node_id=? AND diagram_page_id=?",
+                (node_id, page_id)
+            ).fetchone()
+            if existing and existing['is_excluded']:
+                continue
+            if not existing:
+                conn.execute(
+                    """INSERT INTO bom_node_diagrams (bom_node_id, diagram_page_id, match_type, confidence)
+                       VALUES (?, ?, ?, 0.8)""",
+                    (node_id, page_id, body.match_type)
+                )
+        conn.commit()
+        return {"ok": True}
+    except Exception:
+        conn.rollback()
+        raise
+    finally:
+        conn.close()
+
+
 @router.post("/nodes/{node_id}/diagrams", status_code=201)
 def link_diagram(node_id: int, body: DiagramLinkBody, _=Depends(require_user)):
-    """BOM 노드에 명칭도감 페이지 수동 연결"""
+    """BOM 노드에 명칭도감 페이지 수동 연결 (이미 excluded였으면 복원)"""
     if not bom_repo.get_node_by_id(node_id):
         raise HTTPException(status_code=404, detail="노드를 찾을 수 없습니다.")
     conn = get_connection()
     try:
-        try:
-            cursor = conn.execute(
-                """INSERT INTO bom_node_diagrams (bom_node_id, diagram_page_id, match_type, confidence)
-                   VALUES (?, ?, ?, ?)""",
-                (node_id, body.diagram_page_id, body.match_type, body.confidence)
+        existing = conn.execute(
+            "SELECT id, is_excluded FROM bom_node_diagrams WHERE bom_node_id=? AND diagram_page_id=?",
+            (node_id, body.diagram_page_id)
+        ).fetchone()
+        if existing:
+            # excluded 상태였으면 복원
+            conn.execute(
+                "UPDATE bom_node_diagrams SET is_excluded=FALSE, match_type=? WHERE id=?",
+                (body.match_type, existing['id'])
             )
             conn.commit()
-            return {"id": cursor.lastrowid, "bom_node_id": node_id, **body.model_dump()}
-        except Exception as e:
-            if "UNIQUE" in str(e):
-                raise HTTPException(status_code=409, detail="이미 연결된 페이지입니다.")
-            raise HTTPException(status_code=400, detail=str(e))
+            return {"id": existing['id'], "bom_node_id": node_id, **body.model_dump()}
+        cursor = conn.execute(
+            """INSERT INTO bom_node_diagrams (bom_node_id, diagram_page_id, match_type, confidence)
+               VALUES (?, ?, ?, ?)""",
+            (node_id, body.diagram_page_id, body.match_type, body.confidence)
+        )
+        conn.commit()
+        return {"id": cursor.lastrowid, "bom_node_id": node_id, **body.model_dump()}
+    except Exception as e:
+        conn.rollback()
+        if "UNIQUE" in str(e):
+            raise HTTPException(status_code=409, detail="이미 연결된 페이지입니다.")
+        raise HTTPException(status_code=400, detail=str(e))
     finally:
         conn.close()
 
 
 @router.delete("/nodes/{node_id}/diagrams/{link_id}", status_code=204)
 def unlink_diagram(node_id: int, link_id: int, _=Depends(require_user)):
-    """BOM 노드와 명칭도감 페이지 연결 해제"""
+    """BOM 노드와 명칭도감 페이지 연결 해제 (is_excluded=true 마킹)"""
     conn = get_connection()
     try:
         conn.execute(
-            "DELETE FROM bom_node_diagrams WHERE id = ? AND bom_node_id = ?",
+            "UPDATE bom_node_diagrams SET is_excluded=TRUE WHERE id=? AND bom_node_id=?",
             (link_id, node_id)
         )
         conn.commit()

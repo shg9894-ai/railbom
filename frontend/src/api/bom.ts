@@ -47,4 +47,6 @@ export const bomApi = {
     client.post(`/bom/nodes/${nodeId}/diagrams`, data).then((r) => r.data),
   unlinkDiagram: (nodeId: number, linkId: number) =>
     client.delete(`/bom/nodes/${nodeId}/diagrams/${linkId}`),
+  autoLinkDiagrams: (nodeId: number, diagramPageIds: number[]) =>
+    client.post(`/bom/nodes/${nodeId}/diagrams/auto`, { diagram_page_ids: diagramPageIds }).then((r) => r.data),
 }

@@ -135,14 +135,10 @@ code,
   }
 }
 
-* {
+button, .ant-btn, .ant-menu-item, .ant-tabs-tab,
+.ant-tag, .ant-badge, [role="button"] {
   -webkit-user-select: none;
   user-select: none;
-}
-
-input, textarea {
-  -webkit-user-select: text;
-  user-select: text;
 }
 
 h1,
