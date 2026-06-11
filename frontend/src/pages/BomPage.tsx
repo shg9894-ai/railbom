@@ -1,4 +1,5 @@
-import { useState, useMemo, useCallback, useRef } from 'react'
+import { useState, useMemo, useCallback, useRef, useEffect } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import {
   Select, Card, Spin, Empty, Input, Button, Space, Tooltip,
   Typography, theme, Modal, Descriptions, Tag,
@@ -206,6 +207,9 @@ export default function BomPage() {
   const [loadingIds,   setLoadingIds]  = useState<Set<number>>(new Set())
   const [isExpandingAll, setIsExpandingAll] = useState(false)
   const [compatModal,  setCompatModal] = useState<string[] | null>(null)
+  // 딥링크(?node=<id>)로 진입 시 강조할 노드
+  const [highlightId,  setHighlightId] = useState<number | null>(null)
+  const [searchParams, setSearchParams] = useSearchParams()
 
   // 자식 캐시: nodeId → BomNode[]
   // useRef로 관리해서 setState 루프 없이 트리 수정 가능
@@ -231,6 +235,53 @@ export default function BomPage() {
     setSearch('')
     setInputValue('')
   }
+
+  // 딥링크: /bom?node=<id> 로 들어오면 해당 노드까지 트리를 펼치고 스크롤+강조
+  // (자재마스터 '연결된 BOM 노드 → 이동' 등에서 사용)
+  useEffect(() => {
+    const nodeParam = searchParams.get('node')
+    if (!nodeParam) return
+    const targetId = parseInt(nodeParam, 10)
+    if (isNaN(targetId)) return
+    // param은 1회성 — 바로 지워서 새로고침/뒤로가기 시 재실행 방지
+    searchParams.delete('node')
+    setSearchParams(searchParams, { replace: true })
+
+    ;(async () => {
+      try {
+        // 루트부터 자신까지의 조상 체인
+        const chain = await bomApi.getAncestors(targetId)
+        if (!chain || chain.length === 0) return
+        const target = chain[chain.length - 1]
+        if (target.vehicle_type_id) setVehicleId(target.vehicle_type_id)
+
+        // 조상들(자신 제외)의 자식을 순서대로 로드하고 펼침
+        const newMap = new Map(childrenMapRef.current)
+        const toExpand: number[] = []
+        for (const anc of chain) {
+          if (anc.id === targetId) continue
+          if (!newMap.has(anc.id)) {
+            const kids = await bomApi.getChildrenLazy(anc.id)
+            newMap.set(anc.id, kids)
+          }
+          toExpand.push(anc.id)
+        }
+        setChildrenMap(newMap)
+        setExpandedIds(prev => new Set([...prev, ...toExpand]))
+        setHighlightId(targetId)
+
+        // 렌더 후 스크롤 (roots 로딩 시간 고려해 약간 늦게 2회 시도)
+        const scroll = () =>
+          document.getElementById(`bom-row-${targetId}`)
+            ?.scrollIntoView({ block: 'center', behavior: 'smooth' })
+        setTimeout(scroll, 400)
+        setTimeout(scroll, 1200)
+      } catch {
+        /* 노드가 삭제됐거나 권한 문제 등 — 조용히 무시 */
+      }
+    })()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams])
 
   // 노드 펼치기/접기
   const handleToggle = useCallback(async (node: BomNode) => {
@@ -464,12 +515,18 @@ export default function BomPage() {
                   const isMatch   = matchIds ? matchIds.has(node.id) : false
                   const isLoading_ = loadingIds.has(node.id)
 
+                  const isHighlight = highlightId === node.id
                   return (
                     <tr
                       key={node.id}
+                      id={`bom-row-${node.id}`}
                       style={{
                         borderBottom: `1px solid ${tk.colorBorderSecondary}`,
-                        background: isMatch ? tk.colorWarningBg : depth === 0 ? tk.colorFillAlter : tk.colorBgContainer,
+                        background: isHighlight ? tk.colorPrimaryBg
+                          : isMatch ? tk.colorWarningBg
+                          : depth === 0 ? tk.colorFillAlter : tk.colorBgContainer,
+                        outline: isHighlight ? `2px solid ${tk.colorPrimary}` : undefined,
+                        outlineOffset: isHighlight ? -2 : undefined,
                         }}
                     >
                       {/* 이름 열 */}
