@@ -80,6 +80,14 @@ export default function AppShell({ children, role, onLogout, darkMode, onToggleD
 
   const userId = localStorage.getItem('user_id') ?? ''
 
+  const allMenuItems = [
+    ...menuItems,
+    { key: '/requests', label: '데이터 수정 승인' },
+    { key: '/login-logs', label: '로그인 기록' },
+    { key: '/material-activity', label: '자재마스터 변경 로그' },
+  ]
+  const currentPageLabel = allMenuItems.find(m => m.key === location.pathname)?.label ?? ''
+
   const handleMenuClick = ({ key }: { key: string }) => {
     navigate(key)
     if (isMobile) toggleOpen(false)
@@ -113,6 +121,14 @@ export default function AppShell({ children, role, onLogout, darkMode, onToggleD
             style={{ fontSize: 16, fontWeight: 600, whiteSpace: 'nowrap', color: darkMode ? '#fff' : '#000', cursor: 'pointer' }}
             onClick={() => navigate('/')}
           >철도차량 BOM</span>
+          {currentPageLabel && currentPageLabel !== '메인' && (
+            <>
+              <span style={{ color: '#ccc', fontSize: 14, margin: '0 2px' }}>·</span>
+              <span style={{ fontSize: 13, fontWeight: 500, color: darkMode ? '#aaa' : '#555', whiteSpace: 'nowrap' }}>
+                {currentPageLabel}
+              </span>
+            </>
+          )}
         </Space>
         <Space size={6} style={{ minWidth: 0, flexShrink: 1 }}>
           <span style={{
