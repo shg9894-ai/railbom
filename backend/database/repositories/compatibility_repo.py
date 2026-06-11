@@ -20,7 +20,7 @@ def get_by_vehicle(vehicle_type_id: int):
     conn = get_connection()
     try:
         rows = conn.execute(
-            """SELECT c.*, b.name AS part_name, b.part_number
+            """SELECT c.*, b.name AS part_name, b.material_no AS part_number
                FROM compatibility c
                JOIN bom_nodes b ON b.id = c.bom_node_id
                WHERE c.vehicle_type_id = ?""",

@@ -6,6 +6,18 @@ load_dotenv()
 
 BASE_DIR = Path(__file__).parent.parent
 
+# JWT 시크릿 — 환경변수 필수. 없으면 기동 시 에러.
+_secret = os.getenv("SECRET_KEY", "")
+if not _secret:
+    import warnings
+    warnings.warn(
+        "SECRET_KEY 환경변수가 설정되지 않았습니다. 기본값으로 기동됩니다. "
+        "운영 환경에서는 반드시 설정하세요.",
+        stacklevel=2,
+    )
+    _secret = "railway-bom-secret-2026"
+SECRET_KEY = _secret
+
 # DB: DATABASE_URL 있으면 PostgreSQL, 없으면 SQLite
 DATABASE_URL = os.getenv("DATABASE_URL", "")
 DB_PATH = BASE_DIR / os.getenv("DB_PATH", "data/bom.db")

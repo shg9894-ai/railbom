@@ -283,22 +283,28 @@ def approve_request(rid: int, body: ReviewBody = ReviewBody(), _=Depends(require
                 raise HTTPException(400, "link_id missing")
             conn.execute("DELETE FROM bom_node_diagrams WHERE id=?", (link_id,))
         elif rtype == 'photo_add':
-            # photo_data already stored; copy to assembly_photos
+            from routers.photos import USE_SUPABASE, _supabase_upload, PHOTO_DIR
+            import time
             photo_data = req.get('photo_data')
             photo_filename = req.get('photo_filename') or f"req_{rid}.jpg"
             if photo_data:
-                import os
-                photos_dir = "C:/Dev/railway-bom/backend/assembly_photos"
-                os.makedirs(photos_dir, exist_ok=True)
-                dest = os.path.join(photos_dir, f"{node_id}_{photo_filename}")
-                with open(dest, 'wb') as f:
-                    f.write(photo_data)
-                # register in node_photos if table exists
-                try:
-                    conn.execute("INSERT INTO node_photos (node_id, filename) VALUES (?,?)",
-                                 (node_id, f"{node_id}_{photo_filename}"))
-                except Exception:
-                    pass
+                from pathlib import Path
+                ext = Path(photo_filename).suffix.lower() or ".jpg"
+                seq = int(time.time() * 1000) % 10_000_000
+                filename = f"node_{node_id}_{seq}{ext}"
+                if USE_SUPABASE:
+                    storage_url = _supabase_upload(filename, photo_data, "image/jpeg")
+                    conn.execute(
+                        "INSERT INTO node_photos (node_id, filename, storage_url) VALUES (?,?,?)",
+                        (node_id, filename, storage_url)
+                    )
+                else:
+                    PHOTO_DIR.mkdir(parents=True, exist_ok=True)
+                    (PHOTO_DIR / filename).write_bytes(photo_data)
+                    from routers.photos import _load_index, _save_index
+                    idx = _load_index()
+                    idx.setdefault(str(node_id), []).append(filename)
+                    _save_index(idx)
 
         conn.execute(
             "UPDATE change_requests SET status='approved', reviewed_at=CURRENT_TIMESTAMP, reviewer_note=? WHERE id=?",
@@ -306,6 +312,9 @@ def approve_request(rid: int, body: ReviewBody = ReviewBody(), _=Depends(require
         )
         conn.commit()
         return {"id": rid, "status": "approved"}
+    except Exception:
+        conn.rollback()
+        raise
     finally:
         conn.close()
 
@@ -325,5 +334,8 @@ def reject_request(rid: int, body: ReviewBody = ReviewBody(), _=Depends(require_
         )
         conn.commit()
         return {"id": rid, "status": "rejected"}
+    except Exception:
+        conn.rollback()
+        raise
     finally:
         conn.close()

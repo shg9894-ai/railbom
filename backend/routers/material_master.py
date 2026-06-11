@@ -1,7 +1,8 @@
 """자재마스터 조회 API."""
-from fastapi import APIRouter, Query, HTTPException
+from fastapi import APIRouter, Query, HTTPException, Depends
 from typing import Optional
 from database.connection import get_connection
+from routers.deps import require_user
 
 router = APIRouter(prefix="/api/material-master", tags=["material-master"])
 
@@ -17,6 +18,7 @@ def search(
     is_unused: Optional[bool] = None,
     limit: int = 50,
     offset: int = 0,
+    _=Depends(require_user),
 ):
     """자재마스터 검색. ALLOWED_TYPES(ERSA/HIBE/ERSB)만 노출."""
     conn = get_connection()
@@ -94,7 +96,7 @@ def search(
 
 
 @router.get("/groups")
-def groups():
+def groups(_=Depends(require_user)):
     """용품별그룹 4자리 분류 + 자재유형."""
     conn = get_connection()
     try:
@@ -125,7 +127,7 @@ def groups():
 
 
 @router.get("/stats")
-def stats():
+def stats(_=Depends(require_user)):
     """전체 통계 (ALLOWED_TYPES만)."""
     conn = get_connection()
     try:
@@ -147,7 +149,7 @@ def stats():
 
 
 @router.get("/{material_no}")
-def detail(material_no: str):
+def detail(material_no: str, _=Depends(require_user)):
     """자재 상세."""
     conn = get_connection()
     try:

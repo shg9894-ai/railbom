@@ -5,9 +5,8 @@ FastAPI 인증 의존성.
 """
 from fastapi import Depends, HTTPException, Request
 from jose import jwt, JWTError
-import os
+from config.settings import SECRET_KEY
 
-SECRET_KEY = os.environ.get("SECRET_KEY", "railway-bom-secret-2026")
 ALGORITHM  = "HS256"
 
 

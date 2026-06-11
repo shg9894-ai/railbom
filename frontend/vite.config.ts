@@ -41,7 +41,7 @@ export default defineConfig({
             options: {
               cacheName: 'diagram-images',
               expiration: { maxEntries: 5000, maxAgeSeconds: 60 * 60 * 24 * 90 }, // 90일
-              cacheableResponse: { statuses: [0, 200] },
+              cacheableResponse: { statuses: [200] },
             },
           },
           {
@@ -51,7 +51,7 @@ export default defineConfig({
             options: {
               cacheName: 'diagram-api-images',
               expiration: { maxEntries: 5000, maxAgeSeconds: 60 * 60 * 24 * 90 },
-              cacheableResponse: { statuses: [0, 200, 302] },
+              cacheableResponse: { statuses: [200, 302] },
             },
           },
           {
@@ -62,7 +62,6 @@ export default defineConfig({
               cacheName: 'ecat-images',
               networkTimeoutSeconds: 6,
               expiration: { maxEntries: 10000, maxAgeSeconds: 60 * 60 * 24 * 30 },
-              // status 200만 캐시 (실패 응답 캐시 안 함)
               cacheableResponse: { statuses: [200] },
             },
           },
@@ -85,7 +84,7 @@ export default defineConfig({
               cacheName: 'api-cache',
               networkTimeoutSeconds: 4,
               expiration: { maxEntries: 200, maxAgeSeconds: 60 * 60 * 24 },
-              cacheableResponse: { statuses: [0, 200] },
+              cacheableResponse: { statuses: [200] },
             },
           },
         ],

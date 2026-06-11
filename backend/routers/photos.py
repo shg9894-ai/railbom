@@ -3,10 +3,11 @@
 - 로컬 모드: frontend/public/assembly_photos/ 에 저장
 - 클라우드 모드: Supabase Storage에 저장 (DATABASE_URL 환경변수 있을 때)
 """
-from fastapi import APIRouter, HTTPException, UploadFile, File
+from fastapi import APIRouter, HTTPException, UploadFile, File, Depends
 from pathlib import Path
 from config.settings import DATABASE_URL, SUPABASE_URL, SUPABASE_SERVICE_KEY, SUPABASE_BUCKET
 from database.connection import get_connection
+from routers.deps import require_user, require_admin
 import json, time, shutil, httpx
 
 router = APIRouter(prefix="/api/bom/nodes", tags=["photos"])
@@ -52,7 +53,7 @@ def _save_index(idx: dict):
 
 # ── 목록 ────────────────────────────────────────────────────────────────────────
 @router.get("/{node_id}/photos")
-def list_photos(node_id: int):
+def list_photos(node_id: int, _=Depends(require_user)):
     if USE_SUPABASE:
         conn = get_connection()
         try:
@@ -71,7 +72,7 @@ def list_photos(node_id: int):
 
 # ── 업로드 ──────────────────────────────────────────────────────────────────────
 @router.post("/{node_id}/photos")
-async def upload_photo(node_id: int, file: UploadFile = File(...)):
+async def upload_photo(node_id: int, file: UploadFile = File(...), _=Depends(require_admin)):
     ext = Path(file.filename or "").suffix.lower()
     if not ext:
         ext = ".jpg"
@@ -107,7 +108,7 @@ async def upload_photo(node_id: int, file: UploadFile = File(...)):
 
 # ── 삭제 ────────────────────────────────────────────────────────────────────────
 @router.delete("/{node_id}/photos/{filename}")
-def delete_photo(node_id: int, filename: str):
+def delete_photo(node_id: int, filename: str, _=Depends(require_admin)):
     if any(c in filename for c in ("/", "\\", "..")):
         raise HTTPException(400, "잘못된 파일명")
 

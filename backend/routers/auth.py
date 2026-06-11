@@ -3,11 +3,11 @@ from pydantic import BaseModel
 from jose import jwt
 from datetime import datetime, timedelta
 from database.connection import get_connection
+from config.settings import SECRET_KEY
 import os
 
 router = APIRouter(prefix="/api/auth", tags=["auth"])
 
-SECRET_KEY          = os.environ.get("SECRET_KEY",    "railway-bom-secret-2026")
 ALGORITHM           = "HS256"
 TOKEN_EXPIRE_HOURS  = 12
 
